@@ -9,9 +9,11 @@ import (
 	"github.com/golang/protobuf/proto"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/keepalive"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"time"
 )
 
 var (
@@ -24,7 +26,13 @@ func main() {
 		flag.Parse()
 	}
 
-	conn, err := grpc.Dial(*target, grpc.WithInsecure())
+	conn, err := grpc.Dial(*target,
+		grpc.WithInsecure(),
+		grpc.WithKeepaliveParams(keepalive.ClientParameters{
+			Time:                time.Duration(5) * time.Second,
+			Timeout:             time.Duration(3) * time.Second,
+			PermitWithoutStream: true,
+		}))
 	if err != nil {
 		panic(err)
 	}
