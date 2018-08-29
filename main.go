@@ -39,12 +39,12 @@ func main() {
 
 	cli := discoveryv2.NewAggregatedDiscoveryServiceClient(conn)
 
-	stream, err := cli.StreamAggregatedResources(context.Background())
-	if err != nil {
-		panic(err)
-	}
-
 	go func() {
+		stream, err := cli.StreamAggregatedResources(context.Background())
+		if err != nil {
+			panic(err)
+		}
+
 		if err := http.ListenAndServe(*addr, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			raw, err := ioutil.ReadAll(r.Body)
 			if err != nil {
@@ -70,9 +70,15 @@ func main() {
 
 	go func() {
 		for {
+			stream, err := cli.StreamAggregatedResources(context.Background())
+			if err != nil {
+				panic(err)
+			}
+
 			resp, err := stream.Recv()
 			if err != nil {
 				log.Printf("[ERR] %+v", err)
+				continue
 			}
 			fmt.Printf("--------------- VERSION: %s ------ TYPE_URL: %s --------------------------\n", resp.VersionInfo, resp.TypeUrl)
 			switch resp.TypeUrl {
