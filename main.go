@@ -71,8 +71,7 @@ func main() {
 		for {
 			resp, err := stream.Recv()
 			if err != nil {
-				log.Printf("[ERR] %+v", err)
-				continue
+				panic(err)
 			}
 			fmt.Printf("--------------- VERSION: %s ------ TYPE_URL: %s --------------------------\n", resp.VersionInfo, resp.TypeUrl)
 			switch resp.TypeUrl {
