@@ -104,6 +104,11 @@ function parse_args() {
         shift
         shift
       ;;
+      --output)
+        output=$2
+        shift
+        shift
+      ;;
       *)
         unknown="$unknown $1"
         shift
@@ -126,6 +131,10 @@ fi
 
 if [ -z "$pilot_target" ]; then
   pilot_target=$PILOT_ADDR
+fi
+
+if [ -z "$output" ]; then
+  output=short
 fi
 
 if [ "$debug_server" == "true" ]; then
@@ -170,7 +179,7 @@ if [ "$check_clusters" == "true" ]; then
 }'
 
   echo "checking clusters for pods $pod_id ..."
-  istioctl proxy-config --context $context --namespace $namespace cluster $pod_id
+  istioctl proxy-config --context $context --namespace $namespace -o $output cluster $pod_id
 fi
 
 if [ "$check_endpoints" == "true" ]; then
@@ -201,7 +210,7 @@ if [ "$check_listeners" == "true" ]; then
 	"type_url": "type.googleapis.com/envoy.api.v2.Listener"
 }'
   echo "checking listeners for pods $pod_id ..."
-  istioctl proxy-config --context $context --namespace $namespace listener $pod_id
+  istioctl proxy-config --context $context --namespace $namespace -o $output listener $pod_id
 fi
 
 if [ "$check_routes" == "true" ]; then
@@ -218,6 +227,6 @@ if [ "$check_routes" == "true" ]; then
 	"resource_names": ['$resource_names']
 }'
   echo "checking routes for pods $pod_id ..."
-  istioctl proxy-config --context $context --namespace $namespace route $pod_id
+  istioctl proxy-config --context $context --namespace $namespace -o $output route $pod_id
 fi
 set +x
