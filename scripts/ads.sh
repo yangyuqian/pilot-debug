@@ -191,7 +191,8 @@ if [ "$check_endpoints" == "true" ]; then
 	"node": {
 		"id": '$node_id',
 		"cluster": '$cluster',
-		"build_version": "1381673ad2d74bab4667942abdd8ef75c812e75e/1.8.0-dev/Clean/RELEASE"
+		"build_version": "1381673ad2d74bab4667942abdd8ef75c812e75e/1.8.0-dev/Clean/RELEASE",
+    "resource_names": ['$resource_names']
 	},
 	"type_url": "type.googleapis.com/envoy.api.v2.ClusterLoadAssignment",
   "resource_names": ['$resource_names']
