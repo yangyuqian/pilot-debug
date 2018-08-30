@@ -25,6 +25,7 @@ Available Arguments:
   --resource-names: resource names, i.e. "a","b"
   --namespace: namespace
   --context: context
+  --output: output format of istioctl, must be [short|json], default is short
 
 EOF
   exit 0
