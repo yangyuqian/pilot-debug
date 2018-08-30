@@ -143,9 +143,17 @@ fi
 if [ -n "$selector" ]; then
   pod_id=$(kubectl get pods --namespace $namespace --context $context --selector="$selector" -o jsonpath='{ .items[0].metadata.name }')
 
-  node_id=$(kubectl exec --namespace $namespace -it --context $context -c istio-proxy $pod_id -- cat /etc/istio/proxy/envoy-rev2.json|jq '.node.id')
-  cluster=$(kubectl exec --namespace $namespace -it --context $context -c istio-proxy $pod_id -- cat /etc/istio/proxy/envoy-rev2.json|jq '.node.cluster')
-  node_type=$(kubectl exec --namespace $namespace -it --context $context -c istio-proxy $pod_id -- cat /etc/istio/proxy/envoy-rev2.json|jq '.node.type')
+  if [ -z "$node_id" ]; then
+    node_id=$(kubectl exec --namespace $namespace -it --context $context -c istio-proxy $pod_id -- cat /etc/istio/proxy/envoy-rev2.json|jq '.node.id')
+  fi
+
+  if [ -z "$cluster" ]; then
+    cluster=$(kubectl exec --namespace $namespace -it --context $context -c istio-proxy $pod_id -- cat /etc/istio/proxy/envoy-rev2.json|jq '.node.cluster')
+  fi
+
+  if [ -z "$node_type" ]; then
+    node_type=$(kubectl exec --namespace $namespace -it --context $context -c istio-proxy $pod_id -- cat /etc/istio/proxy/envoy-rev2.json|jq '.node.type')
+  fi
 fi
 
 if [ "$check_clusters" == "true" ]; then
