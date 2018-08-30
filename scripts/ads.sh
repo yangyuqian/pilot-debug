@@ -154,10 +154,9 @@ if [ "$check_clusters" == "true" ]; then
   -H 'Content-Type: application/json' \
   -d '{
 	"node": {
-		"id": "'$node_id'",
-		"cluster": "'$cluster'",
+		"id": '$node_id',
+		"cluster": '$cluster',
 		"build_version": "1381673ad2d74bab4667942abdd8ef75c812e75e/1.8.0-dev/Clean/RELEASE",
-		"type": "'$mode_type'"
 	},
 	"type_url": "type.googleapis.com/envoy.api.v2.Cluster"
 }'
@@ -169,10 +168,9 @@ if [ "$check_endpoints" == "true" ]; then
   -H 'Content-Type: application/json' \
   -d '{
 	"node": {
-		"id": "'$node_id'",
-		"cluster": "'$cluster'",
+		"id": '$node_id',
+		"cluster": '$cluster',
 		"build_version": "1381673ad2d74bab4667942abdd8ef75c812e75e/1.8.0-dev/Clean/RELEASE",
-		"type": "'$node_type'"
 	},
 	"type_url": "type.googleapis.com/envoy.api.v2.ClusterLoadAssignment",
   "resource_names": ['$resource_names']
@@ -185,10 +183,9 @@ if [ "$check_listeners" == "true" ]; then
   -H 'Content-Type: application/json' \
   -d '{
 	"node": {
-		"id": "'$node_id'",
-		"cluster": "'$cluster'",
+		"id": '$node_id',
+		"cluster": '$cluster',
 		"build_version": "1381673ad2d74bab4667942abdd8ef75c812e75e/1.8.0-dev/Clean/RELEASE",
-		"type": "'$node_type'"
 	},
 	"type_url": "type.googleapis.com/envoy.api.v2.Listener"
 }'
@@ -200,10 +197,9 @@ if [ "$check_routes" == "true" ]; then
   -H 'Content-Type: application/json' \
   -d '{
 	"node": {
-		"id": "'$node_id'",
-		"cluster": "'$cluster'",
+		"id": '$node_id',
+		"cluster": '$cluster',
 		"build_version": "1381673ad2d74bab4667942abdd8ef75c812e75e/1.8.0-dev/Clean/RELEASE",
-    "type": "'$node_type'"
 	},
 	"type_url": "type.googleapis.com/envoy.api.v2.RouteConfiguration",
 	"resource_names": ['$resource_names']
