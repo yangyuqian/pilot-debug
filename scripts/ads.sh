@@ -119,6 +119,7 @@ function parse_args() {
 
 parse_args $@
 
+set -x
 if [ "$upgrade" == "true" ]; then
   go get -u github.com/yangyuqian/pilot-debug
 fi
@@ -208,3 +209,4 @@ if [ "$check_routes" == "true" ]; then
 	"resource_names": ['$resource_names']
 }'
 fi
+set +x
