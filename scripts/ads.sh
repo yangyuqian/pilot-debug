@@ -20,8 +20,11 @@ Available Arguments:
   --check-routes: check routes
   --node-id: node id
   --cluster: cluster name
+  --selector: select pods by labels filters to collect metadata automatically
   --node-type: node type
   --resource-names: resource names, i.e. "a","b"
+  --namespace: namespace
+  --context: context
 
 EOF
   exit 0
@@ -81,6 +84,21 @@ function parse_args() {
         shift
         shift
       ;;
+      --selector)
+        selector=$2
+        shift
+        shift
+      ;;
+      --context)
+        context=$2
+        shift
+        shift
+      ;;
+      --namespace)
+        namespace=$2
+        shift
+        shift
+      ;;
       --resource-names)
         resource_names=$2
         shift
@@ -111,6 +129,22 @@ fi
 
 if [ "$debug_server" == "true" ]; then
   pilot-debug --target $pilot_target
+fi
+
+if [ -z "$namespace" ]; then
+  namespace=default
+fi
+
+if [ -z "$context" ]; then
+  context=ui.od.k8s.local
+fi
+
+if [ -n "$selector" ]; then
+  pod_id=$(kubectl get pods --namespace $namespace --context $context --selector="$selector" -o jsonpath='{ .items[0].metadata.name }')
+
+  node_id=$(kubectl exec --namespace $namespace -it --context $context -c istio-proxy $pod_id -- cat /etc/istio/proxy/envoy-rev2.json|jq '.node.id')
+  cluster=$(kubectl exec --namespace $namespace -it --context $context -c istio-proxy $pod_id -- cat /etc/istio/proxy/envoy-rev2.json|jq '.node.cluster')
+  node_type=$(kubectl exec --namespace $namespace -it --context $context -c istio-proxy $pod_id -- cat /etc/istio/proxy/envoy-rev2.json|jq '.node.type')
 fi
 
 if [ "$check_clusters" == "true" ]; then
