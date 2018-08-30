@@ -124,8 +124,7 @@ if [ "$check_clusters" == "true" ]; then
 		"build_version": "1381673ad2d74bab4667942abdd8ef75c812e75e/1.8.0-dev/Clean/RELEASE",
 		"type": "'$mode_type'"
 	},
-	"type_url": "type.googleapis.com/envoy.api.v2.ClusterLoadAssignment",
-  "resource_names": ['$resource_names']
+	"type_url": "type.googleapis.com/envoy.api.v2.Cluster"
 }'
 fi
 
