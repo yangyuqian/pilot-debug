@@ -168,6 +168,9 @@ if [ "$check_clusters" == "true" ]; then
 	},
 	"type_url": "type.googleapis.com/envoy.api.v2.Cluster"
 }'
+
+  echo "checking clusters for pods $pod_id ..."
+  istioctl proxy-config --context $context --namespace $namespace cluster $pod_id
 fi
 
 if [ "$check_endpoints" == "true" ]; then
@@ -197,6 +200,8 @@ if [ "$check_listeners" == "true" ]; then
 	},
 	"type_url": "type.googleapis.com/envoy.api.v2.Listener"
 }'
+  echo "checking listeners for pods $pod_id ..."
+  istioctl proxy-config --context $context --namespace $namespace listener $pod_id
 fi
 
 if [ "$check_routes" == "true" ]; then
@@ -212,5 +217,7 @@ if [ "$check_routes" == "true" ]; then
 	"type_url": "type.googleapis.com/envoy.api.v2.RouteConfiguration",
 	"resource_names": ['$resource_names']
 }'
+  echo "checking routes for pods $pod_id ..."
+  istioctl proxy-config --context $context --namespace $namespace route $pod_id
 fi
 set +x
