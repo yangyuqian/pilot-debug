@@ -156,6 +156,10 @@ if [ -z "$context" ]; then
   context=ui.od.k8s.local
 fi
 
+if [ -z "$revision" ]; then
+  revision=0
+fi
+
 if [ -n "$selector" ]; then
   pod_id=$(kubectl get pods --namespace $namespace --context $context --selector="$selector" -o jsonpath='{ .items[0].metadata.name }')
 
