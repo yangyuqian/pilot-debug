@@ -26,6 +26,7 @@ Available Arguments:
   --namespace: namespace
   --context: context
   --output: output format of istioctl, must be [short|json], default is short
+  --revision: revision(positive integer) of static configuration of Envoy, default 0
 
 EOF
   exit 0
@@ -110,6 +111,11 @@ function parse_args() {
         shift
         shift
       ;;
+      --revision)
+        revision=$2
+        shift
+        shift
+      ;;
       *)
         unknown="$unknown $1"
         shift
@@ -154,15 +160,15 @@ if [ -n "$selector" ]; then
   pod_id=$(kubectl get pods --namespace $namespace --context $context --selector="$selector" -o jsonpath='{ .items[0].metadata.name }')
 
   if [ -z "$node_id" ]; then
-    node_id=$(kubectl exec --namespace $namespace -it --context $context -c istio-proxy $pod_id -- cat /etc/istio/proxy/envoy-rev2.json|jq '.node.id')
+    node_id=$(kubectl exec --namespace $namespace -it --context $context $pod_id -- cat /etc/istio/proxy/envoy-rev${revision}.json|jq '.node.id')
   fi
 
   if [ -z "$cluster" ]; then
-    cluster=$(kubectl exec --namespace $namespace -it --context $context -c istio-proxy $pod_id -- cat /etc/istio/proxy/envoy-rev2.json|jq '.node.cluster')
+    cluster=$(kubectl exec --namespace $namespace -it --context $context $pod_id -- cat /etc/istio/proxy/envoy-rev${revision}.json|jq '.node.cluster')
   fi
 
   if [ -z "$node_type" ]; then
-    node_type=$(kubectl exec --namespace $namespace -it --context $context -c istio-proxy $pod_id -- cat /etc/istio/proxy/envoy-rev2.json|jq '.node.type')
+    node_type=$(kubectl exec --namespace $namespace -it --context $context $pod_id -- cat /etc/istio/proxy/envoy-rev${revision}.json|jq '.node.type')
   fi
 fi
 
