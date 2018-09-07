@@ -1,0 +1,62 @@
+apiVersion: "config.istio.io/v1alpha2"
+kind: redisquota
+metadata:
+  name: handler
+spec:
+  redisServerUrl: rate-limit-redis-ha-master-svc.default.svc:6379
+  connectionPoolSize: 10
+  quotas:
+  - name: requestcount.quota.istio-test
+    maxAmount: 200
+    validDuration: 60s
+    bucketDuration: 1s
+    rateLimitAlgorithm: ROLLING_WINDOW
+    overrides:
+    - dimensions:
+        destination: helloworld
+        destinationVersion: v1
+      maxAmount: 1
+---
+apiVersion: "config.istio.io/v1alpha2"
+kind: quota
+metadata:
+  name: requestcount
+spec:
+  dimensions:
+    source: request.headers["x-forwarded-for"] | "unknown"
+    destination: destination.labels["app"] | destination.service | "unknown"
+    destinationVersion: destination.labels["version"] | "unknown"
+
+---
+apiVersion: config.istio.io/v1alpha2
+kind: QuotaSpec
+metadata:
+  name: request-count
+spec:
+  rules:
+  - quotas:
+    - charge: 1
+      quota: requestcount
+
+---
+apiVersion: config.istio.io/v1alpha2
+kind: QuotaSpecBinding
+metadata:
+  name: request-count
+spec:
+  quotaSpecs:
+  - name: request-count
+    namespace: istio-test
+  services:
+  - name: helloworld
+    namespace: istio-test
+---
+apiVersion: config.istio.io/v1alpha2
+kind: rule
+metadata:
+  name: quota
+spec:
+  actions:
+  - handler: handler.redisquota
+    instances:
+    - requestcount.quota
