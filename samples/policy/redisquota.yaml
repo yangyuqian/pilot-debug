@@ -15,6 +15,7 @@ spec:
     - dimensions:
         destination: helloworld
         destinationVersion: v1
+      # maxAmount must > 1
       maxAmount: 1
 ---
 apiVersion: "config.istio.io/v1alpha2"
