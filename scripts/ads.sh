@@ -128,7 +128,7 @@ parse_args $@
 
 set -x
 if [ "$upgrade" == "true" ]; then
-  go get -u github.com/yangyuqian/pilot-debug
+  go get -u github.com/yangyuqian/pilot-debug/cmd/tools/ads-debug
 fi
 
 # by default get loadbalancer address
@@ -142,7 +142,7 @@ if [ -z "$output" ]; then
 fi
 
 if [ "$debug_server" == "true" ]; then
-  pilot-debug --target $pilot_target
+  ads-debug --target $pilot_target
 fi
 
 if [ -z "$namespace" ]; then
