@@ -91,11 +91,6 @@ function parse_args() {
         shift
         shift
       ;;
-      --context)
-        context=$2
-        shift
-        shift
-      ;;
       --namespace)
         namespace=$2
         shift
@@ -136,6 +131,8 @@ if [ "$upgrade" == "true" ]; then
   go get -u github.com/yangyuqian/pilot-debug
 fi
 
+# by default get loadbalancer address
+PILOT_ADDR=`kubectl get services --namespace istio-system istio-pilot -o jsonpath='{ .status.loadBalancer.ingress[0].hostname }'`:15010
 if [ -z "$pilot_target" ]; then
   pilot_target=$PILOT_ADDR
 fi
@@ -152,27 +149,23 @@ if [ -z "$namespace" ]; then
   namespace=default
 fi
 
-if [ -z "$context" ]; then
-  context=ui.od.k8s.local
-fi
-
 if [ -z "$revision" ]; then
   revision=0
 fi
 
 if [ -n "$selector" ]; then
-  pod_id=$(kubectl get pods --namespace $namespace --context $context --selector="$selector" -o jsonpath='{ .items[0].metadata.name }')
+  pod_id=$(kubectl get pods --namespace $namespace --selector="$selector" -o jsonpath='{ .items[0].metadata.name }')
 
   if [ -z "$node_id" ]; then
-    node_id=$(kubectl exec --namespace $namespace -it --context $context -c istio-proxy $pod_id -- cat /etc/istio/proxy/envoy-rev${revision}.json|jq '.node.id')
+    node_id=$(kubectl exec --namespace $namespace -it -c istio-proxy $pod_id -- cat /etc/istio/proxy/envoy-rev${revision}.json|jq '.node.id')
   fi
 
   if [ -z "$cluster" ]; then
-    cluster=$(kubectl exec --namespace $namespace -it --context $context -c istio-proxy $pod_id -- cat /etc/istio/proxy/envoy-rev${revision}.json|jq '.node.cluster')
+    cluster=$(kubectl exec --namespace $namespace -it -c istio-proxy $pod_id -- cat /etc/istio/proxy/envoy-rev${revision}.json|jq '.node.cluster')
   fi
 
   if [ -z "$node_type" ]; then
-    node_type=$(kubectl exec --namespace $namespace -it --context $context -c istio-proxy $pod_id -- cat /etc/istio/proxy/envoy-rev${revision}.json|jq '.node.type')
+    node_type=$(kubectl exec --namespace $namespace -it -c istio-proxy $pod_id -- cat /etc/istio/proxy/envoy-rev${revision}.json|jq '.node.type')
   fi
 fi
 
@@ -190,7 +183,7 @@ if [ "$check_clusters" == "true" ]; then
 }'
 
   echo "checking clusters for pods $pod_id ..."
-  istioctl proxy-config --context $context --namespace $namespace -o $output cluster $pod_id
+  istioctl proxy-config --namespace $namespace -o $output cluster $pod_id
 fi
 
 if [ "$check_endpoints" == "true" ]; then
@@ -221,7 +214,7 @@ if [ "$check_listeners" == "true" ]; then
 	"type_url": "type.googleapis.com/envoy.api.v2.Listener"
 }'
   echo "checking listeners for pods $pod_id ..."
-  istioctl proxy-config --context $context --namespace $namespace -o $output listener $pod_id
+  istioctl proxy-config --namespace $namespace -o $output listener $pod_id
 fi
 
 if [ "$check_routes" == "true" ]; then
@@ -238,6 +231,6 @@ if [ "$check_routes" == "true" ]; then
 	"resource_names": ['$resource_names']
 }'
   echo "checking routes for pods $pod_id ..."
-  istioctl proxy-config --context $context --namespace $namespace -o $output route $pod_id
+  istioctl proxy-config --namespace $namespace -o $output route $pod_id
 fi
 set +x
