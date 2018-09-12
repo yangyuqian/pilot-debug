@@ -48,9 +48,9 @@ spec:
     port:
       name: https
       number: 443
-      protocol: HTTPS
-    tls:
-      mode: SIMPLE
-      serverCertificate: /etc/istio/ingressgateway-certs/tls.crt
-      privateKey: /etc/istio/ingressgateway-certs/tls.key
+      protocol: TCP
+    # tls:
+    #   mode: SIMPLE
+    #   serverCertificate: /etc/istio/ingressgateway-certs/tls.crt
+    #   privateKey: /etc/istio/ingressgateway-certs/tls.key
 
