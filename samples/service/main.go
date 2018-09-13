@@ -15,6 +15,8 @@ import (
 	"io/ioutil"
 
 	"github.com/go-redis/redis"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 // command-line flags
@@ -39,10 +41,55 @@ var (
 	redisAddr = flag.String("redis-addr", "", "redis address")
 )
 
+// clients
 var (
 	http1client, http2client    *http.Client
 	redisclient, sentinelclient *redis.Client
 )
+
+// metrics
+var (
+	httpReqCnt = prometheus.NewCounterVec(prometheus.CounterOpts{
+		Namespace: "evangelist",
+		Subsystem: "inbound_http",
+		Name:      "request_stats",
+		Help:      "stats requests",
+	}, []string{"method", "code"})
+
+	// dependency services, including HTTP/1.1, HTTP/2, Redis and Redis Sentinel
+	http1DepCnt = prometheus.NewCounterVec(prometheus.CounterOpts{
+		Namespace: "evangelist",
+		Subsystem: "outbound_http1",
+		Name:      "result_stats",
+		Help:      "stats HTTP/1.1",
+	}, []string{"node", "state"})
+	http2DepCnt = prometheus.NewCounterVec(prometheus.CounterOpts{
+		Namespace: "evangelist",
+		Subsystem: "outbound_http2",
+		Name:      "result_stats",
+		Help:      "stats HTTP/2",
+	}, []string{"node", "state"})
+	redisDepCnt = prometheus.NewCounterVec(prometheus.CounterOpts{
+		Namespace: "evangelist",
+		Subsystem: "outbound_redis",
+		Name:      "result_stats",
+		Help:      "stats Redis",
+	}, []string{"node", "state"})
+	sentinelDepCnt = prometheus.NewCounterVec(prometheus.CounterOpts{
+		Namespace: "evangelist",
+		Subsystem: "outbound_sentinel",
+		Name:      "result_stats",
+		Help:      "stats Redis Sentinel",
+	}, []string{"node", "state"})
+)
+
+func init() {
+	prometheus.Register(httpReqCnt)
+	prometheus.Register(http1DepCnt)
+	prometheus.Register(http2DepCnt)
+	prometheus.Register(redisDepCnt)
+	prometheus.Register(sentinelDepCnt)
+}
 
 func main() {
 	if !flag.Parsed() {
@@ -83,52 +130,68 @@ func main() {
 
 	http2.ConfigureServer(&server2, nil)
 
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/metrics", promhttp.Handler().ServeHTTP)
+
+	http.HandleFunc("/", promhttp.InstrumentHandlerCounter(httpReqCnt, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
 		if http1client != nil {
 			fmt.Fprintln(w, "------------------------ BEGIN HTTP/1.1 ------------------------")
-			resp, err := http1client.Get(*http1target)
-			if err != nil {
-				log.Printf("error to fetch info from http1 target %+v", err)
-				handleErr(w, err)
-			}
-			defer func() {
-				if resp.Body != nil {
-					resp.Body.Close()
+			f := func() {
+				resp, err := http1client.Get(*http1target)
+				if err != nil {
+					log.Printf("error to fetch info from http1 target %+v", err)
+					http1DepCnt.WithLabelValues(*serviceName, "ko").Inc()
+					return
 				}
-			}()
+				defer func() {
+					if resp.Body != nil {
+						resp.Body.Close()
+					}
+				}()
 
-			data, err := ioutil.ReadAll(resp.Body)
-			if err != nil {
-				log.Printf("error to fetch info from http1 target %+v", err)
-				handleErr(w, err)
+				data, err := ioutil.ReadAll(resp.Body)
+				if err != nil {
+					log.Printf("error to fetch info from http1 target %+v", err)
+					http1DepCnt.WithLabelValues(*serviceName, "ko").Inc()
+					return
+				}
+
+				http1DepCnt.WithLabelValues(*serviceName, "ok").Inc()
+				w.Write(data)
 			}
 
-			w.Write(data)
+			f()
 			fmt.Fprintln(w, "------------------------ END HTTP/1.1 ------------------------")
 		}
 
 		if http2client != nil {
 			fmt.Fprintln(w, "------------------------ BEGIN HTTP/2 ------------------------")
-			resp, err := http2client.Get(*http2target)
-			if err != nil {
-				log.Printf("error to fetch info from http2 target %+v", err)
-				handleErr(w, err)
-			}
-
-			defer func() {
-				if resp.Body != nil {
-					resp.Body.Close()
+			f := func() {
+				resp, err := http2client.Get(*http2target)
+				if err != nil {
+					log.Printf("error to fetch info from http2 target %+v", err)
+					http2DepCnt.WithLabelValues(*serviceName, "ko").Inc()
+					return
 				}
-			}()
 
-			data, err := ioutil.ReadAll(resp.Body)
-			if err != nil {
-				log.Printf("error to fetch info from http2 target %+v", err)
-				handleErr(w, err)
+				defer func() {
+					if resp.Body != nil {
+						resp.Body.Close()
+					}
+				}()
+
+				data, err := ioutil.ReadAll(resp.Body)
+				if err != nil {
+					log.Printf("error to fetch info from http2 target %+v", err)
+					http2DepCnt.WithLabelValues(*serviceName, "ko").Inc()
+					return
+				}
+
+				http2DepCnt.WithLabelValues(*serviceName, "ok").Inc()
+				w.Write(data)
 			}
 
-			w.Write(data)
+			f()
 			fmt.Fprintln(w, "------------------------ END HTTP/2 ------------------------")
 		}
 
@@ -140,7 +203,7 @@ func main() {
 		fmt.Fprintln(w, "------------------------ BEGIN REDIS ------------------------")
 		CheckRedis(w)
 		fmt.Fprintln(w, "------------------------ END REDIS ------------------------")
-	})
+	})).ServeHTTP)
 
 	go func() {
 		log.Printf("serving HTTP/2 on %s...", *http2addr)
@@ -178,9 +241,11 @@ func CheckRedis(w http.ResponseWriter) {
 		k := fmt.Sprintf("redis:%s", *serviceName)
 		if cmd := redisclient.Set(k, "hello", time.Duration(1)*time.Hour); cmd.Err() != nil {
 			log.Printf("cannot set to redis %+v", cmd.Err())
-			handleErr(w, cmd.Err())
+			redisDepCnt.WithLabelValues(*serviceName, "ko").Inc()
+			return
 		}
 
+		redisDepCnt.WithLabelValues(*serviceName, "ok").Inc()
 		fmt.Fprintf(w, fmt.Sprintf("%s -> %s\n", k, redisclient.Get(k).Val()))
 	}
 
@@ -188,12 +253,11 @@ func CheckRedis(w http.ResponseWriter) {
 		k := fmt.Sprintf("sentinel:%s", *serviceName)
 		if cmd := sentinelclient.Set(k, "hello", time.Duration(1)*time.Hour); cmd.Err() != nil {
 			log.Printf("cannot set to sentinel %+v", cmd.Err())
-			handleErr(w, cmd.Err())
+			sentinelDepCnt.WithLabelValues(*serviceName, "ko").Inc()
+			return
 		}
+
+		sentinelDepCnt.WithLabelValues(*serviceName, "ok").Inc()
 		fmt.Fprintf(w, fmt.Sprintf("%s -> %s\n", k, sentinelclient.Get(k).Val()))
 	}
-}
-
-func handleErr(w http.ResponseWriter, err error) {
-	panic(err)
 }
