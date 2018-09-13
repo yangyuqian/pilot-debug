@@ -1,0 +1,28 @@
+# Default values for mockserver.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: boscoellision/mockserver
+  tag: latest
+  pullPolicy: IfNotPresent
+
+applications:
+- name: mock1
+  replicaCount: 3
+  app: mock1
+  version: v1
+  serviceType: "ClusterIP"
+  redisAddr: localhost:6379
+  redisSentinelAddrs: "localhost:5000"
+  http1target: http://localhost:6003
+  http2target: http://localhost:6004
+  ports:
+  - name: "http1"
+    port: "6000"
+    protocal: "TCP"
+  - name: "http2"
+    port: "6001"
+    protocal: "TCP"
