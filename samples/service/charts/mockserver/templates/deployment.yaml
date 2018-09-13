@@ -54,7 +54,7 @@ metadata:
   annotations:
     "service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled": "true"
     "service.beta.kubernetes.io/aws-load-balancer-internal": "true"
-  {{ end -}}
+  {{ end }}
 spec:
   type: {{ $item.serviceType | default "ClusterIP" }}
   {{ if $item.ports -}}
@@ -64,7 +64,7 @@ spec:
     targetPort: {{ $port.name }}
     protocol: {{ $port.protocol | default "TCP" }}
     name: {{ $port.name }}
-    {{ if $port.nodePort }}nodePort: {{ $port.nodePort }}{{ else }}//skip nodeport{{ end }}
+    {{ if $port.nodePort }}nodePort: {{ $port.nodePort }}{{ else }}# skip nodeport{{ end }}
   {{ end }}
   {{ else }}
   # skip ports
@@ -73,7 +73,7 @@ spec:
     app: {{ $item.app }}
     version: {{ $item.version }}
 {{ else }}
-// skip service without definition
+# skip service without definition
 {{ end }}
 ---
 {{ end }}

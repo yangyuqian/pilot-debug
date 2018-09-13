@@ -15,10 +15,8 @@ applications:
   app: mock1
   version: v1
   serviceType: "ClusterIP"
-  redisAddr: localhost:6379
-  redisSentinelAddrs: "localhost:5000"
-  http1target: http://localhost:6003
-  http2target: http://localhost:6004
+  redisAddr: "mockserver-redis-ha-master-svc:6379"
+  redisSentinelAddrs: "mockserver-redis-ha-sentinel:5000"
   ports:
   - name: "http1"
     port: "6000"
