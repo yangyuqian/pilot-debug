@@ -84,14 +84,13 @@ func main() {
 	http2.ConfigureServer(&server2, nil)
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "URL: %q\n", html.EscapeString(r.URL.Path))
-		ShowRequestInfoHandler(w, r)
 
 		if http1client != nil {
+			fmt.Fprintln(w, "------------------------ BEGIN HTTP/1.1 ------------------------")
 			resp, err := http1client.Get(*http1target)
 			if err != nil {
 				log.Printf("error to fetch info from http1 target %+v", err)
-				return
+				handleErr(w, err)
 			}
 			defer func() {
 				if resp.Body != nil {
@@ -102,16 +101,19 @@ func main() {
 			data, err := ioutil.ReadAll(resp.Body)
 			if err != nil {
 				log.Printf("error to fetch info from http1 target %+v", err)
+				handleErr(w, err)
 			}
 
 			w.Write(data)
+			fmt.Fprintln(w, "------------------------ END HTTP/1.1 ------------------------")
 		}
 
 		if http2client != nil {
+			fmt.Fprintln(w, "------------------------ BEGIN HTTP/2 ------------------------")
 			resp, err := http2client.Get(*http2target)
 			if err != nil {
 				log.Printf("error to fetch info from http2 target %+v", err)
-				return
+				handleErr(w, err)
 			}
 
 			defer func() {
@@ -123,12 +125,21 @@ func main() {
 			data, err := ioutil.ReadAll(resp.Body)
 			if err != nil {
 				log.Printf("error to fetch info from http2 target %+v", err)
+				handleErr(w, err)
 			}
 
 			w.Write(data)
+			fmt.Fprintln(w, "------------------------ END HTTP/2 ------------------------")
 		}
 
+		fmt.Fprintln(w, "------------------------ BEGIN SELF ------------------------")
+		fmt.Fprintf(w, "URL: %q\n", html.EscapeString(r.URL.Path))
+		ShowRequestInfoHandler(w, r)
+		fmt.Fprintln(w, "------------------------ END SELF ------------------------")
+
+		fmt.Fprintln(w, "------------------------ BEGIN REDIS ------------------------")
 		CheckRedis(w)
+		fmt.Fprintln(w, "------------------------ END REDIS ------------------------")
 	})
 
 	go func() {
@@ -147,6 +158,7 @@ func main() {
 func ShowRequestInfoHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/plain")
 
+	fmt.Fprintf(w, "Node: %s\n", *serviceName)
 	fmt.Fprintf(w, "Method: %s\n", r.Method)
 	fmt.Fprintf(w, "Protocol: %s\n", r.Proto)
 	fmt.Fprintf(w, "Host: %s\n", r.Host)
@@ -166,6 +178,7 @@ func CheckRedis(w http.ResponseWriter) {
 		k := fmt.Sprintf("redis:%s", *serviceName)
 		if cmd := redisclient.Set(k, "hello", time.Duration(1)*time.Hour); cmd.Err() != nil {
 			log.Printf("cannot set to redis %+v", cmd.Err())
+			handleErr(w, cmd.Err())
 		}
 
 		fmt.Fprintf(w, fmt.Sprintf("%s -> %s\n", k, redisclient.Get(k).Val()))
@@ -175,7 +188,12 @@ func CheckRedis(w http.ResponseWriter) {
 		k := fmt.Sprintf("sentinel:%s", *serviceName)
 		if cmd := sentinelclient.Set(k, "hello", time.Duration(1)*time.Hour); cmd.Err() != nil {
 			log.Printf("cannot set to sentinel %+v", cmd.Err())
+			handleErr(w, cmd.Err())
 		}
 		fmt.Fprintf(w, fmt.Sprintf("%s -> %s\n", k, sentinelclient.Get(k).Val()))
 	}
+}
+
+func handleErr(w http.ResponseWriter, err error) {
+	panic(err)
 }
