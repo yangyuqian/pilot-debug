@@ -26,8 +26,8 @@ var (
 	http2addr = flag.String("http2-addr", ":6000", "HTTP/2 adress")
 	http1addr = flag.String("http1-addr", ":6001", "HTTP/1.1 adress")
 	// tls key pairs
-	certPath = flag.String("cert-path", "", "path of cert file")
-	keyPath  = flag.String("key-path", "", "path of key file")
+	certPath = flag.String("cert-path", "server.crt", "path of cert file")
+	keyPath  = flag.String("key-path", "server.key", "path of key file")
 
 	// connect to HTTP/1.1 and HTTP/2
 	http1target = flag.String("http1-target", "", "HTTP/1.1 target")
