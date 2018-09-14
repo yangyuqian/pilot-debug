@@ -17,6 +17,7 @@ spec:
   template:
     metadata:
       labels:
+        tier: mock
         app: {{ $item.name }}
         version: {{ $item.version }}
     spec:
@@ -48,6 +49,7 @@ kind: Service
 metadata:
   name: {{ $item.name }}
   labels:
+    tier: mock
     app: {{ $item.name }}
     version: {{ $item.version }}
   {{- if eq $item.serviceType "LoadBalancer" }}

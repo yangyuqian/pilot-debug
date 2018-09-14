@@ -16,8 +16,8 @@ applications:
   serviceType: "ClusterIP"
   redisAddr: "mockserver-redis-ha-master-svc:6379"
   redisSentinelAddrs: "mockserver-redis-ha-sentinel:26379"
-  http1target: "http://mock2.istio-test:6000"
-  http2target: "https://mock3.istio-test.6001"
+  http1target: "http://mock2.soa-test:6000"
+  http2target: "http://mock3.soa-test:6001"
   ports:
   - name: "http1"
     port: "6000"
@@ -32,8 +32,8 @@ applications:
   serviceType: "ClusterIP"
   redisAddr: "mockserver-redis-ha-master-svc:6379"
   redisSentinelAddrs: "mockserver-redis-ha-sentinel:26379"
-  http1target: "http://mock4.istio-test:6000"
-  http2target: "https://mock4.istio-test.6001"
+  http1target: "http://mock4.soa-test:6000"
+  http2target: "http://mock4.soa-test:6001"
   ports:
   - name: "http1"
     port: "6000"
@@ -48,8 +48,8 @@ applications:
   serviceType: "ClusterIP"
   redisAddr: "mockserver-redis-ha-master-svc:6379"
   redisSentinelAddrs: "mockserver-redis-ha-sentinel:26379"
-  http1target: "http://mock4.istio-test:6000"
-  http2target: "https://mock4.istio-test.6001"
+  http1target: "http://mock4.soa-test:6000"
+  http2target: "http://mock4.soa-test:6001"
   ports:
   - name: "http1"
     port: "6000"

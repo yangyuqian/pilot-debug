@@ -1,0 +1,13 @@
+apiVersion: monitoring.coreos.com/v1
+kind: Prometheus
+metadata:
+  name: prometheus-k8s
+  labels:
+    prometheus: k8s
+spec:
+  version: v2.4.0
+  serviceMonitorSelector:
+    matchExpressions:
+    - key: tier
+      operator: In
+      values: ["mock"]
