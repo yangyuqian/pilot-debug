@@ -6,18 +6,18 @@ kind: Deployment
 metadata:
   name: {{ $item.name }}
   labels:
-    app: {{ $item.app }}
+    app: {{ $item.name }}
     version: {{ $item.version }}
 spec:
   replicas: {{ $item.replicaCount | default $values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ $item.app }}
+      app: {{ $item.name }}
       version: {{ $item.version }}
   template:
     metadata:
       labels:
-        app: {{ $item.app }}
+        app: {{ $item.name }}
         version: {{ $item.version }}
     spec:
       containers:
@@ -46,9 +46,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ $item.app }}
+  name: {{ $item.name }}
   labels:
-    app: {{ $item.app }}
+    app: {{ $item.name }}
     version: {{ $item.version }}
   {{- if eq $item.serviceType "LoadBalancer" }}
   annotations:
@@ -70,7 +70,7 @@ spec:
   # skip ports
   {{ end -}}
   selector:
-    app: {{ $item.app }}
+    app: {{ $item.name }}
     version: {{ $item.version }}
 {{ else }}
 # skip service without definition

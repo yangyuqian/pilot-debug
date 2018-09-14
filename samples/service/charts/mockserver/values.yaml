@@ -12,7 +12,54 @@ image:
 applications:
 - name: mock1
   replicaCount: 3
-  app: mock1
+  version: v1
+  serviceType: "ClusterIP"
+  redisAddr: "mockserver-redis-ha-master-svc:6379"
+  redisSentinelAddrs: "mockserver-redis-ha-sentinel:5000"
+  http1target: "http://mock2.istio-test:6000"
+  http2target: "https://mock3.istio-test.6001"
+  ports:
+  - name: "http1"
+    port: "6000"
+    protocal: "TCP"
+  - name: "http2"
+    port: "6001"
+    protocal: "TCP"
+
+- name: mock2
+  replicaCount: 3
+  version: v1
+  serviceType: "ClusterIP"
+  redisAddr: "mockserver-redis-ha-master-svc:6379"
+  redisSentinelAddrs: "mockserver-redis-ha-sentinel:5000"
+  http1target: "http://mock4.istio-test:6000"
+  http2target: "https://mock4.istio-test.6001"
+  ports:
+  - name: "http1"
+    port: "6000"
+    protocal: "TCP"
+  - name: "http2"
+    port: "6001"
+    protocal: "TCP"
+
+- name: mock3
+  replicaCount: 3
+  version: v1
+  serviceType: "ClusterIP"
+  redisAddr: "mockserver-redis-ha-master-svc:6379"
+  redisSentinelAddrs: "mockserver-redis-ha-sentinel:5000"
+  http1target: "http://mock4.istio-test:6000"
+  http2target: "https://mock4.istio-test.6001"
+  ports:
+  - name: "http1"
+    port: "6000"
+    protocal: "TCP"
+  - name: "http2"
+    port: "6001"
+    protocal: "TCP"
+
+- name: mock4
+  replicaCount: 3
   version: v1
   serviceType: "ClusterIP"
   redisAddr: "mockserver-redis-ha-master-svc:6379"
