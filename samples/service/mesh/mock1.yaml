@@ -1,0 +1,39 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: mock1
+spec:
+  gateways: ["mesh"]
+  hosts:
+  - 'mock1'
+  - 'mock1.soa-test'
+  - 'mock1.soa-test.svc'
+  - 'mock1.soa-test.svc.cluster.local'
+  http:
+  - match:
+    - uri:
+        prefix: "/xxx"
+      port: 6000
+    route:
+    - destination:
+        host: mock3.soa-test.svc.cluster.local
+        port:
+          number: 6000
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: mock-server
+spec:
+  host: mock3.soa-test.svc.cluster.local
+  trafficPolicy:
+    loadBalancer:
+      simple: LEAST_CONN
+  subsets:
+  - name: v3mock
+    labels:
+      version: v3
+    trafficPolicy:
+      loadBalancer:
+        simple: ROUND_ROBIN
