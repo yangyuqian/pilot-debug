@@ -1,0 +1,25 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: helloworld
+spec:
+  host: helloworld.soa-test.svc
+  trafficPolicy:
+    portLevelSettings:
+    - port:
+        number: 5000
+      loadBalancer:
+        simple: LEAST_CONN
+  subsets:
+  - name: setv1
+    labels:
+      version: v1
+    trafficPolicy:
+      loadBalancer:
+        simple: ROUND_ROBIN
+  - name: setv2
+    labels:
+      version: v2
+    trafficPolicy:
+      loadBalancer:
+        simple: ROUND_ROBIN

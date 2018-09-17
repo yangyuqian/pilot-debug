@@ -43,12 +43,11 @@ spec:
           {{ if $item.http2target }}- "-http2-target={{ $item.http2target }}"{{ else }}# skip HTTP/2 target{{ end }}
 
 {{ if $item.ports }}
-{{ range $idx, $port := $item.ports }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ $item.name }}-{{ $port.name }}
+  name: {{ $item.name }}
   labels:
     tier: mock
     app: {{ $item.name }}
@@ -61,17 +60,16 @@ metadata:
 spec:
   type: {{ $item.serviceType | default "ClusterIP" }}
   ports:
-  - port: {{ $port.port }}
-    targetPort: {{ $port.name }}
-    protocol: {{ $port.protocol | default "TCP" }}
-    name: {{ $port.name }}
-    {{ if $port.nodePort }}nodePort: {{ $port.nodePort }}{{ else }}# skip nodeport{{ end }}
+  - port: 6000
+    targetPort: 6000
+    protocol: "TCP"
+    name: http1
   selector:
     app: {{ $item.name }}
     version: {{ $item.version }}
-{{ end }}
+
+---
 {{ else }}
 # skip service without definition
 {{ end }}
----
 {{ end }}

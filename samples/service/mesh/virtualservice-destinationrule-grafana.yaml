@@ -1,0 +1,24 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: grafana
+spec:
+  hosts:
+  - "grafana.example.info"
+  gateways:
+  - bookinfo-gateway
+  http:
+  - route:
+    - destination:
+        host: grafana.istio-system.svc.cluster.local
+        port:
+          number: 3000
+
+---
+apiVersion: "networking.istio.io/v1alpha3"
+kind: DestinationRule
+metadata:
+  name: "grafana"
+spec:
+  host: "grafana.istio-system.svc.cluster.local"
+  # grafana is installed without sidecars, thus mutual tls is disabled
