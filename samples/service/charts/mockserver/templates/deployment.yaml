@@ -26,9 +26,8 @@ spec:
           image: "{{ $values.image.repository }}:{{ $values.image.tag }}"
           imagePullPolicy: {{ $values.image.pullPolicy }}
           ports:
-          - name: "http"
-            containerPort: 6000
-            protocol: "TCP"
+          - containerPort: 6000
+            protocol: TCP
           # - name: "http2"
           #   containerPort: 6001
           #   protocol: "TCP"
@@ -62,7 +61,7 @@ spec:
   ports:
   - port: 6000
     targetPort: 6000
-    protocol: "TCP"
+    protocol: TCP
     name: http
   selector:
     app: {{ $item.name }}
