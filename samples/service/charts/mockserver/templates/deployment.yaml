@@ -26,12 +26,12 @@ spec:
           image: "{{ $values.image.repository }}:{{ $values.image.tag }}"
           imagePullPolicy: {{ $values.image.pullPolicy }}
           ports:
-          - name: "http1"
+          - name: "http"
             containerPort: 6000
             protocol: "TCP"
-          - name: "http2"
-            containerPort: 6001
-            protocol: "TCP"
+          # - name: "http2"
+          #   containerPort: 6001
+          #   protocol: "TCP"
           command:
           - "/root/mockserver"
           - "-name={{ $item.name }}"
@@ -63,7 +63,7 @@ spec:
   - port: 6000
     targetPort: 6000
     protocol: "TCP"
-    name: http1
+    name: http
   selector:
     app: {{ $item.name }}
     version: {{ $item.version }}

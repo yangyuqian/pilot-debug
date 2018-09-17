@@ -11,7 +11,6 @@ image:
 
 applications:
 - name: mock1
-  replicaCount: 3
   version: v1
   serviceType: "ClusterIP"
   redisAddr: "mockserver-redis-ha-master-svc:6379"
@@ -19,7 +18,7 @@ applications:
   http1target: "http://mock2.soa-test:6000"
   http2target: "http://mock3.soa-test:6001"
   ports:
-  - name: "http1"
+  - name: "http"
     port: "6000"
     protocal: "TCP"
   - name: "http2"
@@ -27,7 +26,6 @@ applications:
     protocal: "TCP"
 
 - name: mock2
-  replicaCount: 3
   version: v1
   serviceType: "ClusterIP"
   redisAddr: "mockserver-redis-ha-master-svc:6379"
@@ -35,7 +33,7 @@ applications:
   http1target: "http://mock4.soa-test:6000"
   http2target: "http://mock4.soa-test:6001"
   ports:
-  - name: "http1"
+  - name: "http"
     port: "6000"
     protocal: "TCP"
   - name: "http2"
@@ -43,7 +41,6 @@ applications:
     protocal: "TCP"
 
 - name: mock3
-  replicaCount: 3
   version: v1
   serviceType: "ClusterIP"
   redisAddr: "mockserver-redis-ha-master-svc:6379"
@@ -51,7 +48,7 @@ applications:
   http1target: "http://mock4.soa-test:6000"
   http2target: "http://mock4.soa-test:6001"
   ports:
-  - name: "http1"
+  - name: "http"
     port: "6000"
     protocal: "TCP"
   - name: "http2"
@@ -59,13 +56,12 @@ applications:
     protocal: "TCP"
 
 - name: mock4
-  replicaCount: 3
   version: v1
   serviceType: "ClusterIP"
   redisAddr: "mockserver-redis-ha-master-svc:6379"
   redisSentinelAddrs: "mockserver-redis-ha-sentinel:26379"
   ports:
-  - name: "http1"
+  - name: "http"
     port: "6000"
     protocal: "TCP"
   - name: "http2"

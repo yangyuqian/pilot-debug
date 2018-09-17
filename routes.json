@@ -14,7 +14,7 @@
                             "prefix": "/"
                         },
                         "route": {
-                            "cluster": "outbound|80|v2|details.soa-test.svc.cluster.local",
+                            "cluster": "outbound|80|v1|details.soa-test.svc.cluster.local",
                             "timeout": "0.000s",
                             "maxGrpcTimeout": "0.000s"
                         },
@@ -355,7 +355,7 @@
                             "prefix": "/"
                         },
                         "route": {
-                            "cluster": "outbound|80|v3|reviews.soa-test.svc.cluster.local",
+                            "cluster": "outbound|80||reviews.soa-test.svc.cluster.local",
                             "timeout": "0.000s",
                             "maxGrpcTimeout": "0.000s"
                         },
@@ -363,6 +363,12 @@
                             "operation": "reviews.soa-test.svc.cluster.local:80/*"
                         },
                         "perFilterConfig": {
+                            "envoy.fault": {
+                                "delay": {
+                                    "fixed_delay": "2.000s",
+                                    "percent": 100
+                                }
+                            },
                             "mixer": {
                                 "disable_check_calls": true,
                                 "forward_attributes": {
@@ -400,6 +406,158 @@
                                         },
                                         "destination.service.uid": {
                                             "string_value": "istio://soa-test/services/reviews"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "tracing.istio-system.svc.cluster.local:80",
+                "domains": [
+                    "tracing.istio-system.svc.cluster.local",
+                    "tracing.istio-system.svc.cluster.local:80",
+                    "tracing.istio-system",
+                    "tracing.istio-system:80",
+                    "tracing.istio-system.svc.cluster",
+                    "tracing.istio-system.svc.cluster:80",
+                    "tracing.istio-system.svc",
+                    "tracing.istio-system.svc:80",
+                    "100.69.246.118",
+                    "100.69.246.118:80"
+                ],
+                "routes": [
+                    {
+                        "match": {
+                            "prefix": "/"
+                        },
+                        "route": {
+                            "cluster": "outbound|80||tracing.istio-system.svc.cluster.local",
+                            "timeout": "0.000s",
+                            "maxGrpcTimeout": "0.000s"
+                        },
+                        "decorator": {
+                            "operation": "tracing.istio-system.svc.cluster.local:80/*"
+                        },
+                        "perFilterConfig": {
+                            "mixer": {
+                                "disable_check_calls": true,
+                                "forward_attributes": {
+                                    "attributes": {
+                                        "destination.service": {
+                                            "string_value": "tracing.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.host": {
+                                            "string_value": "tracing.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.name": {
+                                            "string_value": "tracing"
+                                        },
+                                        "destination.service.namespace": {
+                                            "string_value": "istio-system"
+                                        },
+                                        "destination.service.uid": {
+                                            "string_value": "istio://istio-system/services/tracing"
+                                        }
+                                    }
+                                },
+                                "mixer_attributes": {
+                                    "attributes": {
+                                        "destination.service": {
+                                            "string_value": "tracing.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.host": {
+                                            "string_value": "tracing.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.name": {
+                                            "string_value": "tracing"
+                                        },
+                                        "destination.service.namespace": {
+                                            "string_value": "istio-system"
+                                        },
+                                        "destination.service.uid": {
+                                            "string_value": "istio://istio-system/services/tracing"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        "validateClusters": false
+    },
+    {
+        "name": "3000",
+        "virtualHosts": [
+            {
+                "name": "grafana.istio-system.svc.cluster.local:3000",
+                "domains": [
+                    "grafana.istio-system.svc.cluster.local",
+                    "grafana.istio-system.svc.cluster.local:3000",
+                    "grafana.istio-system",
+                    "grafana.istio-system:3000",
+                    "grafana.istio-system.svc.cluster",
+                    "grafana.istio-system.svc.cluster:3000",
+                    "grafana.istio-system.svc",
+                    "grafana.istio-system.svc:3000",
+                    "100.66.146.130",
+                    "100.66.146.130:3000"
+                ],
+                "routes": [
+                    {
+                        "match": {
+                            "prefix": "/"
+                        },
+                        "route": {
+                            "cluster": "outbound|3000||grafana.istio-system.svc.cluster.local",
+                            "timeout": "0.000s",
+                            "maxGrpcTimeout": "0.000s"
+                        },
+                        "decorator": {
+                            "operation": "grafana.istio-system.svc.cluster.local:3000/*"
+                        },
+                        "perFilterConfig": {
+                            "mixer": {
+                                "disable_check_calls": true,
+                                "forward_attributes": {
+                                    "attributes": {
+                                        "destination.service": {
+                                            "string_value": "grafana.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.host": {
+                                            "string_value": "grafana.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.name": {
+                                            "string_value": "grafana"
+                                        },
+                                        "destination.service.namespace": {
+                                            "string_value": "istio-system"
+                                        },
+                                        "destination.service.uid": {
+                                            "string_value": "istio://istio-system/services/grafana"
+                                        }
+                                    }
+                                },
+                                "mixer_attributes": {
+                                    "attributes": {
+                                        "destination.service": {
+                                            "string_value": "grafana.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.host": {
+                                            "string_value": "grafana.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.name": {
+                                            "string_value": "grafana"
+                                        },
+                                        "destination.service.namespace": {
+                                            "string_value": "istio-system"
+                                        },
+                                        "destination.service.uid": {
+                                            "string_value": "istio://istio-system/services/grafana"
                                         }
                                     }
                                 }
@@ -639,6 +797,312 @@
         "validateClusters": false
     },
     {
+        "name": "6000",
+        "virtualHosts": [
+            {
+                "name": "mock1.soa-test.svc.cluster.local:6000",
+                "domains": [
+                    "mock1.soa-test.svc.cluster.local",
+                    "mock1.soa-test.svc.cluster.local:6000",
+                    "mock1",
+                    "mock1:6000",
+                    "mock1.soa-test.svc.cluster",
+                    "mock1.soa-test.svc.cluster:6000",
+                    "mock1.soa-test.svc",
+                    "mock1.soa-test.svc:6000",
+                    "mock1.soa-test",
+                    "mock1.soa-test:6000",
+                    "100.66.26.206",
+                    "100.66.26.206:6000"
+                ],
+                "routes": [
+                    {
+                        "match": {
+                            "prefix": "/"
+                        },
+                        "route": {
+                            "cluster": "outbound|6000||mock1.soa-test.svc.cluster.local",
+                            "timeout": "0.000s",
+                            "maxGrpcTimeout": "0.000s"
+                        },
+                        "decorator": {
+                            "operation": "mock1.soa-test.svc.cluster.local:6000/*"
+                        },
+                        "perFilterConfig": {
+                            "mixer": {
+                                "disable_check_calls": true,
+                                "forward_attributes": {
+                                    "attributes": {
+                                        "destination.service": {
+                                            "string_value": "mock1.soa-test.svc.cluster.local"
+                                        },
+                                        "destination.service.host": {
+                                            "string_value": "mock1.soa-test.svc.cluster.local"
+                                        },
+                                        "destination.service.name": {
+                                            "string_value": "mock1"
+                                        },
+                                        "destination.service.namespace": {
+                                            "string_value": "soa-test"
+                                        },
+                                        "destination.service.uid": {
+                                            "string_value": "istio://soa-test/services/mock1"
+                                        }
+                                    }
+                                },
+                                "mixer_attributes": {
+                                    "attributes": {
+                                        "destination.service": {
+                                            "string_value": "mock1.soa-test.svc.cluster.local"
+                                        },
+                                        "destination.service.host": {
+                                            "string_value": "mock1.soa-test.svc.cluster.local"
+                                        },
+                                        "destination.service.name": {
+                                            "string_value": "mock1"
+                                        },
+                                        "destination.service.namespace": {
+                                            "string_value": "soa-test"
+                                        },
+                                        "destination.service.uid": {
+                                            "string_value": "istio://soa-test/services/mock1"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "mock2.soa-test.svc.cluster.local:6000",
+                "domains": [
+                    "mock2.soa-test.svc.cluster.local",
+                    "mock2.soa-test.svc.cluster.local:6000",
+                    "mock2",
+                    "mock2:6000",
+                    "mock2.soa-test.svc.cluster",
+                    "mock2.soa-test.svc.cluster:6000",
+                    "mock2.soa-test.svc",
+                    "mock2.soa-test.svc:6000",
+                    "mock2.soa-test",
+                    "mock2.soa-test:6000",
+                    "100.64.208.135",
+                    "100.64.208.135:6000"
+                ],
+                "routes": [
+                    {
+                        "match": {
+                            "prefix": "/"
+                        },
+                        "route": {
+                            "cluster": "outbound|6000||mock2.soa-test.svc.cluster.local",
+                            "timeout": "0.000s",
+                            "maxGrpcTimeout": "0.000s"
+                        },
+                        "decorator": {
+                            "operation": "mock2.soa-test.svc.cluster.local:6000/*"
+                        },
+                        "perFilterConfig": {
+                            "mixer": {
+                                "disable_check_calls": true,
+                                "forward_attributes": {
+                                    "attributes": {
+                                        "destination.service": {
+                                            "string_value": "mock2.soa-test.svc.cluster.local"
+                                        },
+                                        "destination.service.host": {
+                                            "string_value": "mock2.soa-test.svc.cluster.local"
+                                        },
+                                        "destination.service.name": {
+                                            "string_value": "mock2"
+                                        },
+                                        "destination.service.namespace": {
+                                            "string_value": "soa-test"
+                                        },
+                                        "destination.service.uid": {
+                                            "string_value": "istio://soa-test/services/mock2"
+                                        }
+                                    }
+                                },
+                                "mixer_attributes": {
+                                    "attributes": {
+                                        "destination.service": {
+                                            "string_value": "mock2.soa-test.svc.cluster.local"
+                                        },
+                                        "destination.service.host": {
+                                            "string_value": "mock2.soa-test.svc.cluster.local"
+                                        },
+                                        "destination.service.name": {
+                                            "string_value": "mock2"
+                                        },
+                                        "destination.service.namespace": {
+                                            "string_value": "soa-test"
+                                        },
+                                        "destination.service.uid": {
+                                            "string_value": "istio://soa-test/services/mock2"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "mock3.soa-test.svc.cluster.local:6000",
+                "domains": [
+                    "mock3.soa-test.svc.cluster.local",
+                    "mock3.soa-test.svc.cluster.local:6000",
+                    "mock3",
+                    "mock3:6000",
+                    "mock3.soa-test.svc.cluster",
+                    "mock3.soa-test.svc.cluster:6000",
+                    "mock3.soa-test.svc",
+                    "mock3.soa-test.svc:6000",
+                    "mock3.soa-test",
+                    "mock3.soa-test:6000",
+                    "100.69.189.65",
+                    "100.69.189.65:6000"
+                ],
+                "routes": [
+                    {
+                        "match": {
+                            "prefix": "/"
+                        },
+                        "route": {
+                            "cluster": "outbound|6000||mock3.soa-test.svc.cluster.local",
+                            "timeout": "0.000s",
+                            "maxGrpcTimeout": "0.000s"
+                        },
+                        "decorator": {
+                            "operation": "mock3.soa-test.svc.cluster.local:6000/*"
+                        },
+                        "perFilterConfig": {
+                            "mixer": {
+                                "disable_check_calls": true,
+                                "forward_attributes": {
+                                    "attributes": {
+                                        "destination.service": {
+                                            "string_value": "mock3.soa-test.svc.cluster.local"
+                                        },
+                                        "destination.service.host": {
+                                            "string_value": "mock3.soa-test.svc.cluster.local"
+                                        },
+                                        "destination.service.name": {
+                                            "string_value": "mock3"
+                                        },
+                                        "destination.service.namespace": {
+                                            "string_value": "soa-test"
+                                        },
+                                        "destination.service.uid": {
+                                            "string_value": "istio://soa-test/services/mock3"
+                                        }
+                                    }
+                                },
+                                "mixer_attributes": {
+                                    "attributes": {
+                                        "destination.service": {
+                                            "string_value": "mock3.soa-test.svc.cluster.local"
+                                        },
+                                        "destination.service.host": {
+                                            "string_value": "mock3.soa-test.svc.cluster.local"
+                                        },
+                                        "destination.service.name": {
+                                            "string_value": "mock3"
+                                        },
+                                        "destination.service.namespace": {
+                                            "string_value": "soa-test"
+                                        },
+                                        "destination.service.uid": {
+                                            "string_value": "istio://soa-test/services/mock3"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "mock4.soa-test.svc.cluster.local:6000",
+                "domains": [
+                    "mock4.soa-test.svc.cluster.local",
+                    "mock4.soa-test.svc.cluster.local:6000",
+                    "mock4",
+                    "mock4:6000",
+                    "mock4.soa-test.svc.cluster",
+                    "mock4.soa-test.svc.cluster:6000",
+                    "mock4.soa-test.svc",
+                    "mock4.soa-test.svc:6000",
+                    "mock4.soa-test",
+                    "mock4.soa-test:6000",
+                    "100.64.250.254",
+                    "100.64.250.254:6000"
+                ],
+                "routes": [
+                    {
+                        "match": {
+                            "prefix": "/"
+                        },
+                        "route": {
+                            "cluster": "outbound|6000||mock4.soa-test.svc.cluster.local",
+                            "timeout": "0.000s",
+                            "maxGrpcTimeout": "0.000s"
+                        },
+                        "decorator": {
+                            "operation": "mock4.soa-test.svc.cluster.local:6000/*"
+                        },
+                        "perFilterConfig": {
+                            "mixer": {
+                                "disable_check_calls": true,
+                                "forward_attributes": {
+                                    "attributes": {
+                                        "destination.service": {
+                                            "string_value": "mock4.soa-test.svc.cluster.local"
+                                        },
+                                        "destination.service.host": {
+                                            "string_value": "mock4.soa-test.svc.cluster.local"
+                                        },
+                                        "destination.service.name": {
+                                            "string_value": "mock4"
+                                        },
+                                        "destination.service.namespace": {
+                                            "string_value": "soa-test"
+                                        },
+                                        "destination.service.uid": {
+                                            "string_value": "istio://soa-test/services/mock4"
+                                        }
+                                    }
+                                },
+                                "mixer_attributes": {
+                                    "attributes": {
+                                        "destination.service": {
+                                            "string_value": "mock4.soa-test.svc.cluster.local"
+                                        },
+                                        "destination.service.host": {
+                                            "string_value": "mock4.soa-test.svc.cluster.local"
+                                        },
+                                        "destination.service.name": {
+                                            "string_value": "mock4"
+                                        },
+                                        "destination.service.namespace": {
+                                            "string_value": "soa-test"
+                                        },
+                                        "destination.service.uid": {
+                                            "string_value": "istio://soa-test/services/mock4"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        "validateClusters": false
+    },
+    {
         "name": "8060",
         "virtualHosts": [
             {
@@ -797,6 +1261,85 @@
         "validateClusters": false
     },
     {
+        "name": "8088",
+        "virtualHosts": [
+            {
+                "name": "servicegraph.istio-system.svc.cluster.local:8088",
+                "domains": [
+                    "servicegraph.istio-system.svc.cluster.local",
+                    "servicegraph.istio-system.svc.cluster.local:8088",
+                    "servicegraph.istio-system",
+                    "servicegraph.istio-system:8088",
+                    "servicegraph.istio-system.svc.cluster",
+                    "servicegraph.istio-system.svc.cluster:8088",
+                    "servicegraph.istio-system.svc",
+                    "servicegraph.istio-system.svc:8088",
+                    "100.68.112.191",
+                    "100.68.112.191:8088"
+                ],
+                "routes": [
+                    {
+                        "match": {
+                            "prefix": "/"
+                        },
+                        "route": {
+                            "cluster": "outbound|8088||servicegraph.istio-system.svc.cluster.local",
+                            "timeout": "0.000s",
+                            "maxGrpcTimeout": "0.000s"
+                        },
+                        "decorator": {
+                            "operation": "servicegraph.istio-system.svc.cluster.local:8088/*"
+                        },
+                        "perFilterConfig": {
+                            "mixer": {
+                                "disable_check_calls": true,
+                                "forward_attributes": {
+                                    "attributes": {
+                                        "destination.service": {
+                                            "string_value": "servicegraph.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.host": {
+                                            "string_value": "servicegraph.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.name": {
+                                            "string_value": "servicegraph"
+                                        },
+                                        "destination.service.namespace": {
+                                            "string_value": "istio-system"
+                                        },
+                                        "destination.service.uid": {
+                                            "string_value": "istio://istio-system/services/servicegraph"
+                                        }
+                                    }
+                                },
+                                "mixer_attributes": {
+                                    "attributes": {
+                                        "destination.service": {
+                                            "string_value": "servicegraph.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.host": {
+                                            "string_value": "servicegraph.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.name": {
+                                            "string_value": "servicegraph"
+                                        },
+                                        "destination.service.namespace": {
+                                            "string_value": "istio-system"
+                                        },
+                                        "destination.service.uid": {
+                                            "string_value": "istio://istio-system/services/servicegraph"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        "validateClusters": false
+    },
+    {
         "name": "9080",
         "virtualHosts": [
             {
@@ -821,7 +1364,7 @@
                             "prefix": "/"
                         },
                         "route": {
-                            "cluster": "outbound|9080|v2|details.soa-test.svc.cluster.local",
+                            "cluster": "outbound|9080|v1|details.soa-test.svc.cluster.local",
                             "timeout": "0.000s",
                             "maxGrpcTimeout": "0.000s"
                         },
@@ -1046,7 +1589,7 @@
                             "prefix": "/"
                         },
                         "route": {
-                            "cluster": "outbound|9080|v3|reviews.soa-test.svc.cluster.local",
+                            "cluster": "outbound|9080||reviews.soa-test.svc.cluster.local",
                             "timeout": "0.000s",
                             "maxGrpcTimeout": "0.000s"
                         },
@@ -1054,6 +1597,12 @@
                             "operation": "reviews.soa-test.svc.cluster.local:9080/*"
                         },
                         "perFilterConfig": {
+                            "envoy.fault": {
+                                "delay": {
+                                    "fixed_delay": "2.000s",
+                                    "percent": 100
+                                }
+                            },
                             "mixer": {
                                 "disable_check_calls": true,
                                 "forward_attributes": {
@@ -1626,6 +2175,85 @@
         "validateClusters": false
     },
     {
+        "name": "9411",
+        "virtualHosts": [
+            {
+                "name": "zipkin.istio-system.svc.cluster.local:9411",
+                "domains": [
+                    "zipkin.istio-system.svc.cluster.local",
+                    "zipkin.istio-system.svc.cluster.local:9411",
+                    "zipkin.istio-system",
+                    "zipkin.istio-system:9411",
+                    "zipkin.istio-system.svc.cluster",
+                    "zipkin.istio-system.svc.cluster:9411",
+                    "zipkin.istio-system.svc",
+                    "zipkin.istio-system.svc:9411",
+                    "100.67.198.239",
+                    "100.67.198.239:9411"
+                ],
+                "routes": [
+                    {
+                        "match": {
+                            "prefix": "/"
+                        },
+                        "route": {
+                            "cluster": "outbound|9411||zipkin.istio-system.svc.cluster.local",
+                            "timeout": "0.000s",
+                            "maxGrpcTimeout": "0.000s"
+                        },
+                        "decorator": {
+                            "operation": "zipkin.istio-system.svc.cluster.local:9411/*"
+                        },
+                        "perFilterConfig": {
+                            "mixer": {
+                                "disable_check_calls": true,
+                                "forward_attributes": {
+                                    "attributes": {
+                                        "destination.service": {
+                                            "string_value": "zipkin.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.host": {
+                                            "string_value": "zipkin.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.name": {
+                                            "string_value": "zipkin"
+                                        },
+                                        "destination.service.namespace": {
+                                            "string_value": "istio-system"
+                                        },
+                                        "destination.service.uid": {
+                                            "string_value": "istio://istio-system/services/zipkin"
+                                        }
+                                    }
+                                },
+                                "mixer_attributes": {
+                                    "attributes": {
+                                        "destination.service": {
+                                            "string_value": "zipkin.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.host": {
+                                            "string_value": "zipkin.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.name": {
+                                            "string_value": "zipkin"
+                                        },
+                                        "destination.service.namespace": {
+                                            "string_value": "istio-system"
+                                        },
+                                        "destination.service.uid": {
+                                            "string_value": "istio://istio-system/services/zipkin"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        "validateClusters": false
+    },
+    {
         "name": "15004",
         "virtualHosts": [
             {
@@ -2015,10 +2643,10 @@
         "validateClusters": false
     },
     {
-        "name": "inbound|9080||details.soa-test.svc.cluster.local",
+        "name": "inbound|6000||mock1.soa-test.svc.cluster.local",
         "virtualHosts": [
             {
-                "name": "inbound|http|9080",
+                "name": "inbound|http|6000",
                 "domains": [
                     "*"
                 ],
@@ -2028,31 +2656,31 @@
                             "prefix": "/"
                         },
                         "route": {
-                            "cluster": "inbound|9080||details.soa-test.svc.cluster.local",
+                            "cluster": "inbound|6000||mock1.soa-test.svc.cluster.local",
                             "timeout": "0.000s",
                             "maxGrpcTimeout": "0.000s"
                         },
                         "decorator": {
-                            "operation": "details.soa-test.svc.cluster.local:9080/*"
+                            "operation": "mock1.soa-test.svc.cluster.local:6000/*"
                         },
                         "perFilterConfig": {
                             "mixer": {
                                 "mixer_attributes": {
                                     "attributes": {
                                         "destination.service": {
-                                            "string_value": "details.soa-test.svc.cluster.local"
+                                            "string_value": "mock1.soa-test.svc.cluster.local"
                                         },
                                         "destination.service.host": {
-                                            "string_value": "details.soa-test.svc.cluster.local"
+                                            "string_value": "mock1.soa-test.svc.cluster.local"
                                         },
                                         "destination.service.name": {
-                                            "string_value": "details"
+                                            "string_value": "mock1"
                                         },
                                         "destination.service.namespace": {
                                             "string_value": "soa-test"
                                         },
                                         "destination.service.uid": {
-                                            "string_value": "istio://soa-test/services/details"
+                                            "string_value": "istio://soa-test/services/mock1"
                                         }
                                     }
                                 }
