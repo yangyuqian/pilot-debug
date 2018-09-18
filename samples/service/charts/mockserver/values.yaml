@@ -14,52 +14,24 @@ applications:
   version: v1
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
-  http1target: "http://mock2.soa-test:6000"
-  http2target: "http://mock3.soa-test:6001"
-  ports:
-  - name: "http"
-    port: "6000"
-    protocal: "TCP"
-  - name: "http2"
-    port: "6001"
-    protocal: "TCP"
+  http1target: "http://mock2-http1.soa-test:6000"
+  http2target: "https://mock3-http2.soa-test:6001"
 
 - name: mock2
   version: v1
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
-  http1target: "http://mock4.soa-test:6000"
-  http2target: "http://mock4.soa-test:6001"
-  ports:
-  - name: "http"
-    port: "6000"
-    protocal: "TCP"
-  - name: "http2"
-    port: "6001"
-    protocal: "TCP"
+  http1target: "http://mock4-http1.soa-test:6000"
+  http2target: "http://mock4-http2.soa-test:6001"
 
 - name: mock3
   version: v1
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
-  http1target: "http://mock4.soa-test:6000"
-  http2target: "http://mock4.soa-test:6001"
-  ports:
-  - name: "http"
-    port: "6000"
-    protocal: "TCP"
-  - name: "http2"
-    port: "6001"
-    protocal: "TCP"
+  http1target: "http://mock4-http1.soa-test:6000"
+  http2target: "http://mock4-http2.soa-test:6001"
 
 - name: mock4
   version: v1
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
-  ports:
-  - name: "http"
-    port: "6000"
-    protocal: "TCP"
-  - name: "http2"
-    port: "6001"
-    protocal: "TCP"

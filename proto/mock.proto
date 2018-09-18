@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package pb;
+
+// Authentication Service
+service Mock {
+  rpc Say (MockRequest) returns (MockReply) {}
+}
+
+message MockRequest {
+  string msg = 1;
+}
+
+message MockReply {
+  string msg = 1;
+}
+

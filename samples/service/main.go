@@ -6,36 +6,30 @@ import (
 	"fmt"
 	"html"
 	"log"
+	"net"
 	"net/http"
-	"strings"
 	"time"
 
-	"crypto/tls"
-	"golang.org/x/net/http2"
 	"io/ioutil"
 
 	"github.com/go-redis/redis"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	mockproto "github.com/yangyuqian/pilot-debug/proto"
+	"golang.org/x/net/context"
+	"google.golang.org/grpc"
 )
 
 // command-line flags
 var (
 	serviceName = flag.String("name", "", "unique service name across overall kubernetes cluster")
 	// serve both HTTP/1.1 and HTTP/2
-	http2addr = flag.String("http2-addr", ":6000", "HTTP/2 adress")
-	http1addr = flag.String("http1-addr", ":6001", "HTTP/1.1 adress")
-	// tls key pairs
-	certPath = flag.String("cert-path", "server.crt", "path of cert file")
-	keyPath  = flag.String("key-path", "server.key", "path of key file")
+	http1addr = flag.String("http1-addr", ":6000", "HTTP/1.1 adress")
+	http2addr = flag.String("http2-addr", ":6001", "HTTP/2 adress")
 
 	// connect to HTTP/1.1 and HTTP/2
 	http1target = flag.String("http1-target", "", "HTTP/1.1 target")
 	http2target = flag.String("http2-target", "", "HTTP/2 target")
-
-	// redis sentinels
-	redisSentinelMaster = flag.String("redis-sentinel-master", "mymaster", "master name of sentinel based cluster")
-	redisSentinelAddrs  = flag.String("redis-sentinel-addrs", "", "redis sentinel addresses separated by quotas")
 
 	// redis addr
 	redisAddr = flag.String("redis-addr", "", "redis address")
@@ -43,8 +37,9 @@ var (
 
 // clients
 var (
-	http1client, http2client    *http.Client
-	redisclient, sentinelclient *redis.Client
+	http1client *http.Client
+	redisclient *redis.Client
+	http2client mockproto.MockClient
 )
 
 // metrics
@@ -91,6 +86,18 @@ func init() {
 	prometheus.Register(sentinelDepCnt)
 }
 
+type mockGrpcServer struct{}
+
+func (s *mockGrpcServer) Say(ctx context.Context, req *mockproto.MockRequest) (*mockproto.MockReply, error) {
+	return &mockproto.MockReply{Msg: fmt.Sprintf("got message %s", req.Msg)}, nil
+}
+
+func registerMockGrpcServer(mockSrv mockproto.MockServer) (grpcServer *grpc.Server) {
+	grpcServer = grpc.NewServer()
+	mockproto.RegisterMockServer(grpcServer, mockSrv)
+	return
+}
+
 func main() {
 	if !flag.Parsed() {
 		flag.Parse()
@@ -101,21 +108,12 @@ func main() {
 	}
 
 	if *http2target != "" {
-		http2client = &http.Client{
-			Transport: &http2.Transport{
-				AllowHTTP: true,
-				TLSClientConfig: &tls.Config{
-					InsecureSkipVerify: true,
-				},
-			},
+		conn, err := grpc.Dial(*http2target, grpc.WithInsecure())
+		if err != nil {
+			log.Printf("cannot connect to %s", *http2target)
 		}
-	}
 
-	if *redisSentinelAddrs != "" {
-		sentinelclient = redis.NewFailoverClient(&redis.FailoverOptions{
-			MasterName:    *redisSentinelMaster,
-			SentinelAddrs: strings.Split(*redisSentinelAddrs, ","),
-		})
+		http2client = mockproto.NewMockClient(conn)
 	}
 
 	if *redisAddr != "" {
@@ -123,12 +121,6 @@ func main() {
 			Addr: *redisAddr,
 		})
 	}
-
-	http2.VerboseLogs = true //set true for verbose console output
-	var server2 http.Server
-	server2.Addr = *http2addr
-
-	http2.ConfigureServer(&server2, nil)
 
 	http.HandleFunc("/metrics", promhttp.Handler().ServeHTTP)
 
@@ -165,34 +157,11 @@ func main() {
 		}
 
 		if http2client != nil {
-			fmt.Fprintln(w, "------------------------ BEGIN HTTP/2 ------------------------")
-			f := func() {
-				resp, err := http2client.Get(*http2target)
-				if err != nil {
-					log.Printf("error to fetch info from http2 target %+v", err)
-					http2DepCnt.WithLabelValues(*serviceName, "ko").Inc()
-					return
-				}
-
-				defer func() {
-					if resp.Body != nil {
-						resp.Body.Close()
-					}
-				}()
-
-				data, err := ioutil.ReadAll(resp.Body)
-				if err != nil {
-					log.Printf("error to fetch info from http2 target %+v", err)
-					http2DepCnt.WithLabelValues(*serviceName, "ko").Inc()
-					return
-				}
-
-				http2DepCnt.WithLabelValues(*serviceName, "ok").Inc()
-				w.Write(data)
+			resp, err := http2client.Say(context.TODO(), &mockproto.MockRequest{Msg: fmt.Sprintf("this is %s", *serviceName)})
+			if err != nil {
+				log.Printf("cannot say hello to grpc service %+v", err)
 			}
-
-			f()
-			fmt.Fprintln(w, "------------------------ END HTTP/2 ------------------------")
+			fmt.Fprintf(w, "------------------------ gRPC response %s ------------------------", resp.Msg)
 		}
 
 		fmt.Fprintln(w, "------------------------ BEGIN SELF ------------------------")
@@ -206,14 +175,17 @@ func main() {
 	})).ServeHTTP)
 
 	go func() {
-		log.Printf("serving HTTP/2 on %s...", *http2addr)
-		log.Fatal(server2.ListenAndServeTLS(*certPath, *keyPath))
-	}()
-
-	go func() {
 		log.Printf("serving HTTP/1.1 on %s...", *http1addr)
 		log.Fatal(http.ListenAndServe(*http1addr, nil))
 	}()
+
+	lv2, err := net.Listen("tcp", *http2addr)
+	if err != nil {
+		log.Fatal("cannot listen on %s", *http2addr)
+	}
+
+	grpcServer := registerMockGrpcServer(&mockGrpcServer{})
+	grpcServer.Serve(lv2)
 
 	select {}
 }
@@ -247,17 +219,5 @@ func CheckRedis(w http.ResponseWriter) {
 
 		redisDepCnt.WithLabelValues(*serviceName, "ok").Inc()
 		fmt.Fprintf(w, fmt.Sprintf("%s -> %s\n", k, redisclient.Get(k).Val()))
-	}
-
-	if sentinelclient != nil {
-		k := fmt.Sprintf("sentinel:%s", *serviceName)
-		if cmd := sentinelclient.Set(k, "hello", time.Duration(1)*time.Hour); cmd.Err() != nil {
-			log.Printf("cannot set to sentinel %+v", cmd.Err())
-			sentinelDepCnt.WithLabelValues(*serviceName, "ko").Inc()
-			return
-		}
-
-		sentinelDepCnt.WithLabelValues(*serviceName, "ok").Inc()
-		fmt.Fprintf(w, fmt.Sprintf("%s -> %s\n", k, sentinelclient.Get(k).Val()))
 	}
 }

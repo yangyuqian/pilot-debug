@@ -27,9 +27,9 @@ spec:
           imagePullPolicy: {{ $values.image.pullPolicy }}
           ports:
           - containerPort: 6000
-          # - name: "http2"
-          #   containerPort: 6001
-          #   protocol: "TCP"
+            name: http
+          - containerPort: 6001
+            name: http2
           command:
           - "/root/mockserver"
           - "-name={{ $item.name }}"
@@ -40,15 +40,14 @@ spec:
           {{ if $item.http1target }}- "-http1-target={{ $item.http1target }}"{{ else }}# skip HTTP/1.1 target{{ end }}
           {{ if $item.http2target }}- "-http2-target={{ $item.http2target }}"{{ else }}# skip HTTP/2 target{{ end }}
 
-{{ if $item.ports }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ $item.name }}
+  name: {{ $item.name }}-http1
   labels:
     tier: mock
-    app: {{ $item.name }}
+    app: {{ $item.name }}-http1
     version: {{ $item.version }}
 spec:
   type: {{ $item.serviceType | default "ClusterIP" }}
@@ -60,7 +59,22 @@ spec:
     version: {{ $item.version }}
 
 ---
-{{ else }}
-# skip service without definition
-{{ end }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $item.name }}-http2
+  labels:
+    tier: mock
+    app: {{ $item.name }}-http2
+    version: {{ $item.version }}
+spec:
+  type: {{ $item.serviceType | default "ClusterIP" }}
+  ports:
+  - port: 6001
+    name: http2
+  selector:
+    app: {{ $item.name }}
+    version: {{ $item.version }}
+
+---
 {{ end }}
