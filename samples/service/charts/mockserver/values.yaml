@@ -13,10 +13,10 @@ applications:
 - name: mock1
   version: v1
   serviceType: "ClusterIP"
-  redisAddr: "mockserver-redis-ha-master-svc:6379"
-  redisSentinelAddrs: "mockserver-redis-ha-sentinel:26379"
-  http1target: "http://mock2.soa-test:6000"
-  http2target: "http://mock3.soa-test:6001"
+  # redisAddr: "mockserver-redis-ha-master-svc:6379"
+  # redisSentinelAddrs: "mockserver-redis-ha-sentinel:26379"
+  # http1target: "http://mock2.soa-test:6000"
+  # http2target: "http://mock3.soa-test:6001"
   ports:
   - name: "http"
     port: "6000"
@@ -25,45 +25,45 @@ applications:
     port: "6001"
     protocal: "TCP"
 
-- name: mock2
-  version: v1
-  serviceType: "ClusterIP"
-  redisAddr: "mockserver-redis-ha-master-svc:6379"
-  redisSentinelAddrs: "mockserver-redis-ha-sentinel:26379"
-  http1target: "http://mock4.soa-test:6000"
-  http2target: "http://mock4.soa-test:6001"
-  ports:
-  - name: "http"
-    port: "6000"
-    protocal: "TCP"
-  - name: "http2"
-    port: "6001"
-    protocal: "TCP"
-
-- name: mock3
-  version: v1
-  serviceType: "ClusterIP"
-  redisAddr: "mockserver-redis-ha-master-svc:6379"
-  redisSentinelAddrs: "mockserver-redis-ha-sentinel:26379"
-  http1target: "http://mock4.soa-test:6000"
-  http2target: "http://mock4.soa-test:6001"
-  ports:
-  - name: "http"
-    port: "6000"
-    protocal: "TCP"
-  - name: "http2"
-    port: "6001"
-    protocal: "TCP"
-
-- name: mock4
-  version: v1
-  serviceType: "ClusterIP"
-  redisAddr: "mockserver-redis-ha-master-svc:6379"
-  redisSentinelAddrs: "mockserver-redis-ha-sentinel:26379"
-  ports:
-  - name: "http"
-    port: "6000"
-    protocal: "TCP"
-  - name: "http2"
-    port: "6001"
-    protocal: "TCP"
+# - name: mock2
+#   version: v1
+#   serviceType: "ClusterIP"
+#   redisAddr: "mockserver-redis-ha-master-svc:6379"
+#   redisSentinelAddrs: "mockserver-redis-ha-sentinel:26379"
+#   http1target: "http://mock4.soa-test:6000"
+#   http2target: "http://mock4.soa-test:6001"
+#   ports:
+#   - name: "http"
+#     port: "6000"
+#     protocal: "TCP"
+#   - name: "http2"
+#     port: "6001"
+#     protocal: "TCP"
+#
+# - name: mock3
+#   version: v1
+#   serviceType: "ClusterIP"
+#   redisAddr: "mockserver-redis-ha-master-svc:6379"
+#   redisSentinelAddrs: "mockserver-redis-ha-sentinel:26379"
+#   http1target: "http://mock4.soa-test:6000"
+#   http2target: "http://mock4.soa-test:6001"
+#   ports:
+#   - name: "http"
+#     port: "6000"
+#     protocal: "TCP"
+#   - name: "http2"
+#     port: "6001"
+#     protocal: "TCP"
+#
+# - name: mock4
+#   version: v1
+#   serviceType: "ClusterIP"
+#   redisAddr: "mockserver-redis-ha-master-svc:6379"
+#   redisSentinelAddrs: "mockserver-redis-ha-sentinel:26379"
+#   ports:
+#   - name: "http"
+#     port: "6000"
+#     protocal: "TCP"
+#   - name: "http2"
+#     port: "6001"
+#     protocal: "TCP"

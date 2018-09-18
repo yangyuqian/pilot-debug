@@ -27,7 +27,6 @@ spec:
           imagePullPolicy: {{ $values.image.pullPolicy }}
           ports:
           - containerPort: 6000
-            protocol: TCP
           # - name: "http2"
           #   containerPort: 6001
           #   protocol: "TCP"
@@ -51,17 +50,10 @@ metadata:
     tier: mock
     app: {{ $item.name }}
     version: {{ $item.version }}
-  {{- if eq $item.serviceType "LoadBalancer" }}
-  annotations:
-    "service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled": "true"
-    "service.beta.kubernetes.io/aws-load-balancer-internal": "true"
-  {{ end }}
 spec:
   type: {{ $item.serviceType | default "ClusterIP" }}
   ports:
   - port: 6000
-    targetPort: 6000
-    protocol: TCP
     name: http
   selector:
     app: {{ $item.name }}
