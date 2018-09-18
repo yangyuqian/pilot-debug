@@ -1,0 +1,26 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: mock1
+spec:
+  hosts:
+  - "mock.example.info"
+  gateways:
+  - soa-gateway
+  http:
+  - route:
+    - destination:
+        host: mock1.soa-test.svc.cluster.local
+        port:
+          number: 6000
+
+---
+apiVersion: "networking.istio.io/v1alpha3"
+kind: DestinationRule
+metadata:
+  name: mock1
+spec:
+  host: "mock1.soa-test.svc.cluster.local"
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
