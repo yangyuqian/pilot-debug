@@ -1,4 +1,0 @@
-dependencies:
-- name: redis-ha
-  version: 2.2.3
-

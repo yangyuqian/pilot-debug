@@ -13,6 +13,10 @@ spec:
         host: mock1.soa-test.svc.cluster.local
         port:
           number: 6000
+    mirror:
+      host: mock5.soa-test.svc.cluster.local
+      port:
+        number: 6000
 
 ---
 apiVersion: "networking.istio.io/v1alpha3"
@@ -21,6 +25,34 @@ metadata:
   name: mock1
 spec:
   host: "mock1.soa-test.svc.cluster.local"
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: mock5
+spec:
+  hosts:
+  - "mock5.example.info"
+  gateways:
+  - soa-gateway
+  http:
+  - route:
+    - destination:
+        host: mock5.soa-test.svc.cluster.local
+        port:
+          number: 6000
+
+---
+apiVersion: "networking.istio.io/v1alpha3"
+kind: DestinationRule
+metadata:
+  name: mock5
+spec:
+  host: "mock5.soa-test.svc.cluster.local"
   trafficPolicy:
     tls:
       mode: ISTIO_MUTUAL
