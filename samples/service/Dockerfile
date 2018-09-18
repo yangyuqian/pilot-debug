@@ -9,6 +9,4 @@ FROM alpine:3.5
 
 WORKDIR /root/
 COPY --from=builder /go/bin/service /root/mockserver
-COPY --from=builder /go/src/github.com/yangyuqian/pilot-debug/samples/service/server.crt /root/server.crt
-COPY --from=builder /go/src/github.com/yangyuqian/pilot-debug/samples/service/server.key /root/server.key
 

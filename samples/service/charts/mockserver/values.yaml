@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: boscoellision/mockserver
-  tag: latest
+  tag: v1
   pullPolicy: IfNotPresent
 
 applications:
@@ -15,21 +15,21 @@ applications:
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
   http1target: "http://mock2-http1.soa-test:6000"
-  http2target: "https://mock3-http2.soa-test:6001"
+  http2target: "mock3-http2.soa-test:6001"
 
 - name: mock2
   version: v1
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
   http1target: "http://mock4-http1.soa-test:6000"
-  http2target: "http://mock4-http2.soa-test:6001"
+  http2target: "mock4-http2.soa-test:6001"
 
 - name: mock3
   version: v1
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
   http1target: "http://mock4-http1.soa-test:6000"
-  http2target: "http://mock4-http2.soa-test:6001"
+  http2target: "mock4-http2.soa-test:6001"
 
 - name: mock4
   version: v1
