@@ -1,0 +1,24 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: tracing
+spec:
+  hosts:
+  - "tracing.example.info"
+  gateways:
+  - soa-gateway
+  http:
+  - route:
+    - destination:
+        host: tracing.istio-system.svc.cluster.local
+        port:
+          number: 80
+
+---
+apiVersion: "networking.istio.io/v1alpha3"
+kind: DestinationRule
+metadata:
+  name: tracing
+spec:
+  host: "tracing.istio-system.svc.cluster.local"
+  # tracing is installed without sidecars, thus mutual tls is disabled

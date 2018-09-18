@@ -6,7 +6,7 @@ spec:
   hosts:
   - "grafana.example.info"
   gateways:
-  - bookinfo-gateway
+  - soa-gateway
   http:
   - route:
     - destination:

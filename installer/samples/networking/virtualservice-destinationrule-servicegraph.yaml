@@ -6,7 +6,7 @@ spec:
   hosts:
   - "servicegraph.example.info"
   gateways:
-  - bookinfo-gateway
+  - soa-gateway
   http:
   - route:
     - destination:

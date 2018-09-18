@@ -16,6 +16,9 @@ spec:
       privateKey: /etc/istio/ingressgateway-certs/tls.key
     hosts:
     - "bookinfo.example.info"
+    - "grafana.example.info"
+    - "servicegraph.example.info"
+    - "tracing.example.info"
 
 ---
 apiVersion: networking.istio.io/v1alpha3
