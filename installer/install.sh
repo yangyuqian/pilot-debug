@@ -7,7 +7,10 @@ function wt(){
 }
 
 soa_ns=soa-test
+echo "cleanup existing istio ..."
+kubectl delete -f istio-full.yaml
 
+wt
 echo "installing istio ..."
 kubectl apply -f istio-full.yaml
 
