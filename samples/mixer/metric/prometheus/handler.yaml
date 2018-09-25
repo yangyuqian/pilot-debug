@@ -9,7 +9,7 @@ metadata:
   generation: 1
   name: handler
   namespace: istio-system
-  resourceVersion: "53781070"
+  resourceVersion: "53806725"
   selfLink: /apis/config.istio.io/v1alpha2/namespaces/istio-system/prometheuses/handler
   uid: a423f993-c06a-11e8-b74f-0e3a25fe3428
 spec:
@@ -35,6 +35,27 @@ spec:
     - response_code
     - connection_security_policy
     name: requests_total
+  - instance_name: requestcount.metric.istio-system
+    kind: COUNTER
+    label_names:
+    - reporter
+    - source_app
+    - source_principal
+    - source_workload
+    - source_workload_namespace
+    - source_version
+    - destination_app
+    - destination_principal
+    - destination_workload
+    - destination_workload_namespace
+    - destination_version
+    - destination_service
+    - destination_service_name
+    - destination_service_namespace
+    - request_protocol
+    - response_code
+    - connection_security_policy
+    name: copy_requests_total
   - buckets:
       explicit_buckets:
         bounds:

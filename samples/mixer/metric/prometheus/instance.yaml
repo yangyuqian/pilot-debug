@@ -1,0 +1,11 @@
+apiVersion: config.istio.io/v1alpha2
+kind: metric
+metadata:
+  name: myrequestcount
+  namespace: istio-system
+spec:
+  dimensions:
+    request_protocol: api.protocol | context.protocol | "unknown"
+    response_code: response.code | 200
+  monitored_resource_type: '"UNSPECIFIED"'
+  value: "1"
