@@ -1,0 +1,24 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: ui-search
+spec:
+  hosts:
+  - "search.example.info"
+  gateways:
+  - soa-gateway
+  http:
+  - route:
+    - destination:
+        host: ui-search.od-test.svc.cluster.local
+        port:
+          number: 8993
+
+---
+apiVersion: "networking.istio.io/v1alpha3"
+kind: DestinationRule
+metadata:
+  name: ui-search
+spec:
+  host: "ui-search.od-test.svc.cluster.local"
+  # tracing is installed without sidecars, thus mutual tls is disabled

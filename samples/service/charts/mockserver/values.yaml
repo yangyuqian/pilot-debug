@@ -35,3 +35,17 @@ applications:
   version: v1
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
+  http1target: "http://mock5-http1.soa-test:6000"
+  http2target: "mock5-http2.soa-test:6001"
+
+- name: mock5
+  version: v1
+  serviceType: "ClusterIP"
+  redisAddr: "redis:6379"
+  http1target: "http://mock6-http1.soa-test:6000"
+  http2target: "mock6-http2.soa-test:6001"
+
+- name: mock6
+  version: v1
+  serviceType: "ClusterIP"
+  redisAddr: "redis:6379"
