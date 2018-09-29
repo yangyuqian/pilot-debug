@@ -16,7 +16,7 @@ function reinstall(){
   kubectl apply --namespace $soa_ns -f $1
 }
 
-# reinstall "istio-full.yaml"
+reinstall "istio-full.yaml"
 reinstall "samples/networking/soa-gateway.yaml"
 reinstall "samples/networking/virtualservice-destinationrule-grafana.yaml"
 reinstall "samples/networking/virtualservice-destinationrule-servicegraph.yaml"
