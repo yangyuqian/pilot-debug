@@ -94,9 +94,11 @@ type mockGrpcServer struct{}
 
 func (s *mockGrpcServer) Say(ctx context.Context, req *mockproto.MockRequest) (*mockproto.MockReply, error) {
 	// response 5xx randomly between [0, 2 x errorRatio)
-	ratio := rand.Intn(2 * *errorRatio)
-	if ratio >= *errorRatio {
-		return nil, errors.New("generated error...")
+	if *errorRatio > 0 {
+		ratio := rand.Intn(2 * *errorRatio)
+		if ratio >= *errorRatio {
+			return nil, errors.New("generated error...")
+		}
 	}
 	return &mockproto.MockReply{Msg: fmt.Sprintf("got message %s", req.Msg)}, nil
 }
@@ -135,10 +137,12 @@ func main() {
 
 	http.HandleFunc("/", promhttp.InstrumentHandlerCounter(httpReqCnt, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// response 5xx randomly between [0, 2 x errorRatio)
-		ratio := rand.Intn(2 * *errorRatio)
-		if ratio >= *errorRatio {
-			w.WriteHeader(http.StatusInternalServerError)
-			return
+		if *errorRatio > 0 {
+			ratio := rand.Intn(2 * *errorRatio)
+			if ratio >= *errorRatio {
+				w.WriteHeader(http.StatusInternalServerError)
+				return
+			}
 		}
 
 		if http1client != nil {

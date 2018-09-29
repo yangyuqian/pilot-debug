@@ -1,37 +1,23 @@
 #!/bin/sh
 checktime=60
+soa_ns=soa-test
 
 function wt(){
   echo "wait $checktime seconds ..."
   sleep $checktime
 }
 
-soa_ns=soa-test
-echo "cleanup existing istio ..."
-kubectl delete -f istio-full.yaml
+function reinstall(){
+  echo "cleanup $1 ..."
+  kubectl delete --namespace $soa_ns -f $1
 
-wt
-echo "installing istio ..."
-kubectl apply -f istio-full.yaml
+  wt
+  echo "installing $1 ..."
+  kubectl apply --namespace $soa_ns -f $1
+}
 
-
-wt
-echo "installing bookinfo example ..."
-kubectl apply --namespace $soa_ns -f samples/bookinfo.yaml
-
-
-wt
-echo "installing destinationrule and virtual services ..."
-kubectl apply --namespace $soa_ns -f samples/networking/destination-rule-all-mtls.yaml
-
-
-wt
-echo "installing HTTP/1.1 gateway ..."
-kubectl apply --namespace $soa_ns -f samples/networking/bookinfo-gateway.yaml
-
-wt
-echo "installing HTTPS gateway ..."
-kubectl apply --namespace $soa_ns -f samples/networking/bookinfo-gateway-tls.yaml
-
-
-
+# reinstall "istio-full.yaml"
+reinstall "samples/networking/soa-gateway.yaml"
+reinstall "samples/networking/virtualservice-destinationrule-grafana.yaml"
+reinstall "samples/networking/virtualservice-destinationrule-servicegraph.yaml"
+reinstall "samples/networking/virtualservice-destinationrule-tracing.yaml"

@@ -35,10 +35,12 @@ spec:
           - "-name={{ $item.name }}"
           - "-http1-addr=:6000"
           - "-http2-addr=:6001"
+          {{ if $item.errorRatio }}- "-error-ratio={{ $item.errorRatio }}"{{ end }}
           {{ if $item.redisAddr }}- "-redis-addr={{ $item.redisAddr }}"{{ else }}# skip redis address{{ end }}
           {{ if $item.http1target }}- "-http1-target={{ $item.http1target }}"{{ else }}# skip HTTP/1.1 target{{ end }}
           {{ if $item.http2target }}- "-http2-target={{ $item.http2target }}"{{ else }}# skip HTTP/2 target{{ end }}
 
+{{ if eq $item.version "v1" }}
 ---
 apiVersion: v1
 kind: Service
@@ -47,7 +49,6 @@ metadata:
   labels:
     tier: mock
     app: {{ $item.name }}-http1
-    version: {{ $item.version }}
 spec:
   type: {{ $item.serviceType | default "ClusterIP" }}
   ports:
@@ -55,7 +56,6 @@ spec:
     name: http
   selector:
     app: {{ $item.name }}
-    version: {{ $item.version }}
 
 ---
 apiVersion: v1
@@ -65,7 +65,6 @@ metadata:
   labels:
     tier: mock
     app: {{ $item.name }}-http2
-    version: {{ $item.version }}
 spec:
   type: {{ $item.serviceType | default "ClusterIP" }}
   ports:
@@ -73,7 +72,7 @@ spec:
     name: grpc
   selector:
     app: {{ $item.name }}
-    version: {{ $item.version }}
 
+{{ end }}
 ---
 {{ end }}

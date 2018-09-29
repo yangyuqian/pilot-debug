@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: boscoellision/mockserver
-  tag: v1
+  tag: v3
   pullPolicy: IfNotPresent
 
 applications:
@@ -16,6 +16,7 @@ applications:
   redisAddr: "redis:6379"
   http1target: "http://mock2-http1.soa-test:6000"
   http2target: "mock3-http2.soa-test:6001"
+  errorRatio: -1
 
 - name: mock2
   version: v1
@@ -23,6 +24,7 @@ applications:
   redisAddr: "redis:6379"
   http1target: "http://mock4-http1.soa-test:6000"
   http2target: "mock4-http2.soa-test:6001"
+  errorRatio: -1
 
 - name: mock3
   version: v1
@@ -30,6 +32,15 @@ applications:
   redisAddr: "redis:6379"
   http1target: "http://mock4-http1.soa-test:6000"
   http2target: "mock4-http2.soa-test:6001"
+  errorRatio: -1
+
+# - name: mock3v2
+#   version: v2
+#   serviceType: "ClusterIP"
+#   redisAddr: "redis:6379"
+#   http1target: "http://mock4-http1.soa-test:6000"
+#   http2target: "mock4-http2.soa-test:6001"
+#   errorRatio: -1
 
 - name: mock4
   version: v1
@@ -37,6 +48,15 @@ applications:
   redisAddr: "redis:6379"
   http1target: "http://mock5-http1.soa-test:6000"
   http2target: "mock5-http2.soa-test:6001"
+  errorRatio: -1
+
+# - name: mock4v2
+#   version: v2
+#   serviceType: "ClusterIP"
+#   redisAddr: "redis:6379"
+#   http1target: "http://mock5-http1.soa-test:6000"
+#   http2target: "mock5-http2.soa-test:6001"
+#   errorRatio: -1
 
 - name: mock5
   version: v1
@@ -44,8 +64,24 @@ applications:
   redisAddr: "redis:6379"
   http1target: "http://mock6-http1.soa-test:6000"
   http2target: "mock6-http2.soa-test:6001"
+  errorRatio: -1
+
+# - name: mock5v2
+#   version: v2
+#   serviceType: "ClusterIP"
+#   redisAddr: "redis:6379"
+#   http1target: "http://mock6-http1.soa-test:6000"
+#   http2target: "mock6-http2.soa-test:6001"
+#   errorRatio: -1
 
 - name: mock6
   version: v1
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
+  errorRatio: -1
+
+# - name: mock6v2
+#   version: v2
+#   serviceType: "ClusterIP"
+#   redisAddr: "redis:6379"
+#   errorRatio: -1
