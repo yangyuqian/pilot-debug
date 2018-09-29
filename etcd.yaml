@@ -1,0 +1,21 @@
+apiVersion: etcd.database.coreos.com/v1beta2
+kind: EtcdCluster
+metadata:
+  labels:
+    app: etcd-operator
+    chart: config-service-6.23.365-2-4-NY5-CDTEST
+    release: config-service-test
+    heritage: Tiller
+  name: etcd
+spec:
+  pod:
+    resources:
+      limits:
+        cpu: 3000m
+        memory: 4096Mi
+      requests:
+        cpu: 500m
+        memory: 512Mi
+  repository: quay.io/coreos/etcd
+  size: 5
+  version: 3.2.13

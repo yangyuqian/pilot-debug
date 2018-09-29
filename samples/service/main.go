@@ -12,12 +12,14 @@ import (
 
 	"io/ioutil"
 
+	"errors"
 	"github.com/go-redis/redis"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	mockproto "github.com/yangyuqian/pilot-debug/proto"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
+	"math/rand"
 )
 
 // command-line flags
@@ -33,6 +35,8 @@ var (
 
 	// redis addr
 	redisAddr = flag.String("redis-addr", "", "redis address")
+	// rand
+	errorRatio = flag.Int("error-ratio", 50, "ratio to generate errors")
 )
 
 // clients
@@ -89,6 +93,11 @@ func init() {
 type mockGrpcServer struct{}
 
 func (s *mockGrpcServer) Say(ctx context.Context, req *mockproto.MockRequest) (*mockproto.MockReply, error) {
+	// response 5xx randomly between [0, 2 x errorRatio)
+	ratio := rand.Intn(2 * *errorRatio)
+	if ratio >= *errorRatio {
+		return nil, errors.New("generated error...")
+	}
 	return &mockproto.MockReply{Msg: fmt.Sprintf("got message %s", req.Msg)}, nil
 }
 
@@ -125,6 +134,12 @@ func main() {
 	http.HandleFunc("/metrics", promhttp.Handler().ServeHTTP)
 
 	http.HandleFunc("/", promhttp.InstrumentHandlerCounter(httpReqCnt, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// response 5xx randomly between [0, 2 x errorRatio)
+		ratio := rand.Intn(2 * *errorRatio)
+		if ratio >= *errorRatio {
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
 
 		if http1client != nil {
 			fmt.Fprintln(w, "------------------------ BEGIN HTTP/1.1 ------------------------")
