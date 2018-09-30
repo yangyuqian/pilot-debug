@@ -35,8 +35,10 @@ var (
 
 	// redis addr
 	redisAddr = flag.String("redis-addr", "", "redis address")
-	// rand
+	// random error
 	errorRatio = flag.Int("error-ratio", 50, "ratio to generate errors")
+	// random latency in milliseconds
+	latency = flag.Int("latency-milliseconds", 500, "set upper bound of the random latency")
 )
 
 // clients
@@ -95,11 +97,14 @@ type mockGrpcServer struct{}
 func (s *mockGrpcServer) Say(ctx context.Context, req *mockproto.MockRequest) (*mockproto.MockReply, error) {
 	// response 5xx randomly between [0, 2 x errorRatio)
 	if *errorRatio > 0 {
+		log.Printf("accessing gRPC with error Ratio %d ...", *errorRatio)
 		ratio := rand.Intn(2 * *errorRatio)
 		if ratio >= *errorRatio {
 			return nil, errors.New("generated error...")
 		}
 	}
+
+	time.Sleep(time.Duration(*latency) * time.Millisecond)
 	return &mockproto.MockReply{Msg: fmt.Sprintf("got message %s", req.Msg)}, nil
 }
 
@@ -138,12 +143,14 @@ func main() {
 	http.HandleFunc("/", promhttp.InstrumentHandlerCounter(httpReqCnt, http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// response 5xx randomly between [0, 2 x errorRatio)
 		if *errorRatio > 0 {
+			log.Printf("accessing HTTP/1.1 with error Ratio %d ...", *errorRatio)
 			ratio := rand.Intn(2 * *errorRatio)
 			if ratio >= *errorRatio {
 				w.WriteHeader(http.StatusInternalServerError)
 				return
 			}
 		}
+		time.Sleep(time.Duration(*latency) * time.Millisecond)
 
 		if http1client != nil {
 			fmt.Fprintln(w, "------------------------ BEGIN HTTP/1.1 ------------------------")
@@ -179,8 +186,9 @@ func main() {
 			resp, err := http2client.Say(context.TODO(), &mockproto.MockRequest{Msg: fmt.Sprintf("this is %s", *serviceName)})
 			if err != nil {
 				log.Printf("cannot say hello to grpc service %+v", err)
+			} else {
+				fmt.Fprintf(w, "------------------------ gRPC response %s ------------------------", resp.Msg)
 			}
-			fmt.Fprintf(w, "------------------------ gRPC response %s ------------------------", resp.Msg)
 		}
 
 		fmt.Fprintln(w, "------------------------ BEGIN SELF ------------------------")
