@@ -21,7 +21,7 @@ applications:
 
 - name: mock2
   versions: ["v1", "v2"]
-  errorRatios: [-1, -1]
+  errorRatios: [-1, 50]
   latencies: [50, 500]
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
@@ -30,7 +30,7 @@ applications:
 
 - name: mock3
   versions: ["v1", "v2", "v3"]
-  errorRatios: [-1, -1, -1]
+  errorRatios: [-1, 50, -1]
   latencies: [50, 500, 50]
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
@@ -39,7 +39,7 @@ applications:
 
 - name: mock4
   versions: ["v1", "v2", "v3"]
-  errorRatios: [-1, -1, -1]
+  errorRatios: [-1, 50, -1]
   latencies: [50, 500, 50]
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
@@ -48,7 +48,7 @@ applications:
 
 - name: mock5
   versions: ["v1", "v2", "v3"]
-  errorRatios: [-1, -1, -1]
+  errorRatios: [-1, 50, -1]
   latencies: [50, 500, 50]
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
@@ -57,7 +57,7 @@ applications:
 
 - name: mock6
   versions: ["v1", "v2", "v3"]
-  errorRatios: [-1, -1, -1]
+  errorRatios: [-1, 50, -1]
   latencies: [50, 500, 50]
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
