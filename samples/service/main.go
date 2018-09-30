@@ -19,6 +19,7 @@ import (
 	mockproto "github.com/yangyuqian/pilot-debug/proto"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/metadata"
 	"math/rand"
 )
 
@@ -38,7 +39,8 @@ var (
 	// random error
 	errorRatio = flag.Int("error-ratio", 50, "ratio to generate errors")
 	// random latency in milliseconds
-	latency = flag.Int("latency-milliseconds", 500, "set upper bound of the random latency")
+	latency    = flag.Int("latency-milliseconds", 500, "set upper bound of the random latency")
+	headerlist = []string{"x-request-id", "x-b3-traceid", "x-b3-spanid", "x-b3-parentspanid", "x-b3-sampled", "x-b3-flags", "x-ot-span-context"}
 )
 
 // clients
@@ -146,8 +148,7 @@ func main() {
 			log.Printf("accessing HTTP/1.1 with error Ratio %d ...", *errorRatio)
 			ratio := rand.Intn(2 * *errorRatio)
 			if *errorRatio >= 100 || ratio >= *errorRatio {
-				w.WriteHeader(http.StatusInternalServerError)
-				return
+				panic("generated 502 error...")
 			}
 		}
 		time.Sleep(time.Duration(rand.Intn(*latency*2)) * time.Millisecond)
@@ -155,7 +156,18 @@ func main() {
 		if http1client != nil {
 			fmt.Fprintln(w, "------------------------ BEGIN HTTP/1.1 ------------------------")
 			f := func() {
-				resp, err := http1client.Get(*http1target)
+				req, err := http.NewRequest("GET", *http1target, nil)
+				if err != nil {
+					panic(err)
+				}
+				req.Header = make(http.Header)
+				for _, it := range headerlist {
+					if ihdr := r.Header.Get(it); ihdr != "" {
+						req.Header.Set(it, ihdr)
+					}
+				}
+
+				resp, err := http1client.Do(req)
 				if err != nil {
 					log.Printf("error to fetch info from http1 target %+v", err)
 					http1DepCnt.WithLabelValues(*serviceName, "ko").Inc()
@@ -183,7 +195,15 @@ func main() {
 		}
 
 		if http2client != nil {
-			resp, err := http2client.Say(context.TODO(), &mockproto.MockRequest{Msg: fmt.Sprintf("this is %s", *serviceName)})
+			headers := make(map[string]string)
+			for _, it := range headerlist {
+				if ihdr := r.Header.Get(it); ihdr != "" {
+					headers[it] = ihdr
+				}
+			}
+
+			md := metadata.New(headers)
+			resp, err := http2client.Say(context.TODO(), &mockproto.MockRequest{Msg: fmt.Sprintf("this is %s", *serviceName)}, grpc.Header(&md))
 			if err != nil {
 				log.Printf("cannot say hello to grpc service %+v", err)
 			} else {

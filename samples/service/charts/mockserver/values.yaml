@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: boscoellision/mockserver
-  tag: v9
+  tag: v11
   pullPolicy: IfNotPresent
 
 applications:
@@ -21,7 +21,7 @@ applications:
 
 - name: mock2
   versions: ["v1", "v2"]
-  errorRatios: [-1, 101]
+  errorRatios: [-1, -1]
   latencies: [5, 50]
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
@@ -30,7 +30,7 @@ applications:
 
 - name: mock3
   versions: ["v1", "v2", "v3"]
-  errorRatios: [-1, 5, -1]
+  errorRatios: [-1, -1, -1]
   latencies: [5, 50, 5]
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
@@ -39,7 +39,7 @@ applications:
 
 - name: mock4
   versions: ["v1", "v2", "v3"]
-  errorRatios: [-1, 5, -1]
+  errorRatios: [-1, -1, -1]
   latencies: [5, 50, 5]
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
@@ -48,7 +48,7 @@ applications:
 
 - name: mock5
   versions: ["v1", "v2", "v3"]
-  errorRatios: [-1, 5, -1]
+  errorRatios: [-1, -1, -1]
   latencies: [5, 50, 5]
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
@@ -57,7 +57,7 @@ applications:
 
 - name: mock6
   versions: ["v1", "v2", "v3"]
-  errorRatios: [-1, 5, -1]
+  errorRatios: [-1, -1, -1]
   latencies: [5, 50, 5]
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
