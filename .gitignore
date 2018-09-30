@@ -14,3 +14,5 @@
 data/
 mockserver.yaml
 server
+mockserver
+samples/service/mockserver

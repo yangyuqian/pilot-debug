@@ -104,7 +104,7 @@ func (s *mockGrpcServer) Say(ctx context.Context, req *mockproto.MockRequest) (*
 		}
 	}
 
-	time.Sleep(time.Duration(*latency) * time.Millisecond)
+	time.Sleep(time.Duration(rand.Intn(*latency*2)) * time.Millisecond)
 	return &mockproto.MockReply{Msg: fmt.Sprintf("got message %s", req.Msg)}, nil
 }
 
@@ -150,7 +150,7 @@ func main() {
 				return
 			}
 		}
-		time.Sleep(time.Duration(*latency) * time.Millisecond)
+		time.Sleep(time.Duration(rand.Intn(*latency*2)) * time.Millisecond)
 
 		if http1client != nil {
 			fmt.Fprintln(w, "------------------------ BEGIN HTTP/1.1 ------------------------")
