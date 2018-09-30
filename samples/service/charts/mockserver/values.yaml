@@ -6,14 +6,14 @@ replicaCount: 1
 
 image:
   repository: boscoellision/mockserver
-  tag: v7
+  tag: v9
   pullPolicy: IfNotPresent
 
 applications:
 - name: mock1
   versions: ["v1"]
   errorRatios: [-1]
-  latencies: [50]
+  latencies: [5]
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
   http1target: "http://mock2-http1.soa-test:6000"
@@ -21,8 +21,8 @@ applications:
 
 - name: mock2
   versions: ["v1", "v2"]
-  errorRatios: [-1, 50]
-  latencies: [50, 500]
+  errorRatios: [-1, 101]
+  latencies: [5, 50]
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
   http1target: "http://mock3-http1.soa-test:6000"
@@ -30,8 +30,8 @@ applications:
 
 - name: mock3
   versions: ["v1", "v2", "v3"]
-  errorRatios: [-1, 50, -1]
-  latencies: [50, 500, 50]
+  errorRatios: [-1, 5, -1]
+  latencies: [5, 50, 5]
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
   http1target: "http://mock4-http1.soa-test:6000"
@@ -39,8 +39,8 @@ applications:
 
 - name: mock4
   versions: ["v1", "v2", "v3"]
-  errorRatios: [-1, 50, -1]
-  latencies: [50, 500, 50]
+  errorRatios: [-1, 5, -1]
+  latencies: [5, 50, 5]
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
   http1target: "http://mock5-http1.soa-test:6000"
@@ -48,8 +48,8 @@ applications:
 
 - name: mock5
   versions: ["v1", "v2", "v3"]
-  errorRatios: [-1, 50, -1]
-  latencies: [50, 500, 50]
+  errorRatios: [-1, 5, -1]
+  latencies: [5, 50, 5]
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
   http1target: "http://mock6-http1.soa-test:6000"
@@ -57,7 +57,7 @@ applications:
 
 - name: mock6
   versions: ["v1", "v2", "v3"]
-  errorRatios: [-1, 50, -1]
-  latencies: [50, 500, 50]
+  errorRatios: [-1, 5, -1]
+  latencies: [5, 50, 5]
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"

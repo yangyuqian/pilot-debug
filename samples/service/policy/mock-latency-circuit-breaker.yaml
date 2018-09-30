@@ -1,6 +1,30 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
+  name: mock1-http1
+spec:
+  host: mock1-http1.soa-test.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+    connectionPool:
+      tcp:
+        maxConnections: 1
+      http:
+        http1MaxPendingRequests: 1
+        maxRequestsPerConnection: 1
+        http2MaxRequests: 1
+        # maxRetries: 3
+    outlierDetection:
+      consecutiveErrors: 1
+      interval: 60s
+      baseEjectionTime: 5m
+      maxEjectionPercent: 100
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
   name: mock2-http1
 spec:
   host: mock2-http1.soa-test.svc.cluster.local

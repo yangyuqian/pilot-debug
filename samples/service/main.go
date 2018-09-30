@@ -99,7 +99,7 @@ func (s *mockGrpcServer) Say(ctx context.Context, req *mockproto.MockRequest) (*
 	if *errorRatio > 0 {
 		log.Printf("accessing gRPC with error Ratio %d ...", *errorRatio)
 		ratio := rand.Intn(2 * *errorRatio)
-		if ratio >= *errorRatio {
+		if *errorRatio >= 100 || ratio >= *errorRatio {
 			return nil, errors.New("generated error...")
 		}
 	}
@@ -145,7 +145,7 @@ func main() {
 		if *errorRatio > 0 {
 			log.Printf("accessing HTTP/1.1 with error Ratio %d ...", *errorRatio)
 			ratio := rand.Intn(2 * *errorRatio)
-			if ratio >= *errorRatio {
+			if *errorRatio >= 100 || ratio >= *errorRatio {
 				w.WriteHeader(http.StatusInternalServerError)
 				return
 			}

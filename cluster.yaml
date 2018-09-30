@@ -1,0 +1,3420 @@
+[
+    {
+        "name": "BlackHoleCluster",
+        "connectTimeout": "1.000s"
+    },
+    {
+        "name": "outbound|3050||auth-service.od-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|3050||auth-service.od-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/od-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|3051||auth-service.od-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|3051||auth-service.od-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/od-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio",
+                    "h2"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        },
+        "http2ProtocolOptions": {
+            "maxConcurrentStreams": 1073741824
+        }
+    },
+    {
+        "name": "outbound|8080||authadapter.od-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|8080||authadapter.od-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/od-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|9091||config-service-controller.od-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|9091||config-service-controller.od-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/od-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|80||config-service-insecure.od-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|80||config-service-insecure.od-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/od-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|3306||config-service-test-mysql.od-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|3306||config-service-test-mysql.od-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/od-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|6379||config-service-test-redis-ha-master-svc.od-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|6379||config-service-test-redis-ha-master-svc.od-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/od-test/sa/config-service-test-redis-ha"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|26379||config-service-test-redis-ha-sentinel.od-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|26379||config-service-test-redis-ha-sentinel.od-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/od-test/sa/config-service-test-redis-ha"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|6379||config-service-test-redis-ha-slave-svc.od-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|6379||config-service-test-redis-ha-slave-svc.od-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/od-test/sa/config-service-test-redis-ha"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|443||config-service.od-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|443||config-service.od-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/od-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|9091||cs-apiserver-prom.od-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|9091||cs-apiserver-prom.od-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/od-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|443||cs-apiserver.od-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|443||cs-apiserver.od-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/od-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|2379||cs-etcd-client.od-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|2379||cs-etcd-client.od-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    }
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|2379||cs-etcd.od-test.svc.cluster.local",
+        "type": "ORIGINAL_DST",
+        "connectTimeout": "1.000s",
+        "lbPolicy": "ORIGINAL_DST_LB",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    }
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|2380||cs-etcd.od-test.svc.cluster.local",
+        "type": "ORIGINAL_DST",
+        "connectTimeout": "1.000s",
+        "lbPolicy": "ORIGINAL_DST_LB",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    }
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|3020||cs-gateway.od-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|3020||cs-gateway.od-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/od-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|19999||etcd-restore-operator.od-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|19999||etcd-restore-operator.od-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/od-test/sa/etcd-operator-etcd-operator-etcd-restore-operator"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|3000||grafana.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|3000||grafana.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        }
+    },
+    {
+        "name": "outbound|5000||helloworld.default.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|5000||helloworld.default.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    }
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|5000||helloworld.istio-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|5000||helloworld.istio-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    }
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|5000||helloworld.soa-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|5000||helloworld.soa-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    }
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|8060||istio-citadel.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|8060||istio-citadel.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/istio-system/sa/istio-citadel-service-account"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio",
+                    "h2"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        },
+        "http2ProtocolOptions": {
+            "maxConcurrentStreams": 1073741824
+        }
+    },
+    {
+        "name": "outbound|9093||istio-citadel.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|9093||istio-citadel.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/istio-system/sa/istio-citadel-service-account"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|80||istio-egressgateway.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|80||istio-egressgateway.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/istio-system/sa/istio-egressgateway-service-account"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio",
+                    "h2"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        },
+        "http2ProtocolOptions": {
+            "maxConcurrentStreams": 1073741824
+        }
+    },
+    {
+        "name": "outbound|443||istio-egressgateway.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|443||istio-egressgateway.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/istio-system/sa/istio-egressgateway-service-account"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|443||istio-galley.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|443||istio-galley.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/istio-system/sa/istio-galley-service-account"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|9093||istio-galley.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|9093||istio-galley.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/istio-system/sa/istio-galley-service-account"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|80||istio-ingressgateway.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|80||istio-ingressgateway.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio",
+                    "h2"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        },
+        "http2ProtocolOptions": {
+            "maxConcurrentStreams": 1073741824
+        }
+    },
+    {
+        "name": "outbound|443||istio-ingressgateway.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|443||istio-ingressgateway.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|853||istio-ingressgateway.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|853||istio-ingressgateway.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|8060||istio-ingressgateway.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|8060||istio-ingressgateway.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|15011||istio-ingressgateway.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|15011||istio-ingressgateway.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|15030||istio-ingressgateway.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|15030||istio-ingressgateway.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio",
+                    "h2"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        },
+        "http2ProtocolOptions": {
+            "maxConcurrentStreams": 1073741824
+        }
+    },
+    {
+        "name": "outbound|15031||istio-ingressgateway.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|15031||istio-ingressgateway.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio",
+                    "h2"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        },
+        "http2ProtocolOptions": {
+            "maxConcurrentStreams": 1073741824
+        }
+    },
+    {
+        "name": "outbound|31400||istio-ingressgateway.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|31400||istio-ingressgateway.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/istio-system/sa/istio-ingressgateway-service-account"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|8080||istio-pilot.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|8080||istio-pilot.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/istio-system/sa/istio-pilot-service-account"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|9093||istio-pilot.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|9093||istio-pilot.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/istio-system/sa/istio-pilot-service-account"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|15010||istio-pilot.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|15010||istio-pilot.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/istio-system/sa/istio-pilot-service-account"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio",
+                    "h2"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        },
+        "http2ProtocolOptions": {
+            "maxConcurrentStreams": 1073741824
+        }
+    },
+    {
+        "name": "outbound|15011||istio-pilot.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|15011||istio-pilot.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/istio-system/sa/istio-pilot-service-account"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|9091||istio-policy.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|9091||istio-policy.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "maxRequestsPerConnection": 10000,
+        "circuitBreakers": {
+            "thresholds": [
+                {
+                    "maxRequests": 10000
+                }
+            ]
+        },
+        "http2ProtocolOptions": {
+            "maxConcurrentStreams": 1073741824
+        }
+    },
+    {
+        "name": "outbound|9093||istio-policy.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|9093||istio-policy.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "maxRequestsPerConnection": 10000,
+        "circuitBreakers": {
+            "thresholds": [
+                {
+                    "maxRequests": 10000
+                }
+            ]
+        }
+    },
+    {
+        "name": "outbound|15004||istio-policy.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|15004||istio-policy.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "maxRequestsPerConnection": 10000,
+        "circuitBreakers": {
+            "thresholds": [
+                {
+                    "maxRequests": 10000
+                }
+            ]
+        },
+        "http2ProtocolOptions": {
+            "maxConcurrentStreams": 1073741824
+        }
+    },
+    {
+        "name": "outbound|443||istio-sidecar-injector.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|443||istio-sidecar-injector.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/istio-system/sa/istio-sidecar-injector-service-account"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|9102||istio-statsd-prom-bridge.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|9102||istio-statsd-prom-bridge.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/istio-system/sa/istio-mixer-service-account"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|9091||istio-telemetry.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|9091||istio-telemetry.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "maxRequestsPerConnection": 10000,
+        "circuitBreakers": {
+            "thresholds": [
+                {
+                    "maxRequests": 10000
+                }
+            ]
+        },
+        "http2ProtocolOptions": {
+            "maxConcurrentStreams": 1073741824
+        }
+    },
+    {
+        "name": "outbound|9093||istio-telemetry.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|9093||istio-telemetry.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "maxRequestsPerConnection": 10000,
+        "circuitBreakers": {
+            "thresholds": [
+                {
+                    "maxRequests": 10000
+                }
+            ]
+        }
+    },
+    {
+        "name": "outbound|15004||istio-telemetry.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|15004||istio-telemetry.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "maxRequestsPerConnection": 10000,
+        "circuitBreakers": {
+            "thresholds": [
+                {
+                    "maxRequests": 10000
+                }
+            ]
+        },
+        "http2ProtocolOptions": {
+            "maxConcurrentStreams": 1073741824
+        }
+    },
+    {
+        "name": "outbound|42422||istio-telemetry.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|42422||istio-telemetry.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "maxRequestsPerConnection": 10000,
+        "circuitBreakers": {
+            "thresholds": [
+                {
+                    "maxRequests": 10000
+                }
+            ]
+        }
+    },
+    {
+        "name": "outbound|14267||jaeger-collector.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|14267||jaeger-collector.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/istio-system/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|14268||jaeger-collector.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|14268||jaeger-collector.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/istio-system/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|16686||jaeger-query.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|16686||jaeger-query.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/istio-system/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|53||kube-dns.kube-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|53||kube-dns.kube-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/kube-system/sa/kube-dns"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|10250||kubelet.kube-system.svc.cluster.local",
+        "type": "ORIGINAL_DST",
+        "connectTimeout": "1.000s",
+        "lbPolicy": "ORIGINAL_DST_LB",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    }
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|443||kubernetes.default.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|443||kubernetes.default.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        }
+    },
+    {
+        "name": "outbound|6000||mock1-http1.soa-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|6000||mock1-http1.soa-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/soa-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "mock1-http1.soa-test.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|6001||mock1-http2.soa-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|6001||mock1-http2.soa-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/soa-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio",
+                    "h2"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        },
+        "http2ProtocolOptions": {
+            "maxConcurrentStreams": 1073741824
+        }
+    },
+    {
+        "name": "inbound|6000||mock2-http1.soa-test.svc.cluster.local",
+        "connectTimeout": "1.000s",
+        "hosts": [
+            {
+                "socketAddress": {
+                    "address": "127.0.0.1",
+                    "portValue": 6000
+                }
+            }
+        ],
+        "maxRequestsPerConnection": 1,
+        "circuitBreakers": {
+            "thresholds": [
+                {
+                    "maxConnections": 1,
+                    "maxPendingRequests": 1,
+                    "maxRequests": 1
+                }
+            ]
+        }
+    },
+    {
+        "name": "outbound|6000||mock2-http1.soa-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|6000||mock2-http1.soa-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "maxRequestsPerConnection": 1,
+        "circuitBreakers": {
+            "thresholds": [
+                {
+                    "maxConnections": 1,
+                    "maxPendingRequests": 1,
+                    "maxRequests": 1
+                }
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/soa-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "mock2-http1.soa-test.svc.cluster.local"
+        },
+        "outlierDetection": {
+            "interval": "60.000s",
+            "baseEjectionTime": "300.000s",
+            "maxEjectionPercent": 100,
+            "enforcingConsecutive5xx": 0,
+            "consecutiveGatewayFailure": 1,
+            "enforcingConsecutiveGatewayFailure": 100
+        }
+    },
+    {
+        "name": "inbound|6001||mock2-http2.soa-test.svc.cluster.local",
+        "connectTimeout": "1.000s",
+        "hosts": [
+            {
+                "socketAddress": {
+                    "address": "127.0.0.1",
+                    "portValue": 6001
+                }
+            }
+        ],
+        "maxRequestsPerConnection": 1,
+        "circuitBreakers": {
+            "thresholds": [
+                {
+                    "maxConnections": 1,
+                    "maxPendingRequests": 1,
+                    "maxRequests": 1
+                }
+            ]
+        },
+        "http2ProtocolOptions": {
+            "maxConcurrentStreams": 1073741824
+        }
+    },
+    {
+        "name": "outbound|6001||mock2-http2.soa-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|6001||mock2-http2.soa-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "maxRequestsPerConnection": 1,
+        "circuitBreakers": {
+            "thresholds": [
+                {
+                    "maxConnections": 1,
+                    "maxPendingRequests": 1,
+                    "maxRequests": 1
+                }
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/soa-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio",
+                    "h2"
+                ]
+            },
+            "sni": "mock2-http2.soa-test.svc.cluster.local"
+        },
+        "http2ProtocolOptions": {
+            "maxConcurrentStreams": 1073741824
+        },
+        "outlierDetection": {
+            "interval": "60.000s",
+            "baseEjectionTime": "300.000s",
+            "maxEjectionPercent": 100,
+            "enforcingConsecutive5xx": 0,
+            "consecutiveGatewayFailure": 1,
+            "enforcingConsecutiveGatewayFailure": 100
+        }
+    },
+    {
+        "name": "outbound|6000||mock3-http1.soa-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|6000||mock3-http1.soa-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "maxRequestsPerConnection": 1,
+        "circuitBreakers": {
+            "thresholds": [
+                {
+                    "maxConnections": 1,
+                    "maxPendingRequests": 1,
+                    "maxRequests": 1
+                }
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/soa-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "mock3-http1.soa-test.svc.cluster.local"
+        },
+        "outlierDetection": {
+            "interval": "60.000s",
+            "baseEjectionTime": "300.000s",
+            "maxEjectionPercent": 100,
+            "enforcingConsecutive5xx": 0,
+            "consecutiveGatewayFailure": 1,
+            "enforcingConsecutiveGatewayFailure": 100
+        }
+    },
+    {
+        "name": "outbound|6001||mock3-http2.soa-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|6001||mock3-http2.soa-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "maxRequestsPerConnection": 1,
+        "circuitBreakers": {
+            "thresholds": [
+                {
+                    "maxConnections": 1,
+                    "maxPendingRequests": 1,
+                    "maxRequests": 1
+                }
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/soa-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio",
+                    "h2"
+                ]
+            },
+            "sni": "mock3-http2.soa-test.svc.cluster.local"
+        },
+        "http2ProtocolOptions": {
+            "maxConcurrentStreams": 1073741824
+        },
+        "outlierDetection": {
+            "interval": "60.000s",
+            "baseEjectionTime": "300.000s",
+            "maxEjectionPercent": 100,
+            "enforcingConsecutive5xx": 0,
+            "consecutiveGatewayFailure": 1,
+            "enforcingConsecutiveGatewayFailure": 100
+        }
+    },
+    {
+        "name": "outbound|6000||mock4-http1.soa-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|6000||mock4-http1.soa-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "maxRequestsPerConnection": 1,
+        "circuitBreakers": {
+            "thresholds": [
+                {
+                    "maxConnections": 1,
+                    "maxPendingRequests": 1,
+                    "maxRequests": 1
+                }
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/soa-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "mock4-http1.soa-test.svc.cluster.local"
+        },
+        "outlierDetection": {
+            "interval": "60.000s",
+            "baseEjectionTime": "300.000s",
+            "maxEjectionPercent": 100,
+            "enforcingConsecutive5xx": 0,
+            "consecutiveGatewayFailure": 1,
+            "enforcingConsecutiveGatewayFailure": 100
+        }
+    },
+    {
+        "name": "outbound|6001||mock4-http2.soa-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|6001||mock4-http2.soa-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "maxRequestsPerConnection": 1,
+        "circuitBreakers": {
+            "thresholds": [
+                {
+                    "maxConnections": 1,
+                    "maxPendingRequests": 1,
+                    "maxRequests": 1
+                }
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/soa-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio",
+                    "h2"
+                ]
+            },
+            "sni": "mock4-http2.soa-test.svc.cluster.local"
+        },
+        "http2ProtocolOptions": {
+            "maxConcurrentStreams": 1073741824
+        },
+        "outlierDetection": {
+            "interval": "60.000s",
+            "baseEjectionTime": "300.000s",
+            "maxEjectionPercent": 100,
+            "enforcingConsecutive5xx": 0,
+            "consecutiveGatewayFailure": 1,
+            "enforcingConsecutiveGatewayFailure": 100
+        }
+    },
+    {
+        "name": "outbound|6000||mock5-http1.soa-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|6000||mock5-http1.soa-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "maxRequestsPerConnection": 1,
+        "circuitBreakers": {
+            "thresholds": [
+                {
+                    "maxConnections": 1,
+                    "maxPendingRequests": 1,
+                    "maxRequests": 1
+                }
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/soa-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "mock5-http1.soa-test.svc.cluster.local"
+        },
+        "outlierDetection": {
+            "interval": "60.000s",
+            "baseEjectionTime": "300.000s",
+            "maxEjectionPercent": 100,
+            "enforcingConsecutive5xx": 0,
+            "consecutiveGatewayFailure": 1,
+            "enforcingConsecutiveGatewayFailure": 100
+        }
+    },
+    {
+        "name": "outbound|6001||mock5-http2.soa-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|6001||mock5-http2.soa-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "maxRequestsPerConnection": 1,
+        "circuitBreakers": {
+            "thresholds": [
+                {
+                    "maxConnections": 1,
+                    "maxPendingRequests": 1,
+                    "maxRequests": 1
+                }
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/soa-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio",
+                    "h2"
+                ]
+            },
+            "sni": "mock5-http2.soa-test.svc.cluster.local"
+        },
+        "http2ProtocolOptions": {
+            "maxConcurrentStreams": 1073741824
+        },
+        "outlierDetection": {
+            "interval": "60.000s",
+            "baseEjectionTime": "300.000s",
+            "maxEjectionPercent": 100,
+            "enforcingConsecutive5xx": 0,
+            "consecutiveGatewayFailure": 1,
+            "enforcingConsecutiveGatewayFailure": 100
+        }
+    },
+    {
+        "name": "outbound|6000||mock6-http1.soa-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|6000||mock6-http1.soa-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "maxRequestsPerConnection": 1,
+        "circuitBreakers": {
+            "thresholds": [
+                {
+                    "maxConnections": 1,
+                    "maxPendingRequests": 1,
+                    "maxRequests": 1
+                }
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/soa-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "mock6-http1.soa-test.svc.cluster.local"
+        },
+        "outlierDetection": {
+            "interval": "60.000s",
+            "baseEjectionTime": "300.000s",
+            "maxEjectionPercent": 100,
+            "enforcingConsecutive5xx": 0,
+            "consecutiveGatewayFailure": 1,
+            "enforcingConsecutiveGatewayFailure": 100
+        }
+    },
+    {
+        "name": "outbound|6001||mock6-http2.soa-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|6001||mock6-http2.soa-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "maxRequestsPerConnection": 1,
+        "circuitBreakers": {
+            "thresholds": [
+                {
+                    "maxConnections": 1,
+                    "maxPendingRequests": 1,
+                    "maxRequests": 1
+                }
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/soa-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio",
+                    "h2"
+                ]
+            },
+            "sni": "mock6-http2.soa-test.svc.cluster.local"
+        },
+        "http2ProtocolOptions": {
+            "maxConcurrentStreams": 1073741824
+        },
+        "outlierDetection": {
+            "interval": "60.000s",
+            "baseEjectionTime": "300.000s",
+            "maxEjectionPercent": 100,
+            "enforcingConsecutive5xx": 0,
+            "consecutiveGatewayFailure": 1,
+            "enforcingConsecutiveGatewayFailure": 100
+        }
+    },
+    {
+        "name": "outbound|8001||nginx-service.default.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|8001||nginx-service.default.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    }
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|8000||nginx-service.soa-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|8000||nginx-service.soa-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    }
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|9090||prometheus-operated.soa-mon.svc.cluster.local",
+        "type": "ORIGINAL_DST",
+        "connectTimeout": "1.000s",
+        "lbPolicy": "ORIGINAL_DST_LB",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    }
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|9090||prometheus.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|9090||prometheus.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/istio-system/sa/prometheus"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|80||prometheus.soa-mon.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|80||prometheus.soa-mon.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    }
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|8080||rbacadapter.od-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|8080||rbacadapter.od-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/od-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|6379||redis.soa-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|6379||redis.soa-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/soa-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "redis.soa-test.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|8088||servicegraph.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|8088||servicegraph.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        }
+    },
+    {
+        "name": "outbound|44134||tiller-deploy.kube-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|44134||tiller-deploy.kube-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/kube-system/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|80||tracing.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|80||tracing.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        }
+    },
+    {
+        "name": "outbound|8161||ui-search-activemq.od-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|8161||ui-search-activemq.od-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/od-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|61616||ui-search-activemq.od-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|61616||ui-search-activemq.od-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/od-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|3306||ui-search-mysql.od-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|3306||ui-search-mysql.od-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/od-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|25||ui-search-smtp.od-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|25||ui-search-smtp.od-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/od-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "outbound|8993||ui-search.od-test.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|8993||ui-search.od-test.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/od-test/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    },
+    {
+        "name": "xds-grpc",
+        "type": "STRICT_DNS",
+        "connectTimeout": "10.000s",
+        "hosts": [
+            {
+                "socketAddress": {
+                    "address": "istio-pilot.istio-system",
+                    "portValue": 15010
+                }
+            }
+        ],
+        "circuitBreakers": {
+            "thresholds": [
+                {
+                    "maxConnections": 100000,
+                    "maxPendingRequests": 100000,
+                    "maxRequests": 100000
+                },
+                {
+                    "priority": "HIGH",
+                    "maxConnections": 100000,
+                    "maxPendingRequests": 100000,
+                    "maxRequests": 100000
+                }
+            ]
+        },
+        "http2ProtocolOptions": {},
+        "upstreamConnectionOptions": {
+            "tcpKeepalive": {
+                "keepaliveTime": 300
+            }
+        }
+    },
+    {
+        "name": "zipkin",
+        "type": "STRICT_DNS",
+        "connectTimeout": "1.000s",
+        "hosts": [
+            {
+                "socketAddress": {
+                    "address": "zipkin.istio-system",
+                    "portValue": 9411
+                }
+            }
+        ]
+    },
+    {
+        "name": "outbound|9411||zipkin.istio-system.svc.cluster.local",
+        "type": "EDS",
+        "edsClusterConfig": {
+            "edsConfig": {
+                "ads": {}
+            },
+            "serviceName": "outbound|9411||zipkin.istio-system.svc.cluster.local"
+        },
+        "connectTimeout": "1.000s",
+        "circuitBreakers": {
+            "thresholds": [
+                {}
+            ]
+        },
+        "tlsContext": {
+            "commonTlsContext": {
+                "tlsCertificates": [
+                    {
+                        "certificateChain": {
+                            "filename": "/etc/certs/cert-chain.pem"
+                        },
+                        "privateKey": {
+                            "filename": "/etc/certs/key.pem"
+                        }
+                    }
+                ],
+                "validationContext": {
+                    "trustedCa": {
+                        "filename": "/etc/certs/root-cert.pem"
+                    },
+                    "verifySubjectAltName": [
+                        "spiffe://cluster.local/ns/istio-system/sa/default"
+                    ]
+                },
+                "alpnProtocols": [
+                    "istio"
+                ]
+            },
+            "sni": "kube-dns.kube-system.svc.cluster.local"
+        }
+    }
+]
