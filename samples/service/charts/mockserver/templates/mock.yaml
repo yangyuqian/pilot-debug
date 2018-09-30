@@ -5,6 +5,7 @@
 
 {{ range $idx, $version := $item.versions }}
 {{ $errorRatio := (index $item.errorRatios $idx) }}
+{{ $latency := (index $item.latencies $idx) }}
 apiVersion: apps/v1beta2
 kind: Deployment
 metadata:
@@ -37,7 +38,7 @@ spec:
           - "--name={{ $item.name }}"
           - "--http1-addr=:6000"
           - "--http2-addr=:6001"
-          {{ if $item.latency }}- "--latency-milliseconds={{ $item.latency }}"{{ end }}
+          {{ if $latency }}- "--latency-milliseconds={{ $latency }}"{{ end }}
           {{ if $errorRatio }}- "--error-ratio={{ $errorRatio }}"{{ end }}
           {{ if $item.redisAddr }}- "--redis-addr={{ $item.redisAddr }}"{{ else }}# skip redis address{{ end }}
           {{ if $item.http1target }}- "--http1-target={{ $item.http1target }}"{{ else }}# skip HTTP/1.1 target{{ end }}

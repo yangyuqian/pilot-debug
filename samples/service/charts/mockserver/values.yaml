@@ -13,6 +13,7 @@ applications:
 - name: mock1
   versions: ["v1"]
   errorRatios: [-1]
+  latencies: [50]
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
   http1target: "http://mock2-http1.soa-test:6000"
@@ -20,6 +21,43 @@ applications:
 
 - name: mock2
   versions: ["v1", "v2"]
-  errorRatios: [-1, 50]
+  errorRatios: [-1, -1]
+  latencies: [50, 500]
+  serviceType: "ClusterIP"
+  redisAddr: "redis:6379"
+  http1target: "http://mock3-http1.soa-test:6000"
+  http2target: "mock4-http2.soa-test:6001"
+
+- name: mock3
+  versions: ["v1", "v2", "v3"]
+  errorRatios: [-1, -1, -1]
+  latencies: [50, 500, 50]
+  serviceType: "ClusterIP"
+  redisAddr: "redis:6379"
+  http1target: "http://mock4-http1.soa-test:6000"
+  http2target: "mock5-http2.soa-test:6001"
+
+- name: mock4
+  versions: ["v1", "v2", "v3"]
+  errorRatios: [-1, -1, -1]
+  latencies: [50, 500, 50]
+  serviceType: "ClusterIP"
+  redisAddr: "redis:6379"
+  http1target: "http://mock5-http1.soa-test:6000"
+  http2target: "mock6-http2.soa-test:6001"
+
+- name: mock5
+  versions: ["v1", "v2", "v3"]
+  errorRatios: [-1, -1, -1]
+  latencies: [50, 500, 50]
+  serviceType: "ClusterIP"
+  redisAddr: "redis:6379"
+  http1target: "http://mock6-http1.soa-test:6000"
+  http2target: "mock6-http2.soa-test:6001"
+
+- name: mock6
+  versions: ["v1", "v2", "v3"]
+  errorRatios: [-1, -1, -1]
+  latencies: [50, 500, 50]
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
