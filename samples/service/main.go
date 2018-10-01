@@ -14,12 +14,13 @@ import (
 
 	"errors"
 	"github.com/go-redis/redis"
+	// grpcopentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
+	// ot "github.com/opentracing/opentracing-go"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	mockproto "github.com/yangyuqian/pilot-debug/proto"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/metadata"
 	"math/rand"
 )
 
@@ -126,7 +127,13 @@ func main() {
 	}
 
 	if *http2target != "" {
-		conn, err := grpc.Dial(*http2target, grpc.WithInsecure())
+		var opts []grpc.DialOption
+		// opts = append(opts, grpc.WithStreamInterceptor(grpcopentracing.StreamClientInterceptor(grpcopentracing.WithTracer(ot.GlobalTracer()))))
+		// opts = append(opts, grpc.WithUnaryInterceptor(grpcopentracing.UnaryClientInterceptor(grpcopentracing.WithTracer(ot.GlobalTracer()))))
+
+		opts = append(opts, grpc.WithInsecure())
+
+		conn, err := grpc.Dial(*http2target, opts...)
 		if err != nil {
 			log.Printf("cannot connect to %s", *http2target)
 		}
@@ -195,15 +202,7 @@ func main() {
 		}
 
 		if http2client != nil {
-			headers := make(map[string]string)
-			for _, it := range headerlist {
-				if ihdr := r.Header.Get(it); ihdr != "" {
-					headers[it] = ihdr
-				}
-			}
-
-			md := metadata.New(headers)
-			resp, err := http2client.Say(context.TODO(), &mockproto.MockRequest{Msg: fmt.Sprintf("this is %s", *serviceName)}, grpc.Header(&md))
+			resp, err := http2client.Say(context.TODO(), &mockproto.MockRequest{Msg: fmt.Sprintf("this is %s", *serviceName)})
 			if err != nil {
 				log.Printf("cannot say hello to grpc service %+v", err)
 			} else {
