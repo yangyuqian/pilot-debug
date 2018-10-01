@@ -14,13 +14,14 @@ import (
 
 	"errors"
 	"github.com/go-redis/redis"
-	// grpcopentracing "github.com/grpc-ecosystem/go-grpc-middleware/tracing/opentracing"
-	// ot "github.com/opentracing/opentracing-go"
+	ot "github.com/opentracing/opentracing-go"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	mockproto "github.com/yangyuqian/pilot-debug/proto"
 	"golang.org/x/net/context"
+	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/metadata"
 	"math/rand"
 )
 
@@ -107,6 +108,20 @@ func (s *mockGrpcServer) Say(ctx context.Context, req *mockproto.MockRequest) (*
 		}
 	}
 
+	if *http1target != "" {
+		if span := ot.SpanFromContext(ctx); span != nil {
+			req, _ := http.NewRequest("GET", *http1target, nil)
+			ot.GlobalTracer().Inject(
+				span.Context(),
+				ot.HTTPHeaders,
+				ot.HTTPHeadersCarrier(req.Header))
+
+			ctxhttp.Do(ctx, nil, req)
+
+			return &mockproto.MockReply{Msg: fmt.Sprintf("passing headers to http/1.1 target: %+v", req.Header)}, nil
+		}
+	}
+
 	time.Sleep(time.Duration(rand.Intn(*latency*2)) * time.Millisecond)
 	return &mockproto.MockReply{Msg: fmt.Sprintf("got message %s", req.Msg)}, nil
 }
@@ -128,8 +143,6 @@ func main() {
 
 	if *http2target != "" {
 		var opts []grpc.DialOption
-		// opts = append(opts, grpc.WithStreamInterceptor(grpcopentracing.StreamClientInterceptor(grpcopentracing.WithTracer(ot.GlobalTracer()))))
-		// opts = append(opts, grpc.WithUnaryInterceptor(grpcopentracing.UnaryClientInterceptor(grpcopentracing.WithTracer(ot.GlobalTracer()))))
 
 		opts = append(opts, grpc.WithInsecure())
 
@@ -202,7 +215,15 @@ func main() {
 		}
 
 		if http2client != nil {
-			resp, err := http2client.Say(context.TODO(), &mockproto.MockRequest{Msg: fmt.Sprintf("this is %s", *serviceName)})
+			headers := make(map[string]string)
+			for _, it := range headerlist {
+				if ihdr := r.Header.Get(it); ihdr != "" {
+					headers[it] = ihdr
+				}
+			}
+			md := metadata.New(headers)
+
+			resp, err := http2client.Say(context.TODO(), &mockproto.MockRequest{Msg: fmt.Sprintf("this is %s", *serviceName)}, grpc.Header(&md))
 			if err != nil {
 				log.Printf("cannot say hello to grpc service %+v", err)
 			} else {
