@@ -42,7 +42,7 @@ var (
 	errorRatio = flag.Int("error-ratio", 50, "ratio to generate errors")
 	// random latency in milliseconds
 	latency    = flag.Int("latency-milliseconds", 500, "set upper bound of the random latency")
-	headerlist = []string{"x-request-id", "x-b3-traceid", "x-b3-spanid", "x-b3-parentspanid", "x-b3-sampled", "x-b3-flags", "x-ot-span-context"}
+	headerlist = []string{"x-request-id", "x-b3-traceid", "x-b3-spanid", "x-b3-parentspanid", "x-b3-sampled", "x-b3-flags", "x-ot-span-context", "x-my-user"}
 )
 
 // clients
