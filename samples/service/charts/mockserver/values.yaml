@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: boscoellision/mockserver
-  tag: v17
+  tag: v16
   pullPolicy: IfNotPresent
 
 applications:
