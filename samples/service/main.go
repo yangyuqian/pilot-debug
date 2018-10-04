@@ -176,6 +176,7 @@ func main() {
 		if http1client != nil {
 			fmt.Fprintln(w, "------------------------ BEGIN HTTP/1.1 ------------------------")
 			f := func() {
+				// GET HTTP/1.1 target
 				req, err := http.NewRequest("GET", *http1target, nil)
 				if err != nil {
 					panic(err)
@@ -208,6 +209,29 @@ func main() {
 
 				http1DepCnt.WithLabelValues(*serviceName, "ok").Inc()
 				w.Write(data)
+
+				// POST HTTP/1.1 target
+				reqpost, err := http.NewRequest("POST", *http1target, nil)
+				if err != nil {
+					panic(err)
+				}
+				reqpost.Header = make(http.Header)
+				for _, it := range headerlist {
+					if ihdr := r.Header.Get(it); ihdr != "" {
+						reqpost.Header.Set(it, ihdr)
+					}
+				}
+				// Do nothing with the reponse, simply visual the response in
+				// Tracer system
+				resppost, err := http1client.Do(reqpost)
+				if err != nil {
+					panic(err)
+				}
+
+				// fails on any non 2xx responses
+				if resppost.StatusCode >= 300 {
+					log.Printf("cannot POST %s with status code %d", *http1target, resppost.StatusCode)
+				}
 			}
 
 			f()

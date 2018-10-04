@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: boscoellision/mockserver
-  tag: v15
+  tag: v17
   pullPolicy: IfNotPresent
 
 applications:
@@ -61,3 +61,4 @@ applications:
   latencies: [5, 50, 5]
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
+  http1target: "http://www.example.com"

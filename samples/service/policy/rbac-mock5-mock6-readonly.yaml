@@ -1,0 +1,20 @@
+apiVersion: "rbac.istio.io/v1alpha1"
+kind: ServiceRole
+metadata:
+  name: mock6-http1-readonly
+spec:
+  rules:
+  - services: ["mock6-http1.soa-test.svc.cluster.local"]
+    methods: ["GET"]
+
+---
+apiVersion: "rbac.istio.io/v1alpha1"
+kind: ServiceRoleBinding
+metadata:
+  name: mock6-http1-readonly
+spec:
+  subjects:
+  - user: "*"
+  roleRef:
+    kind: ServiceRole
+    name: "mock6-http1-readonly"

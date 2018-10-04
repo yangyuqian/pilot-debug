@@ -1,0 +1,34 @@
+apiVersion: "rbac.istio.io/v1alpha1"
+kind: ServiceRole
+metadata:
+  name: admin-mock
+spec:
+  rules:
+  - services:
+    - "mock1-http1.soa-test.svc.cluster.local"
+    - "mock2-http1.soa-test.svc.cluster.local"
+    - "mock3-http1.soa-test.svc.cluster.local"
+    - "mock4-http1.soa-test.svc.cluster.local"
+    - "mock5-http1.soa-test.svc.cluster.local"
+    - "mock6-http1.soa-test.svc.cluster.local"
+    methods: ["GET", "POST"]
+  - services:
+    - "mock1-http2.soa-test.svc.cluster.local"
+    - "mock2-http2.soa-test.svc.cluster.local"
+    - "mock3-http2.soa-test.svc.cluster.local"
+    - "mock4-http2.soa-test.svc.cluster.local"
+    - "mock5-http2.soa-test.svc.cluster.local"
+    - "mock6-http2.soa-test.svc.cluster.local"
+    methods: ["POST"]
+
+---
+apiVersion: "rbac.istio.io/v1alpha1"
+kind: ServiceRoleBinding
+metadata:
+  name: admin-mock
+spec:
+  subjects:
+  - user: "*"
+  roleRef:
+    kind: ServiceRole
+    name: "admin-mock"

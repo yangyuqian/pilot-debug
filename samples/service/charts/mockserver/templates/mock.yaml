@@ -1,8 +1,6 @@
 {{ $values := .Values }}
 {{ $chart := .Chart }}
 {{ range $idx, $item := .Values.applications }}
-
-
 {{ range $idx, $version := $item.versions }}
 {{ $errorRatio := (index $item.errorRatios $idx) }}
 {{ $latency := (index $item.latencies $idx) }}
@@ -12,7 +10,7 @@ metadata:
   name: {{ $item.name }}-{{ $version }}
   labels:
     app: {{ $item.name }}
-    version: {{ $item.version }}
+    version: {{ $version }}
 spec:
   replicas: {{ $item.replicaCount | default $values.replicaCount }}
   selector:
@@ -25,24 +23,24 @@ spec:
         version: {{ $version }}
     spec:
       containers:
-        - name: server
-          image: "{{ $values.image.repository }}:{{ $values.image.tag }}"
-          imagePullPolicy: {{ $values.image.pullPolicy }}
-          ports:
-          - containerPort: 6000
-            name: http
-          - containerPort: 6001
-            name: http2
-          command:
-          - "/root/mockserver"
-          - "--name={{ $item.name }}"
-          - "--http1-addr=:6000"
-          - "--http2-addr=:6001"
-          {{ if $latency }}- "--latency-milliseconds={{ $latency }}"{{ end }}
-          {{ if $errorRatio }}- "--error-ratio={{ $errorRatio }}"{{ end }}
-          {{ if $item.redisAddr }}- "--redis-addr={{ $item.redisAddr }}"{{ else }}# skip redis address{{ end }}
-          {{ if $item.http1target }}- "--http1-target={{ $item.http1target }}"{{ else }}# skip HTTP/1.1 target{{ end }}
-          {{ if $item.http2target }}- "--http2-target={{ $item.http2target }}"{{ else }}# skip HTTP/2 target{{ end }}
+      - name: server
+        image: "{{ $values.image.repository }}:{{ $values.image.tag }}"
+        imagePullPolicy: {{ $values.image.pullPolicy }}
+        ports:
+        - containerPort: 6000
+          name: http
+        - containerPort: 6001
+          name: http2
+        command:
+        - "/root/mockserver"
+        - "--name={{ $item.name }}"
+        - "--http1-addr=:6000"
+        - "--http2-addr=:6001"
+        {{ if $latency }}- "--latency-milliseconds={{ $latency }}"{{ end }}
+        {{ if $errorRatio }}- "--error-ratio={{ $errorRatio }}"{{ end }}
+        {{ if $item.redisAddr }}- "--redis-addr={{ $item.redisAddr }}"{{ else }}# skip redis address{{ end }}
+        {{ if $item.http1target }}- "--http1-target={{ $item.http1target }}"{{ else }}# skip HTTP/1.1 target{{ end }}
+        {{ if $item.http2target }}- "--http2-target={{ $item.http2target }}"{{ else }}# skip HTTP/2 target{{ end }}
 ---
 {{ end }}
 

@@ -1,0 +1,10 @@
+# mesh wide singleton, refer to https://istio.io/docs/concepts/security/#enabling-authorization for more details.
+# set this config to enable rbac for specified namespace
+apiVersion: "rbac.istio.io/v1alpha1"
+kind: RbacConfig
+metadata:
+  name: default
+spec:
+  mode: 'ON_WITH_INCLUSION'
+  inclusion:
+    namespaces: ["soa-test"]

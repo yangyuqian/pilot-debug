@@ -1,0 +1,85 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: ServiceEntry
+metadata:
+  name: example-com-http
+spec:
+  hosts:
+  - www.example.com
+  location: MESH_EXTERNAL
+  ports:
+  - number: 80
+    name: http
+    protocol: HTTP
+  resolution: DNS
+  endpoints:
+  - address: www.example.com
+    ports:
+      http: 80
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: example-com-http-egressgateway
+spec:
+  selector:
+    istio: egressgateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - www.example.com
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: egressgateway-for-example-com
+spec:
+  host: istio-egressgateway.istio-system.svc.cluster.local
+  subsets:
+  - name: example-com
+    trafficPolicy:
+      loadBalancer:
+        simple: ROUND_ROBIN
+      portLevelSettings:
+      - port:
+          number: 80
+        loadBalancer:
+          simple: ROUND_ROBIN
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: example-com-through-egressgateway
+spec:
+  hosts:
+  - www.example.com
+  gateways:
+  - example-com-http-egressgateway
+  - mesh
+  http:
+  - match:
+    - gateways:
+      - mesh
+      port: 80
+    route:
+    - destination:
+        host: istio-egressgateway.istio-system.svc.cluster.local
+        subset: example-com
+        port:
+          number: 80
+      weight: 100
+  - match:
+    - gateways:
+      - example-com-http-egressgateway
+      port: 80
+    route:
+    - destination:
+        host: www.example.com
+        port:
+          number: 80
+      weight: 100
