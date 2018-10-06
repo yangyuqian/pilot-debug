@@ -1,0 +1,10 @@
+apiVersion: "config.istio.io/v1alpha2"
+kind: quota
+metadata:
+  name: requestcount
+  namespace: istio-system
+spec:
+  dimensions:
+    source: request.headers["x-forwarded-for"] | "unknown"
+    destination: destination.labels["app"] | destination.service | "unknown"
+    destinationVersion: destination.labels["version"] | "unknown"

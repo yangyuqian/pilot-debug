@@ -1,0 +1,15 @@
+apiVersion: "config.istio.io/v1alpha2"
+kind: memquota
+metadata:
+  name: handler
+  namespace: istio-system
+spec:
+  quotas:
+  - name: requestcount.quota.istio-system
+    maxAmount: 2
+    validDuration: 1s
+    overrides:
+    - dimensions:
+        destination: mock1-http1.soa-test.svc.cluster.local
+      maxAmount: 2
+      validDuration: 1s

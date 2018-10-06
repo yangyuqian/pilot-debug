@@ -1,0 +1,12 @@
+apiVersion: config.istio.io/v1alpha2
+kind: QuotaSpecBinding
+metadata:
+  name: requestcount
+  namespace: istio-system
+spec:
+  quotaSpecs:
+  - name: requestcount
+    namespace: soa-test
+  services:
+  - name: mock1-http1
+    namespace: soa-test
