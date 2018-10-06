@@ -25,6 +25,33 @@ spec:
           number: 6379
 
 ---
+apiVersion: "networking.istio.io/v1alpha3"
+kind: "DestinationRule"
+metadata:
+  name: redisquota
+spec:
+  host: redisquota.soa-test.svc.cluster.local
+  trafficPolicy:
+    tls:
+      mode: DISABLE
+
+---
+
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: redisquota
+spec:
+  hosts:
+  - redisquota
+  tcp:
+  - route:
+    - destination:
+        host: redisquota.soa-test.svc.cluster.local
+        port:
+          number: 6379
+
+---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:

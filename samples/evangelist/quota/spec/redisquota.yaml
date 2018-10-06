@@ -3,7 +3,7 @@ kind: redisquota
 metadata:
   name: handler
 spec:
-  redisServerUrl: redis.soa-test.svc:6379
+  redisServerUrl: redisquota.soa-test.svc:6379
   connectionPoolSize: 10
   quotas:
   - name: requestcount.quota.soa-test
