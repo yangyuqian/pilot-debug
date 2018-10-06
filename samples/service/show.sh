@@ -161,7 +161,7 @@ if [ -n "$install_example" ]; then
 fi
 
 if [ -n "$uninstall_example" ]; then
-  kubectl delete --namespace $namespace -f ${example_root_path}/${install_example}/spec/
+  kubectl delete --namespace $namespace -f ${example_root_path}/${uninstall_example}/spec/
   echo "waiting $graceful_seconds seconds..."
   sleep $graceful_seconds
 fi
