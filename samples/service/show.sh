@@ -155,13 +155,21 @@ if [ -n "$upgrade" ]; then
 fi
 
 if [ -n "$install_example" ]; then
-  kubectl apply --namespace $namespace -f ${example_root_path}/${install_example}/spec/
+  if [ -f "${example_root_path}/${install_example}/install.sh" ]; then
+    sh ${example_root_path}/${install_example}/install.sh
+  else
+    kubectl apply --namespace $namespace -f ${example_root_path}/${install_example}/spec/
+  fi
   echo "waiting $graceful_seconds seconds..."
   sleep $graceful_seconds
 fi
 
 if [ -n "$uninstall_example" ]; then
-  kubectl delete --namespace $namespace -f ${example_root_path}/${uninstall_example}/spec/
+  if [ -f "${example_root_path}/${uninstall_example}/uninstall.sh" ]; then
+    sh ${example_root_path}/${uninstall_example}/uninstall.sh
+  else
+    kubectl delete --namespace $namespace -f ${example_root_path}/${uninstall_example}/spec/
+  fi
   echo "waiting $graceful_seconds seconds..."
   sleep $graceful_seconds
 fi
