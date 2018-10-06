@@ -143,10 +143,11 @@ parse_args $@
 
 # upgrade or install mockserver, and cleanup all monitor data
 if [ -n "$upgrade" ]; then
-  restart_deployment "istio-tracing"
+  restart_deployment "istio-telemetry"
   restart_deployment "prometheus"
   restart_deployment "servicegraph"
   restart_deployment "grafana"
+  restart_deployment "istio-tracing"
 
   helm upgrade --install --timeout 1200 --wait --namespace $namespace $release $chart
   echo "waiting $graceful_seconds seconds..."
@@ -154,13 +155,13 @@ if [ -n "$upgrade" ]; then
 fi
 
 if [ -n "$install_example" ]; then
-  kubectl apply --namespace $namespace ${example_root_path}/${install_example}
+  kubectl apply --namespace $namespace -f ${example_root_path}/${install_example}/spec/
   echo "waiting $graceful_seconds seconds..."
   sleep $graceful_seconds
 fi
 
 if [ -n "$uninstall_example" ]; then
-  kubectl delete --namespace $namespace ${example_root_path}/${install_example}
+  kubectl delete --namespace $namespace -f ${example_root_path}/${install_example}/spec/
   echo "waiting $graceful_seconds seconds..."
   sleep $graceful_seconds
 fi
