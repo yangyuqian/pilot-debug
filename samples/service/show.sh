@@ -146,6 +146,7 @@ if [ -n "$upgrade" ]; then
   restart_deployment "istio-tracing"
   restart_deployment "prometheus"
   restart_deployment "servicegraph"
+  restart_deployment "grafana"
 
   helm upgrade --install --timeout 1200 --wait --namespace $namespace $release $chart
   echo "waiting $graceful_seconds seconds..."
