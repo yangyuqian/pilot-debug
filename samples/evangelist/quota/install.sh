@@ -5,4 +5,3 @@ kubectl apply --namespace istio-system -f samples/evangelist/quota/spec/quotaspe
 kubectl apply --namespace istio-system -f samples/evangelist/quota/spec/instance.yaml
 kubectl apply --namespace istio-system -f samples/evangelist/quota/spec/handler.yaml
 kubectl apply --namespace istio-system -f samples/evangelist/quota/spec/rule.yaml
-
