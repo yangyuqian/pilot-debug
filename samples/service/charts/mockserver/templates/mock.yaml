@@ -22,6 +22,7 @@ spec:
         app: {{ $item.name }}
         version: {{ $version }}
     spec:
+      serviceAccountName: {{ $item.name }}-{{ $version }}
       containers:
       - name: server
         image: "{{ $values.image.repository }}:{{ $values.image.tag }}"

@@ -11,15 +11,14 @@ import (
 	"time"
 
 	"io/ioutil"
+	"strings"
 
 	"errors"
 	"github.com/go-redis/redis"
-	ot "github.com/opentracing/opentracing-go"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	mockproto "github.com/yangyuqian/pilot-debug/proto"
 	"golang.org/x/net/context"
-	"golang.org/x/net/context/ctxhttp"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 	"math/rand"
@@ -33,8 +32,8 @@ var (
 	http2addr = flag.String("http2-addr", ":6001", "HTTP/2 adress")
 
 	// connect to HTTP/1.1 and HTTP/2
-	http1target = flag.String("http1-target", "", "HTTP/1.1 target")
-	http2target = flag.String("http2-target", "", "HTTP/2 target")
+	http1targets = flag.String("http1-target", "", "HTTP/1.1 target")
+	http2target  = flag.String("http2-target", "", "HTTP/2 target")
 
 	// redis addr
 	redisAddr = flag.String("redis-addr", "", "redis address")
@@ -108,20 +107,6 @@ func (s *mockGrpcServer) Say(ctx context.Context, req *mockproto.MockRequest) (*
 		}
 	}
 
-	if *http1target != "" {
-		if span := ot.SpanFromContext(ctx); span != nil {
-			req, _ := http.NewRequest("GET", *http1target, nil)
-			ot.GlobalTracer().Inject(
-				span.Context(),
-				ot.HTTPHeaders,
-				ot.HTTPHeadersCarrier(req.Header))
-
-			ctxhttp.Do(ctx, nil, req)
-
-			return &mockproto.MockReply{Msg: fmt.Sprintf("passing headers to http/1.1 target: %+v", req.Header)}, nil
-		}
-	}
-
 	time.Sleep(time.Duration(rand.Intn(*latency*2)) * time.Millisecond)
 	return &mockproto.MockReply{Msg: fmt.Sprintf("got message %s", req.Msg)}, nil
 }
@@ -137,7 +122,7 @@ func main() {
 		flag.Parse()
 	}
 
-	if *http1target != "" {
+	if *http1targets != "" {
 		http1client = http.DefaultClient
 	}
 
@@ -176,61 +161,41 @@ func main() {
 		if http1client != nil {
 			fmt.Fprintln(w, "------------------------ BEGIN HTTP/1.1 ------------------------")
 			f := func() {
-				// GET HTTP/1.1 target
-				req, err := http.NewRequest("GET", *http1target, nil)
-				if err != nil {
-					panic(err)
-				}
-				req.Header = make(http.Header)
-				for _, it := range headerlist {
-					if ihdr := r.Header.Get(it); ihdr != "" {
-						req.Header.Set(it, ihdr)
+				for _, http1target := range strings.Split(*http1targets, ",") {
+					// GET.http1target
+					parts := strings.Split(http1target, "|")
+					req, err := http.NewRequest(parts[0], parts[1], nil)
+					if err != nil {
+						panic(err)
 					}
-				}
-
-				resp, err := http1client.Do(req)
-				if err != nil {
-					log.Printf("error to fetch info from http1 target %+v", err)
-					http1DepCnt.WithLabelValues(*serviceName, "ko").Inc()
-					return
-				}
-				defer func() {
-					if resp.Body != nil {
-						resp.Body.Close()
+					req.Header = make(http.Header)
+					for _, it := range headerlist {
+						if ihdr := r.Header.Get(it); ihdr != "" {
+							req.Header.Set(it, ihdr)
+						}
 					}
-				}()
 
-				data, err := ioutil.ReadAll(resp.Body)
-				if err != nil {
-					log.Printf("error to fetch info from http1 target %+v", err)
-					http1DepCnt.WithLabelValues(*serviceName, "ko").Inc()
-					return
-				}
-
-				http1DepCnt.WithLabelValues(*serviceName, "ok").Inc()
-				w.Write(data)
-
-				// POST HTTP/1.1 target
-				reqpost, err := http.NewRequest("POST", *http1target, nil)
-				if err != nil {
-					panic(err)
-				}
-				reqpost.Header = make(http.Header)
-				for _, it := range headerlist {
-					if ihdr := r.Header.Get(it); ihdr != "" {
-						reqpost.Header.Set(it, ihdr)
+					resp, err := http1client.Do(req)
+					if err != nil {
+						log.Printf("error to fetch info from http1 target %+v", err)
+						http1DepCnt.WithLabelValues(*serviceName, "ko").Inc()
+						return
 					}
-				}
-				// Do nothing with the reponse, simply visual the response in
-				// Tracer system
-				resppost, err := http1client.Do(reqpost)
-				if err != nil {
-					panic(err)
-				}
+					defer func() {
+						if resp.Body != nil {
+							resp.Body.Close()
+						}
+					}()
 
-				// fails on any non 2xx responses
-				if resppost.StatusCode >= 300 {
-					log.Printf("cannot POST %s with status code %d", *http1target, resppost.StatusCode)
+					data, err := ioutil.ReadAll(resp.Body)
+					if err != nil {
+						log.Printf("error to fetch info from http1 target %+v", err)
+						http1DepCnt.WithLabelValues(*serviceName, "ko").Inc()
+						return
+					}
+
+					http1DepCnt.WithLabelValues(*serviceName, "ok").Inc()
+					w.Write(data)
 				}
 			}
 

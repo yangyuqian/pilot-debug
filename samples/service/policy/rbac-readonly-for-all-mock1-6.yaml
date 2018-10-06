@@ -9,8 +9,6 @@ spec:
     - "mock2-http1.soa-test.svc.cluster.local"
     - "mock3-http1.soa-test.svc.cluster.local"
     - "mock4-http1.soa-test.svc.cluster.local"
-    - "mock5-http1.soa-test.svc.cluster.local"
-    - "mock6-http1.soa-test.svc.cluster.local"
     methods: ["GET"]
 
 ---
