@@ -41,6 +41,5 @@ applications:
   errorRatios: [-1, -1, -1]
   latencies: [5, 100, 5]
   serviceType: "ClusterIP"
-  redisAddr: "redis:6379"
   http1target: "GET|http://www.example.com"
 
