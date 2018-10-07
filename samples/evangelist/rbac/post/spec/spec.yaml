@@ -1,0 +1,126 @@
+apiVersion: "rbac.istio.io/v1alpha1"
+kind: ServiceRole
+metadata:
+  name: mock4-http1-post
+spec:
+  rules:
+  - services: ["mock4-http1.soa-test.svc.cluster.local"]
+    methods: ["POST"]
+
+---
+apiVersion: "rbac.istio.io/v1alpha1"
+kind: ServiceRoleBinding
+metadata:
+  name: mock4-http1-post
+spec:
+  subjects:
+  # ServiceAccount name
+  - user: "cluster.local/ns/soa-test/sa/mock3-v1"
+  - user: "cluster.local/ns/soa-test/sa/mock3-v2"
+  - user: "cluster.local/ns/soa-test/sa/mock3-v3"
+  roleRef:
+    kind: ServiceRole
+    name: "mock4-http1-post"
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: mock3-http1
+spec:
+  hosts:
+  - mock3-http1
+  tcp:
+  - route:
+    - destination:
+        host: mock3-http1.soa-test.svc.cluster.local
+        port:
+          number: 6000
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: mock3-http2
+spec:
+  hosts:
+  - mock3-http2
+  tcp:
+  - route:
+    - destination:
+        host: mock3-http2.soa-test.svc.cluster.local
+        port:
+          number: 6000
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: mock4-http1
+spec:
+  hosts:
+  - mock4-http1
+  tcp:
+  - route:
+    - destination:
+        host: mock4-http1.soa-test.svc.cluster.local
+        port:
+          number: 6001
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: mock4-http2
+spec:
+  hosts:
+  - mock4-http2
+  tcp:
+  - route:
+    - destination:
+        host: mock4-http2.soa-test.svc.cluster.local
+        port:
+          number: 6001
+---
+apiVersion: "networking.istio.io/v1alpha3"
+kind: DestinationRule
+metadata:
+  name: mock3-http1
+spec:
+  host: "mock3-http1.soa-test.svc.cluster.local"
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+
+---
+apiVersion: "networking.istio.io/v1alpha3"
+kind: DestinationRule
+metadata:
+  name: mock3-http2
+spec:
+  host: "mock3-http2.soa-test.svc.cluster.local"
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+
+---
+apiVersion: "networking.istio.io/v1alpha3"
+kind: DestinationRule
+metadata:
+  name: mock4-http1
+spec:
+  host: "mock4-http1.soa-test.svc.cluster.local"
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
+
+---
+apiVersion: "networking.istio.io/v1alpha3"
+kind: DestinationRule
+metadata:
+  name: mock4-http2
+spec:
+  host: "mock4-http2.soa-test.svc.cluster.local"
+  trafficPolicy:
+    tls:
+      mode: ISTIO_MUTUAL
