@@ -1,0 +1,28 @@
+apiVersion: config.istio.io/v1alpha2
+kind: prometheus
+metadata:
+  name: mypromhandler
+  namespace: istio-system
+spec:
+  metrics:
+  - instance_name: requestcount.metric.istio-system
+    kind: COUNTER
+    label_names:
+    - reporter
+    - source_app
+    - source_principal
+    - source_workload
+    - source_workload_namespace
+    - source_version
+    - destination_app
+    - destination_principal
+    - destination_workload
+    - destination_workload_namespace
+    - destination_version
+    - destination_service
+    - destination_service_name
+    - destination_service_namespace
+    - request_protocol
+    - response_code
+    - connection_security_policy
+    name: myrequests_total

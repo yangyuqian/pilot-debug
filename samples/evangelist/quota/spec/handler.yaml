@@ -7,9 +7,9 @@ spec:
   quotas:
   - name: requestcount.quota.istio-system
     maxAmount: 20
-    validDuration: 1s
+    validDuration: 30s
     overrides:
     - dimensions:
         destination: mock1-http1.soa-test.svc.cluster.local
-      maxAmount: 2
-      validDuration: 1s
+      maxAmount: 10
+      validDuration: 30s
