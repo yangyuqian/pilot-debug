@@ -345,7 +345,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(istio_requests_total{source_app=~\"(mock|istio-ingress|istio-egress).*\", destination_app=~\"(mock|istio-ingress|istio-egress).*\", response_code=~\"2[0-9][0-9]\"}[30s])) by (desntination_version, destination_app)",
+          "expr": "sum(rate(istio_requests_total{source_app=~\"(mock|istio-ingress|istio-egress).*\", destination_app=~\"(mock|istio-ingress|istio-egress).*\", response_code=~\"2[0-9][0-9]\"}[30s])) by (destination_version, destination_app)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "-> {{destination_version}}.{{destination_app}}",
@@ -393,6 +393,7 @@
       }
     }
   ],
+  "refresh": "5s",
   "schemaVersion": 16,
   "style": "dark",
   "tags": [],

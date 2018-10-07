@@ -6,7 +6,7 @@ metadata:
 spec:
   quotas:
   - name: requestcount.quota.istio-system
-    maxAmount: 2
+    maxAmount: 20
     validDuration: 1s
     overrides:
     - dimensions:
