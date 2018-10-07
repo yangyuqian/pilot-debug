@@ -43,3 +43,8 @@ applications:
   serviceType: "ClusterIP"
   http1target: "GET|http://www.example.com"
 
+- name: mock5
+  versions: ["v1"]
+  errorRatios: [-1]
+  latencies: [5]
+  serviceType: "ClusterIP"
