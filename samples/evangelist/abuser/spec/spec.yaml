@@ -1,0 +1,150 @@
+# traffic with header of x-my-user: foo should be
+# served by the slow v2 mock3 service, to simulate
+# a typical a/b testing scenario -- minimize the
+# client impact by explicit routing rules.
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: mock3-http1
+spec:
+  hosts:
+  - "mock3-http1.soa-test.svc.cluster.local"
+  http:
+  - route:
+    - destination:
+        host: mock3-http1.soa-test.svc.cluster.local
+        subset: v1
+      weight: 5
+    - destination:
+        host: mock3-http1.soa-test.svc.cluster.local
+        subset: v2
+      weight: 90
+    - destination:
+        host: mock3-http1.soa-test.svc.cluster.local
+        subset: v3
+      weight: 5
+    match:
+    - headers:
+        x-my-user:
+          exact: foo
+  - route:
+    - destination:
+        host: mock3-http1.soa-test.svc.cluster.local
+        subset: v1
+      weight: 90
+    - destination:
+        host: mock3-http1.soa-test.svc.cluster.local
+        subset: v2
+      weight: 5
+    - destination:
+        host: mock3-http1.soa-test.svc.cluster.local
+        subset: v3
+      weight: 5
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: mock3-http2
+spec:
+  hosts:
+  - "mock3-http2.soa-test.svc.cluster.local"
+  http:
+  - route:
+    - destination:
+        host: mock3-http2.soa-test.svc.cluster.local
+        subset: v1
+      weight: 90
+    - destination:
+        host: mock3-http2.soa-test.svc.cluster.local
+        subset: v2
+      weight: 5
+    - destination:
+        host: mock3-http2.soa-test.svc.cluster.local
+        subset: v3
+      weight: 5
+    match:
+    - headers:
+        x-my-user:
+          exact: foo
+  - route:
+    - destination:
+        host: mock3-http1.soa-test.svc.cluster.local
+        subset: v1
+      weight: 90
+    - destination:
+        host: mock3-http1.soa-test.svc.cluster.local
+        subset: v2
+      weight: 5
+    - destination:
+        host: mock3-http1.soa-test.svc.cluster.local
+        subset: v3
+      weight: 5
+
+---
+# DestinatioRule for v1~v3 http/1.1 endpoints of mock3
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: mock3-http1
+spec:
+  host: mock3-http1.soa-test.svc.cluster.local
+  subsets:
+  - name: v1
+    labels:
+      version: v1
+    trafficPolicy:
+      tls:
+        mode: ISTIO_MUTUAL
+      loadBalancer:
+        simple: LEAST_CONN
+  - name: v2
+    labels:
+      version: v2
+    trafficPolicy:
+      tls:
+        mode: ISTIO_MUTUAL
+      loadBalancer:
+        simple: LEAST_CONN
+  - name: v3
+    labels:
+      version: v3
+    trafficPolicy:
+      tls:
+        mode: ISTIO_MUTUAL
+      loadBalancer:
+        simple: LEAST_CONN
+
+---
+# DestinatioRule for v1~v3 http/2 endpoints of mock3
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: mock3-http2
+spec:
+  host: mock3-http2.soa-test.svc.cluster.local
+  subsets:
+  - name: v1
+    labels:
+      version: v1
+    trafficPolicy:
+      tls:
+        mode: ISTIO_MUTUAL
+      loadBalancer:
+        simple: LEAST_CONN
+  - name: v2
+    labels:
+      version: v2
+    trafficPolicy:
+      tls:
+        mode: ISTIO_MUTUAL
+      loadBalancer:
+        simple: LEAST_CONN
+  - name: v3
+    labels:
+      version: v3
+    trafficPolicy:
+      tls:
+        mode: ISTIO_MUTUAL
+      loadBalancer:
+        simple: LEAST_CONN
