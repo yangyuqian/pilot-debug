@@ -10,15 +10,11 @@ spec:
     - destination:
         host: mock3-http1.soa-test.svc.cluster.local
         subset: v1
-      weight: 5
+      weight: 95
     - destination:
         host: mock3-http1.soa-test.svc.cluster.local
         subset: v2
       weight: 5
-    - destination:
-        host: mock3-http1.soa-test.svc.cluster.local
-        subset: v3
-      weight: 90
 
 ---
 apiVersion: networking.istio.io/v1alpha3
@@ -33,15 +29,11 @@ spec:
     - destination:
         host: mock3-http2.soa-test.svc.cluster.local
         subset: v1
-      weight: 5
+      weight: 95
     - destination:
         host: mock3-http2.soa-test.svc.cluster.local
         subset: v2
       weight: 5
-    - destination:
-        host: mock3-http2.soa-test.svc.cluster.local
-        subset: v3
-      weight: 90
 
 ---
 # DestinatioRule for v1~v3 http/1.1 endpoints of mock3
