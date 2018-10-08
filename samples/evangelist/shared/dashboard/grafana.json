@@ -46,6 +46,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
+  "iteration": 1538989321650,
   "links": [],
   "panels": [
     {
@@ -56,8 +57,8 @@
       "datasource": "${DS_PROMETHEUS}",
       "fill": 3,
       "gridPos": {
-        "h": 10,
-        "w": 12,
+        "h": 9,
+        "w": 8,
         "x": 0,
         "y": 0
       },
@@ -87,17 +88,18 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(istio_requests_total{source_app=~\"(mock|istio-ingress|istio-egress).*\", destination_app=~\"(mock|istio-ingress|istio-egress).*\", response_code=~\"2[0-9][0-9]\"}[30s])) by (source_version, destination_version, source_app, destination_app)",
+          "expr": "sum(rate(istio_requests_total{source_app=~\"$source_app\", destination_app=~\"$destination_app\", source_version=~\"$source_version\", destination_version=~\"$destination_version\", response_code=~\"$response_code\"}[30s])) by (source_version, destination_version, source_app, destination_app, response_code)",
           "format": "time_series",
+          "hide": false,
           "intervalFactor": 1,
-          "legendFormat": "{{source_version}}.{{source_app}} -> {{destination_version}}.{{destination_app}}",
+          "legendFormat": "{{source_version}}.{{source_app}} -> {{destination_version}}.{{destination_app}}({{response_code}})",
           "refId": "A"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Traffic Stats - All",
+      "title": "Traffic Stats",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -142,12 +144,12 @@
       "datasource": "${DS_PROMETHEUS}",
       "fill": 3,
       "gridPos": {
-        "h": 10,
-        "w": 12,
-        "x": 12,
+        "h": 9,
+        "w": 8,
+        "x": 8,
         "y": 0
       },
-      "id": 8,
+      "id": 12,
       "legend": {
         "alignAsTable": true,
         "avg": false,
@@ -163,7 +165,7 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "percentage": false,
+      "percentage": true,
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -173,17 +175,17 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "histogram_quantile(0.95, sum(rate(istio_request_duration_seconds_bucket{source_app=~\"(mock|istio-ingress|istio-egress).*\", destination_app=~\"(mock|istio-ingress|istio-egress).*\", response_code=~\"2[0-9][0-9]\"}[30s])) by (le, source_app, source_version, destination_app, destination_version))",
+          "expr": "sum(rate(istio_requests_total{source_app=~\"$source_app\", destination_app=~\"$destination_app\", source_version=~\"$source_version\", destination_version=~\"$destination_version\", response_code=~\"$response_code\"}[30s])) by (source_version, destination_version, source_app, destination_app, response_code)",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{{source_version}}.{{source_app}} -> {{destination_version}}.{{destination_app}}",
+          "legendFormat": "{{source_version}}.{{source_app}} -> {{destination_version}}.{{destination_app}}({{response_code}})",
           "refId": "A"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Latency Stats - All",
+      "title": "Traffic Distribution",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -229,11 +231,11 @@
       "fill": 3,
       "gridPos": {
         "h": 9,
-        "w": 12,
-        "x": 0,
-        "y": 10
+        "w": 8,
+        "x": 16,
+        "y": 0
       },
-      "id": 4,
+      "id": 14,
       "legend": {
         "alignAsTable": true,
         "avg": false,
@@ -259,17 +261,17 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(istio_requests_total{source_app=~\"(mock|istio-ingress|istio-egress).*\", destination_app=~\"(mock|istio-ingress|istio-egress).*\", response_code=~\"2[0-9][0-9]\"}[30s])) by (source_version, source_app)",
+          "expr": "histogram_quantile(0.95, sum(rate(istio_request_duration_seconds_bucket{source_app=~\"$source_app\", destination_app=~\"$destination_app\", source_version=~\"$source_version\", destination_version=~\"$destination_version\", response_code=~\"$response_code\"}[30s])) by (source_version, destination_version, source_app, destination_app, response_code, le))",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{{source_version}}.{{source_app}} -> ",
+          "legendFormat": "{{source_version}}.{{source_app}} -> {{destination_version}}.{{destination_app}}({{response_code}})",
           "refId": "A"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Traffic Stats by Source",
+      "title": "Traffic Duration",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -285,93 +287,7 @@
       },
       "yaxes": [
         {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${DS_PROMETHEUS}",
-      "fill": 3,
-      "gridPos": {
-        "h": 9,
-        "w": 12,
-        "x": 12,
-        "y": 10
-      },
-      "id": 6,
-      "legend": {
-        "alignAsTable": true,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "null",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": true,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "sum(rate(istio_requests_total{source_app=~\"(mock|istio-ingress|istio-egress).*\", destination_app=~\"(mock|istio-ingress|istio-egress).*\", response_code=~\"2[0-9][0-9]\"}[30s])) by (destination_version, destination_app)",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "-> {{destination_version}}.{{destination_app}}",
-          "refId": "A"
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Traffic Stats - by Destination",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
+          "format": "s",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -398,7 +314,108 @@
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "allValue": "(istio-ingress|istio-egress|mock).*",
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "source_app",
+        "options": [],
+        "query": "label_values(istio_requests_total, source_app)",
+        "refresh": 1,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": "(istio-ingress|istio-egress|mock).*",
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "destination_app",
+        "options": [],
+        "query": "label_values(istio_requests_total, destination_app)",
+        "refresh": 1,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": ".*",
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "response_code",
+        "options": [],
+        "query": "label_values(istio_requests_total, response_code)",
+        "refresh": 1,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": ".*",
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "source_version",
+        "options": [],
+        "query": "label_values(istio_requests_total, source_version)",
+        "refresh": 1,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": ".*",
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "destination_version",
+        "options": [],
+        "query": "label_values(istio_requests_total, destination_version)",
+        "refresh": 1,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
   },
   "time": {
     "from": "now-5m",
@@ -432,5 +449,5 @@
   "timezone": "",
   "title": "evangelist-init",
   "uid": "WKY5SS1mk",
-  "version": 7
+  "version": 14
 }
