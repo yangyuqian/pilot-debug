@@ -46,7 +46,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1538979513905,
+  "iteration": 1538985816866,
   "links": [],
   "panels": [
     {
@@ -88,7 +88,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "histogram_quantile(0.95, sum(rate(istio_request_duration_seconds_bucket{source_app=~\"$source_app\", destination_app=~\"$destination_app\"}[30s])) by (le, source_app, source_version, destination_app, destination_version))",
+          "expr": "histogram_quantile(0.95, sum(rate(istio_request_duration_seconds_bucket{response_code=~\"$response_code\", source_app=~\"$source_app\", destination_app=~\"$destination_app\"}[30s])) by (le, source_app, source_version, destination_app, destination_version))",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{source_version}}.{{source_app}} -> {{destination_version}}.{{destination_app}}",
@@ -174,7 +174,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(istio_requests_total{source_app=~\"$source_app\", destination_app=~\"$destination_app\"}[30s])) by (source_version, destination_version, source_app, destination_app)",
+          "expr": "sum(rate(istio_requests_total{response_code=~\"$response_code\", source_app=~\"$source_app\", destination_app=~\"$destination_app\"}[30s])) by (source_version, destination_version, source_app, destination_app)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{source_version}}.{{source_app}} -> {{destination_version}}.{{destination_app}}",
@@ -260,7 +260,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(istio_requests_total{source_app=~\"$source_app\", destination_app=~\"$destination_app\"}[30s])) by (source_version, destination_version, source_app, destination_app)",
+          "expr": "sum(rate(istio_requests_total{response_code=~\"$response_code\",source_app=~\"$source_app\", destination_app=~\"$destination_app\"}[30s])) by (source_version, destination_version, source_app, destination_app)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{source_version}}.{{source_app}} -> {{destination_version}}.{{destination_app}}",
@@ -346,7 +346,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(istio_requests_total{source_app=~\"$source_app\", destination_app=~\"$destination_app\"}[30s])) by (source_version, source_app)",
+          "expr": "sum(rate(istio_requests_total{response_code=~\"$response_code\",source_app=~\"$source_app\", destination_app=~\"$destination_app\"}[30s])) by (source_version, source_app)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{source_version}}.{{source_app}} -> ",
@@ -432,7 +432,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(istio_requests_total{source_app=~\"$source_app\", destination_app=~\"$destination_app\"}[30s])) by (source_version, source_app)",
+          "expr": "sum(rate(istio_requests_total{response_code=~\"$response_code\",source_app=~\"$source_app\", destination_app=~\"$destination_app\"}[30s])) by (source_version, source_app)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{source_version}}.{{source_app}} -> ",
@@ -518,7 +518,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(istio_requests_total{source_app=~\"$source_app\", destination_app=~\"$destination_app\"}[30s])) by (destination_version, destination_app)",
+          "expr": "sum(rate(istio_requests_total{response_code=~\"$response_code\",source_app=~\"$source_app\", destination_app=~\"$destination_app\"}[30s])) by (destination_version, destination_app)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "-> {{destination_version}}.{{destination_app}}",
@@ -604,7 +604,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(istio_requests_total{source_app=~\"$source_app\", destination_app=~\"$destination_app\"}[30s])) by (destination_version, destination_app)",
+          "expr": "sum(rate(istio_requests_total{response_code=~\"$response_code\",source_app=~\"$source_app\", destination_app=~\"$destination_app\"}[30s])) by (destination_version, destination_app)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "-> {{destination_version}}.{{destination_app}}",
@@ -697,6 +697,26 @@
         "tagsQuery": "",
         "type": "query",
         "useTags": false
+      },
+      {
+        "allValue": ".*",
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "response_code",
+        "options": [],
+        "query": "label_values(istio_requests_total, response_code)",
+        "refresh": 1,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
       }
     ]
   },
@@ -732,5 +752,5 @@
   "timezone": "",
   "title": "evangelist-init",
   "uid": "WKY5SS1mk",
-  "version": 17
+  "version": 2
 }
