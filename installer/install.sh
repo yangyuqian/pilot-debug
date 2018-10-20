@@ -1,6 +1,6 @@
 #!/bin/sh
 checktime=60
-soa_ns=soa-test
+soa_ns=istio-system
 
 function wt(){
   echo "wait $checktime seconds ..."
