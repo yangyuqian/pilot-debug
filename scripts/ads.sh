@@ -154,7 +154,7 @@ if [ -z "$revision" ]; then
 fi
 
 if [ -n "$selector" ]; then
-  pod_id=$(kubectl get pods --namespace $namespace --selector="$selector" -o jsonpath='{ .items[0].metadata.name }')
+  pod_id=$(kubectl get pods --namespace $namespace --selector="$selector" --field-selector=status.phase=Running -o jsonpath='{ .items[0].metadata.name }')
 
   if [ -z "$node_id" ]; then
     node_id=$(kubectl exec --namespace $namespace -it -c istio-proxy $pod_id -- cat /etc/istio/proxy/envoy-rev${revision}.json|jq '.node.id')
