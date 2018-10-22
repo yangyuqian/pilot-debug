@@ -22,6 +22,8 @@ spec:
         app: {{ $item.name }}
         version: {{ $version }}
     spec:
+      nodeSelector:
+        soa: "true"
       serviceAccountName: {{ $item.name }}-{{ $version }}
       containers:
       - name: server

@@ -19,3 +19,4 @@ spec:
     - "servicegraph.example.info"
     - "tracing.example.info"
     - "mock.example.info"
+    - "solr.example.info"

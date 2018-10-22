@@ -2794,6 +2794,8 @@ spec:
       annotations:
         sidecar.istio.io/inject: "false"
     spec:
+      nodeSelector:
+        important: "true"
       serviceAccountName: istio-mixer-service-account
       volumes:
       - name: config-volume
@@ -2812,7 +2814,6 @@ spec:
         resources:
           requests:
             cpu: 10m
-          
         volumeMounts:
         - name: config-volume
           mountPath: /etc/statsd
@@ -2949,6 +2950,8 @@ spec:
         scheduler.alpha.kubernetes.io/critical-pod: ""
     spec:
       serviceAccountName: istio-galley-service-account
+      nodeSelector:
+        critical: "true"
       containers:
         - name: validator
           image: "docker.io/istio/galley:1.0.2"
@@ -3062,6 +3065,8 @@ spec:
         sidecar.istio.io/inject: "false"
         scheduler.alpha.kubernetes.io/critical-pod: ""
     spec:
+      nodeSelector:
+        critical: "true"
       serviceAccountName: istio-egressgateway-service-account
       containers:
         - name: istio-proxy
@@ -3198,6 +3203,8 @@ spec:
         sidecar.istio.io/inject: "false"
         scheduler.alpha.kubernetes.io/critical-pod: ""
     spec:
+      nodeSelector:
+        critical: "true"
       serviceAccountName: istio-ingressgateway-service-account
       containers:
         - name: istio-proxy
@@ -3341,6 +3348,8 @@ spec:
         sidecar.istio.io/inject: "false"
         scheduler.alpha.kubernetes.io/critical-pod: ""
     spec:
+      nodeSelector:
+        critical: "true"
       containers:
         - name: grafana
           image: "docker.io/istio/grafana:1.0.2"
@@ -3430,6 +3439,8 @@ spec:
         sidecar.istio.io/inject: "false"
         scheduler.alpha.kubernetes.io/critical-pod: ""
     spec:
+      nodeSelector:
+        critical: "true"
       serviceAccountName: istio-mixer-service-account
       volumes:
       - name: istio-certs
@@ -3560,6 +3571,8 @@ spec:
         sidecar.istio.io/inject: "false"
         scheduler.alpha.kubernetes.io/critical-pod: ""
     spec:
+      nodeSelector:
+        critical: "true"
       serviceAccountName: istio-mixer-service-account
       volumes:
       - name: istio-certs
@@ -3664,6 +3677,8 @@ spec:
         sidecar.istio.io/inject: "false"
         scheduler.alpha.kubernetes.io/critical-pod: ""
     spec:
+      nodeSelector:
+        critical: "true"
       serviceAccountName: istio-pilot-service-account
       containers:
         - name: discovery
@@ -3819,6 +3834,8 @@ spec:
         sidecar.istio.io/inject: "false"
         scheduler.alpha.kubernetes.io/critical-pod: ""
     spec:
+      nodeSelector:
+        important: "true"
       serviceAccountName: prometheus
       containers:
         - name: prometheus
@@ -3841,7 +3858,6 @@ spec:
           resources:
             requests:
               cpu: 10m
-            
           volumeMounts:
           - name: config-volume
             mountPath: /etc/prometheus
@@ -3907,6 +3923,8 @@ spec:
         sidecar.istio.io/inject: "false"
         scheduler.alpha.kubernetes.io/critical-pod: ""
     spec:
+      nodeSelector:
+        critical: "true"
       serviceAccountName: istio-citadel-service-account
       containers:
         - name: citadel
@@ -3922,8 +3940,7 @@ spec:
           resources:
             requests:
               cpu: 10m
-            
-      affinity:      
+      affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
@@ -3979,6 +3996,8 @@ spec:
         sidecar.istio.io/inject: "false"
         scheduler.alpha.kubernetes.io/critical-pod: ""
     spec:
+      nodeSelector:
+        important: "true"
       containers:
         - name: servicegraph
           image: "docker.io/istio/servicegraph:1.0.2"
@@ -4056,6 +4075,8 @@ spec:
         sidecar.istio.io/inject: "false"
         scheduler.alpha.kubernetes.io/critical-pod: ""
     spec:
+      nodeSelector:
+        important: "true"
       serviceAccountName: istio-sidecar-injector-service-account
       containers:
         - name: sidecar-injector-webhook
@@ -4170,6 +4191,8 @@ spec:
         sidecar.istio.io/inject: "false"
         scheduler.alpha.kubernetes.io/critical-pod: ""
     spec:
+      nodeSelector:
+        important: "true"
       containers:
         - name: jaeger
           image: "docker.io/jaegertracing/all-in-one:1.5"
