@@ -38,6 +38,7 @@ spec:
   - route:
     - destination:
         host: mock1-http1.soa-test.svc.cluster.local
+        subset: v1
         port:
           number: 6000
 
@@ -51,4 +52,20 @@ spec:
   trafficPolicy:
     tls:
       mode: ISTIO_MUTUAL
-
+  subsets:
+  - name: v1
+    labels:
+      version: v1
+    trafficPolicy:
+      tls:
+        mode: ISTIO_MUTUAL
+      loadBalancer:
+        simple: LEAST_CONN
+  - name: v2
+    labels:
+      version: v2
+    trafficPolicy:
+      tls:
+        mode: ISTIO_MUTUAL
+      loadBalancer:
+        simple: LEAST_CONN

@@ -11,9 +11,9 @@ image:
 
 applications:
 - name: mock1
-  versions: ["v1"]
-  errorRatios: [-1]
-  latencies: [5]
+  versions: ["v1", "v2"]
+  errorRatios: [-1, -1]
+  latencies: [5, 30]
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
   http1target: "GET|http://mock2-http1.soa-test:6000,POST|http://mock2-http1.soa-test:6000"
@@ -43,8 +43,3 @@ applications:
   serviceType: "ClusterIP"
   http1target: "GET|http://www.example.com"
 
-- name: mock5
-  versions: ["v1"]
-  errorRatios: [-1]
-  latencies: [5]
-  serviceType: "ClusterIP"
