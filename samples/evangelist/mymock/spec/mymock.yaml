@@ -1,0 +1,21 @@
+apiVersion: "config.istio.io/v1alpha2"
+kind: mymock
+metadata:
+  name: denyv23mockhandler
+spec:
+---
+apiVersion: "config.istio.io/v1alpha2"
+kind: checknothing
+metadata:
+  name: denyv23instance
+spec:
+---
+apiVersion: "config.istio.io/v1alpha2"
+kind: rule
+metadata:
+  name: denyv23rule
+spec:
+  match: source.labels["version"] == "v1" || source.labels["version"] == "v2" || source.labels["version"] == "v3"
+  actions:
+  - handler: denyv23mockhandler.mymock
+    instances: [ denyv23instance.checknothing ]

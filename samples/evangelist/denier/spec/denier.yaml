@@ -1,0 +1,24 @@
+apiVersion: "config.istio.io/v1alpha2"
+kind: denier
+metadata:
+  name: denyv23handler
+spec:
+  status:
+    code: 500
+    message: bad request
+---
+apiVersion: "config.istio.io/v1alpha2"
+kind: checknothing
+metadata:
+  name: denyv23handler
+spec:
+---
+apiVersion: "config.istio.io/v1alpha2"
+kind: rule
+metadata:
+  name: denyv23handler
+spec:
+  match: source.labels["version"] == "v1" || source.labels["version"] == "v2" || source.labels["version"] == "v3"
+  actions:
+  - handler: denyv23handler.denier
+    instances: [ denyv23handler.checknothing ]
