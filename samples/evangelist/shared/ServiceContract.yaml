@@ -1,0 +1,41 @@
+apiVersion: "mesh.freewheel.tv/v1"
+kind: ServiceContract
+metadata:
+  name: serviceA
+  namespace: soa-test
+spec:
+  product: APIOnly
+  trafficPolicy:
+    users: [user1, user2]
+    clients: [Disney, ABC, Comcast, Microsoft]
+    route:
+    - version: v1
+      port: 6000
+      alloc: 95
+      urlPattern: "/a/b/*"
+    - version: v2
+      port: 6000
+      alloc: 5
+    mirror:
+      version: v3
+      port: 6000
+
+
+  quotaPolicy:
+  - sourceApp: serviceA
+    sourceVersion: v1
+    maxQuota: 50
+
+  rbacPolicy:
+    eternal:
+    - permission: perm1
+      verb: [GET]
+      patterns:
+      - "/api/something/v1/*"
+    internal:
+    - source: "mock2-v1"
+      namespace: "soa-test"
+      verbs: [GET, POST]
+      patterns:
+      - "/api/somethingelse/v1/*"
+

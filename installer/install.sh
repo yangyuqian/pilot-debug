@@ -13,7 +13,7 @@ function reinstall(){
     ns=$2
   fi
   echo "cleanup $1 ..."
-  kubectl delete --namespace $ns -f $1
+  kubectl delete --namespace $ns -f $1 || echo "removed $1 ..."
 
   wt
   echo "installing $1 ..."
