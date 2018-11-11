@@ -20,6 +20,3 @@ spec:
     - "tracing.example.info"
     - "mock.example.info"
     - "solr.example.info"
-    - mrm.demand1.od.aws.freewheel.tv
-    - rpm.demand1.od.aws.freewheel.tv
-    - api.demand1.od.aws.freewheel.tv
