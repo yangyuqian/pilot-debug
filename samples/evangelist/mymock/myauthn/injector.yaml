@@ -171,12 +171,6 @@ data:
         - "[[ annotation .ObjectMeta `sidecar.evangelist.info/target`  `localhost:8080`  ]]"
         - "-url-prefix"
         - "/"
-        volumeMounts:
-        - mountPath: /etc/cs/tls
-          name: fw-gateway-certs
-          readOnly: true
-        - mountPath: /app/conf
-          name: gateway-config
       [[ end ]]
       volumes:
       - emptyDir:
