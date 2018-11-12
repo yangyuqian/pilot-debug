@@ -14,5 +14,5 @@ spec:
   # define a custom metrics
   - handler: mypromhandler.prometheus
     instances:
-    - requestcount.metric
+    - myrequestcount.metric
   match: context.protocol == "http" || context.protocol == "grpc"

@@ -25,4 +25,5 @@ spec:
     - request_protocol
     - response_code
     - connection_security_policy
+    - fw_user_login
     name: myrequests_total
