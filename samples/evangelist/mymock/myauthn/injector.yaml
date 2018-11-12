@@ -152,7 +152,6 @@ data:
           name: istio-certs
           readOnly: true
       [[ if (isset .ObjectMeta.Annotations `sidecar.evangelist.info/authn`) ]]
-      # insert gateway and auth here!!!
       - name: authn
         imagePullPolicy: Always
         image: "boscoellision/myauthn:v1.0"
