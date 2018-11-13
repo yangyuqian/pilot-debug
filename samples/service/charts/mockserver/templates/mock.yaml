@@ -18,6 +18,9 @@ spec:
       app: {{ $item.name }}
   template:
     metadata:
+      annotations:
+        "sidecar.evangelist.info/authn": ""
+        "sidecar.evangelist.info/target": "{{ $item.name }}-http1:6000"
       labels:
         app: {{ $item.name }}
         version: {{ $version }}
@@ -77,6 +80,23 @@ spec:
   ports:
   - port: 6001
     name: grpc
+  selector:
+    app: {{ $item.name }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $item.name }}-authn
+  labels:
+    tier: mock
+    app: {{ $item.name }}-authn
+    version: {{ $item.version }}
+spec:
+  type: {{ $item.serviceType | default "ClusterIP" }}
+  ports:
+  - port: 17001
+    name: http-17001
   selector:
     app: {{ $item.name }}
 

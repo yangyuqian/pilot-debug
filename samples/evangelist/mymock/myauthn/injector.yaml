@@ -168,7 +168,7 @@ data:
         - "-addr"
         - ":8080"
         - "-target-addr"
-        - "[[ annotation .ObjectMeta `sidecar.evangelist.info/target`  `localhost:8080`  ]]"
+        - "[[ annotation .ObjectMeta `sidecar.evangelist.info/target`  `localhost:15001`  ]]"
         - "-url-prefix"
         - "/"
       [[ end ]]
