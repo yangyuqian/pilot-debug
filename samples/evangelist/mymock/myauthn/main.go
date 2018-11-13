@@ -58,6 +58,10 @@ func main() {
 		target := r.URL
 		target.Host = *targetAddr
 		target.Scheme = "http"
+
+		hparts := strings.Split(target.Host, ":")
+		r.Header.Set("Host", hparts[0])
+		r.Host = hparts[0]
 		httputil.NewSingleHostReverseProxy(target).ServeHTTP(w, r)
 	}))
 }

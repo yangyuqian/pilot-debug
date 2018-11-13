@@ -45,7 +45,7 @@ spec:
         {{ if $latency }}- "--latency-milliseconds={{ $latency }}"{{ end }}
         {{ if $errorRatio }}- "--error-ratio={{ $errorRatio }}"{{ end }}
         {{ if $item.redisAddr }}- "--redis-addr={{ $item.redisAddr }}"{{ else }}# skip redis address{{ end }}
-        {{ if $item.http1target }}- "--http1-target={{ $item.http1target }}"{{ else }}# skip HTTP/1.1 target{{ end }}
+        {{ if $item.http1target }}- "--http1-target={{ if $values.enableAuthn }}{{ if $item.http1targetAuthn }}{{ $item.http1targetAuthn }}{{ else }}{{ $item.http1target }}{{ end }}{{ else }}{{ $item.http1target }}{{ end }}"{{ else }}# skip HTTP/1.1 target{{ end }}
         {{ if $item.http2target }}- "--http2-target={{ $item.http2target }}"{{ else }}# skip HTTP/2 target{{ end }}
 ---
 {{ end }}
@@ -99,6 +99,36 @@ spec:
     name: http-17001
   selector:
     app: {{ $item.name }}
+
+{{ if $values.enableAuthn }}
+---
+# apiVersion: networking.istio.io/v1alpha3
+# kind: VirtualService
+# metadata:
+#   name: {{ $item.name }}-authn
+# spec:
+#   hosts:
+#   - {{ $item.name }}-authn
+#   tcp:
+#   - route:
+#     - destination:
+#         host: {{ $item.name }}-authn
+#         port:
+#           number: 17001
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: {{ $item.name }}-authn
+spec:
+  host: {{ $item.name }}-authn
+  trafficPolicy:
+    connectionPool:
+      tcp:
+        maxConnections: 50
+        connectTimeout: 3s
+{{ end }}
 
 ---
 {{ end }}

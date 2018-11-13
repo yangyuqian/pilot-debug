@@ -20,7 +20,7 @@ spec:
   tcp:
   - route:
     - destination:
-        host: redis.soa-test.svc.cluster.local
+        host: redis.{{ .Release.Namespace }}.svc.cluster.local
         port:
           number: 6379
 
@@ -37,7 +37,7 @@ spec:
   http:
   - route:
     - destination:
-        host: mock1-http1.soa-test.svc.cluster.local
+        host: mock1-http1.{{ .Release.Namespace }}.svc.cluster.local
         subset: v1
         port:
           number: 6000
@@ -48,7 +48,7 @@ kind: DestinationRule
 metadata:
   name: mock1
 spec:
-  host: "mock1-http1.soa-test.svc.cluster.local"
+  host: "mock1-http1.{{ .Release.Namespace }}.svc.cluster.local"
   trafficPolicy:
     tls:
       mode: ISTIO_MUTUAL
@@ -69,3 +69,4 @@ spec:
         mode: ISTIO_MUTUAL
       loadBalancer:
         simple: LEAST_CONN
+
