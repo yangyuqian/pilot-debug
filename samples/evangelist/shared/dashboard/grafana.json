@@ -14,7 +14,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "5.2.2"
+      "version": "5.2.3"
     },
     {
       "type": "panel",
@@ -46,9 +46,93 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1538989321667,
+  "iteration": 1542170293921,
   "links": [],
   "panels": [
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "${DS_PROMETHEUS}",
+      "fill": 4,
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 16,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(rate(istio_myrequests_total{source_app=~\"$source_app\", destination_app=~\"$destination_app\", source_version=~\"$source_version\", destination_version=~\"$destination_version\", response_code=~\"$response_code\", evangelist_user=~\"$evangelist_user\", evangelist_user_group=~\"$evangelist_user_group\"}[60s])) by (evangelist_user, evangelist_user_group)",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "{{evangelist_user}}({{evangelist_user_group}})",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Traffic Stats by User/Group",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
     {
       "aliasColors": {},
       "bars": false,
@@ -60,7 +144,7 @@
         "h": 9,
         "w": 8,
         "x": 0,
-        "y": 0
+        "y": 9
       },
       "id": 2,
       "legend": {
@@ -147,7 +231,7 @@
         "h": 9,
         "w": 8,
         "x": 8,
-        "y": 0
+        "y": 9
       },
       "id": 12,
       "legend": {
@@ -233,7 +317,7 @@
         "h": 9,
         "w": 8,
         "x": 16,
-        "y": 0
+        "y": 9
       },
       "id": 14,
       "legend": {
@@ -414,6 +498,46 @@
         "tagsQuery": "",
         "type": "query",
         "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "evangelist_user",
+        "options": [],
+        "query": "label_values(istio_myrequests_total, evangelist_user)",
+        "refresh": 1,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_PROMETHEUS}",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "evangelist_user_group",
+        "options": [],
+        "query": "label_values(istio_myrequests_total, evangelist_user_group)",
+        "refresh": 1,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
       }
     ]
   },
@@ -449,5 +573,5 @@
   "timezone": "",
   "title": "evangelist-init",
   "uid": "WKY5SS1mk",
-  "version": 14
+  "version": 9
 }

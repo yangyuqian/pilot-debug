@@ -15,7 +15,7 @@ kind: rule
 metadata:
   name: denyv23rule
 spec:
-  match: source.labels["version"] == "v1" || source.labels["version"] == "v2" || source.labels["version"] == "v3"
+  match: (source.labels["version"] == "v1") && request.headers["x-evangelist-myuser"] == "user1"
   actions:
   - handler: denyv23mockhandler.mymock
     instances: [ denyv23instance.checknothing ]
