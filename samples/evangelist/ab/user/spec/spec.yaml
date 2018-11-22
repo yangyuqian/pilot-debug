@@ -8,36 +8,36 @@ metadata:
   name: mock3-http1
 spec:
   hosts:
-  - "mock3-http1.soa-test.svc.cluster.local"
+  - "mock3-http1.od-system.svc.cluster.local"
   http:
   - route:
     - destination:
-        host: mock3-http1.soa-test.svc.cluster.local
+        host: mock3-http1.od-system.svc.cluster.local
         subset: v1
       weight: 5
     - destination:
-        host: mock3-http1.soa-test.svc.cluster.local
+        host: mock3-http1.od-system.svc.cluster.local
         subset: v2
       weight: 90
     - destination:
-        host: mock3-http1.soa-test.svc.cluster.local
+        host: mock3-http1.od-system.svc.cluster.local
         subset: v3
       weight: 5
     match:
     - headers:
-        x-my-user:
-          exact: foo
+        x-evangelist-myuser:
+          exact: user1
   - route:
     - destination:
-        host: mock3-http1.soa-test.svc.cluster.local
+        host: mock3-http1.od-system.svc.cluster.local
         subset: v1
       weight: 90
     - destination:
-        host: mock3-http1.soa-test.svc.cluster.local
+        host: mock3-http1.od-system.svc.cluster.local
         subset: v2
       weight: 5
     - destination:
-        host: mock3-http1.soa-test.svc.cluster.local
+        host: mock3-http1.od-system.svc.cluster.local
         subset: v3
       weight: 5
 
@@ -48,36 +48,36 @@ metadata:
   name: mock3-http2
 spec:
   hosts:
-  - "mock3-http2.soa-test.svc.cluster.local"
+  - "mock3-http2.od-system.svc.cluster.local"
   http:
   - route:
     - destination:
-        host: mock3-http2.soa-test.svc.cluster.local
+        host: mock3-http2.od-system.svc.cluster.local
         subset: v1
       weight: 90
     - destination:
-        host: mock3-http2.soa-test.svc.cluster.local
+        host: mock3-http2.od-system.svc.cluster.local
         subset: v2
       weight: 5
     - destination:
-        host: mock3-http2.soa-test.svc.cluster.local
+        host: mock3-http2.od-system.svc.cluster.local
         subset: v3
       weight: 5
     match:
     - headers:
-        x-my-user:
-          exact: foo
+        x-evangelist-myuser:
+          exact: user1
   - route:
     - destination:
-        host: mock3-http1.soa-test.svc.cluster.local
+        host: mock3-http1.od-system.svc.cluster.local
         subset: v1
       weight: 90
     - destination:
-        host: mock3-http1.soa-test.svc.cluster.local
+        host: mock3-http1.od-system.svc.cluster.local
         subset: v2
       weight: 5
     - destination:
-        host: mock3-http1.soa-test.svc.cluster.local
+        host: mock3-http1.od-system.svc.cluster.local
         subset: v3
       weight: 5
 
@@ -88,7 +88,7 @@ kind: DestinationRule
 metadata:
   name: mock3-http1
 spec:
-  host: mock3-http1.soa-test.svc.cluster.local
+  host: mock3-http1.od-system.svc.cluster.local
   subsets:
   - name: v1
     labels:
@@ -122,7 +122,7 @@ kind: DestinationRule
 metadata:
   name: mock3-http2
 spec:
-  host: mock3-http2.soa-test.svc.cluster.local
+  host: mock3-http2.od-system.svc.cluster.local
   subsets:
   - name: v1
     labels:

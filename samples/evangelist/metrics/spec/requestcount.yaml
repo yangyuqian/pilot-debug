@@ -24,7 +24,7 @@ spec:
     source_version: source.labels["version"] | "unknown"
     source_workload: source.workload.name | "unknown"
     source_workload_namespace: source.workload.namespace | "unknown"
-    fw_user_login: request.headers["x-freewheel-user-login"] | "unknown"
-    fw_network_id: request.headers["x-freewheel-network-id"] | "unknown"
+    evangelist_user: request.headers["x-evangelist-myuser"] | "unknown"
+    evangelist_user_group: request.headers["x-evangelist-mygroup"] | "unknown"
   monitored_resource_type: '"UNSPECIFIED"'
   value: "1"
