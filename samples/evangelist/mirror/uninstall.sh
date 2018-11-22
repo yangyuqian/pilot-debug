@@ -1,3 +1,3 @@
 #!/bin/sh
 
-kubectl apply --namespace soa-test -f samples/evangelist/mirror/spec/spec-old.yaml
+kubectl apply --namespace od-system -f samples/evangelist/mirror/spec/spec-old.yaml
