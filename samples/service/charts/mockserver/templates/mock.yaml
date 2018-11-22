@@ -103,21 +103,6 @@ spec:
 
 {{ if $values.enableAuthn }}
 ---
-# apiVersion: networking.istio.io/v1alpha3
-# kind: VirtualService
-# metadata:
-#   name: {{ $item.name }}-authn
-# spec:
-#   hosts:
-#   - {{ $item.name }}-authn
-#   tcp:
-#   - route:
-#     - destination:
-#         host: {{ $item.name }}-authn
-#         port:
-#           number: 17001
-
----
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
@@ -131,7 +116,17 @@ spec:
       tcp:
         maxConnections: 50
         connectTimeout: 3s
+  subsets:
+  {{- range $idx, $version := $item.versions }}
+  - name: {{ $version }}
+    labels:
+      version: {{ $version }}
+    trafficPolicy:
+      loadBalancer:
+        simple: LEAST_CONN
+  {{ end -}}
+{{ end }}
+---
+
 {{ end }}
 
----
-{{ end }}
