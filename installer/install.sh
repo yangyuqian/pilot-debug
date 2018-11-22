@@ -1,6 +1,6 @@
 #!/bin/sh
 checktime=60
-soa_ns=evangelist
+soa_ns=od-system
 
 function wt(){
   echo "wait $checktime seconds ..."
@@ -25,4 +25,4 @@ reinstall "samples/networking/soa-gateway.yaml"
 reinstall "samples/networking/virtualservice-destinationrule-grafana.yaml"
 reinstall "samples/networking/virtualservice-destinationrule-servicegraph.yaml"
 reinstall "samples/networking/virtualservice-destinationrule-tracing.yaml"
-reinstall "samples/networking/virtualservice-destinationrule-pilot.yaml"
+# reinstall "samples/networking/virtualservice-destinationrule-pilot.yaml"

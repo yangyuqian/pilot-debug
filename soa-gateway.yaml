@@ -1,0 +1,52 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: soa-gateway
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - grafana.example.info
+    - servicegraph.example.info
+    - tracing.example.info
+    - mock.example.info
+    - mrm.demand1.od.aws.freewheel.tv
+    - rpm.demand1.od.aws.freewheel.tv
+    - api.demand1.od.aws.freewheel.tv
+    - mrm.demo.od.aws.freewheel.tv
+    - rpm.demo.od.aws.freewheel.tv
+    - api.demo.od.aws.freewheel.tv
+    port:
+      name: https
+      number: 443
+      protocol: HTTPS
+    tls:
+      mode: SIMPLE
+      privateKey: /etc/istio/ingressgateway-certs/tls.key
+      serverCertificate: /etc/istio/ingressgateway-certs/tls.crt
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: soa-gateway-insecure
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - grafana.example.info
+    - servicegraph.example.info
+    - tracing.example.info
+    - mock.example.info
+    - mrm.demand1.od.aws.freewheel.tv
+    - rpm.demand1.od.aws.freewheel.tv
+    - api.demand1.od.aws.freewheel.tv
+    - mrm.demo.od.aws.freewheel.tv
+    - rpm.demo.od.aws.freewheel.tv
+    - api.demo.od.aws.freewheel.tv
+    port:
+      name: http
+      number: 80
+      protocol: HTTP

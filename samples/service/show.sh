@@ -143,11 +143,11 @@ parse_args $@
 
 # upgrade or install mockserver, and cleanup all monitor data
 if [ -n "$upgrade" ]; then
-  restart_deployment "istio-telemetry"
-  restart_deployment "grafana"
-  restart_deployment "prometheus"
-  restart_deployment "servicegraph"
-  restart_deployment "istio-tracing"
+  # restart_deployment "istio-telemetry"
+  # restart_deployment "grafana"
+  # restart_deployment "prometheus"
+  # restart_deployment "servicegraph"
+  # restart_deployment "istio-tracing"
 
   helm upgrade --install --timeout 1200 --wait --namespace $namespace $release $chart
   echo "waiting $graceful_seconds seconds..."
