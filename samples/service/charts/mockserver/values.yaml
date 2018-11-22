@@ -17,9 +17,9 @@ applications:
   latencies: [5, 30]
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
-  http1targetAuthn: "GET|http://mock2-authn.evangelist:17001,POST|http://mock2-authn.evangelist:17001"
-  http1target: "GET|http://mock2-http1.evangelist:6000,POST|http://mock2-http1.evangelist:6000"
-  http2target: "mock2-http2.evangelist:6001"
+  http1targetAuthn: "GET|http://mock2-authn.od-system:17001,POST|http://mock2-authn.od-system:17001"
+  http1target: "GET|http://mock2-http1.od-system:6000,POST|http://mock2-http1.od-system:6000"
+  http2target: "mock2-http2.od-system:6001"
 
 - name: mock2
   versions: ["v1", "v2"]
@@ -27,9 +27,9 @@ applications:
   latencies: [5, 10]
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
-  http1targetAuthn: "GET|http://mock3-authn.evangelist:17001,POST|http://mock3-authn.evangelist:17001"
-  http1target: "GET|http://mock3-http1.evangelist:6000,POST|http://mock3-http1.evangelist:6000"
-  http2target: "mock4-http2.evangelist:6001"
+  http1targetAuthn: "GET|http://mock3-authn.od-system:17001,POST|http://mock3-authn.od-system:17001"
+  http1target: "GET|http://mock3-http1.od-system:6000,POST|http://mock3-http1.od-system:6000"
+  http2target: "mock4-http2.od-system:6001"
 
 - name: mock3
   versions: ["v1", "v2", "v3"]
@@ -37,8 +37,8 @@ applications:
   latencies: [5, 3000, 5]
   serviceType: "ClusterIP"
   redisAddr: "redis:6379"
-  http1targetAuthn: "GET|http://mock4-authn.evangelist:17001"
-  http1target: "GET|http://mock4-http1.evangelist:6000"
+  http1targetAuthn: "GET|http://mock4-authn.od-system:17001"
+  http1target: "GET|http://mock4-http1.od-system:6000"
 
 - name: mock4
   versions: ["v1", "v2", "v3"]

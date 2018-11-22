@@ -21,6 +21,7 @@ spec:
       annotations:
         "sidecar.evangelist.info/authn": ""
         "sidecar.evangelist.info/target": "{{ $item.name }}-http1:6000"
+        # "traffic.sidecar.istio.io/includeInboundPorts": "6000,6001,17001"
       labels:
         app: {{ $item.name }}
         version: {{ $version }}
@@ -124,6 +125,8 @@ metadata:
 spec:
   host: {{ $item.name }}-authn
   trafficPolicy:
+    # tls:
+    #   mode: ISTIO_MUTUAL
     connectionPool:
       tcp:
         maxConnections: 50

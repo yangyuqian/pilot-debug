@@ -37,10 +37,10 @@ spec:
   http:
   - route:
     - destination:
-        host: mock1-http1.{{ .Release.Namespace }}.svc.cluster.local
+        host: mock1-authn.{{ .Release.Namespace }}.svc.cluster.local
         subset: v1
         port:
-          number: 6000
+          number: 17001
 
 ---
 apiVersion: "networking.istio.io/v1alpha3"
@@ -70,3 +70,23 @@ spec:
       loadBalancer:
         simple: LEAST_CONN
 
+---
+apiVersion: "networking.istio.io/v1alpha3"
+kind: DestinationRule
+metadata:
+  name: mock1-authn
+spec:
+  host: "mock1-authn.{{ .Release.Namespace }}.svc.cluster.local"
+  subsets:
+  - name: v1
+    labels:
+      version: v1
+    trafficPolicy:
+      loadBalancer:
+        simple: LEAST_CONN
+  - name: v2
+    labels:
+      version: v2
+    trafficPolicy:
+      loadBalancer:
+        simple: LEAST_CONN
