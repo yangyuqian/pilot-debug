@@ -6,7 +6,7 @@ spec:
   hosts:
   - "tracing.example.info"
   gateways:
-  - soa-gateway
+  - gateway
   http:
   - route:
     - destination:

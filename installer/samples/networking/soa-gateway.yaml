@@ -1,22 +1,42 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: soa-gateway
+  annotations:
+  name: gateway
 spec:
   selector:
     istio: ingressgateway
   servers:
-  - port:
-      number: 443
+  - hosts:
+    - grafana.example.info
+    - servicegraph.example.info
+    - tracing.example.info
+    - mock.example.info
+    - mrm.addui.od.aws.freewheel.tv
+    - rpm.addui.od.aws.freewheel.tv
+    - api.addui.od.aws.freewheel.tv
+    port:
       name: https
+      number: 443
       protocol: HTTPS
     tls:
       mode: SIMPLE
-      serverCertificate: /etc/istio/ingressgateway-certs/tls.crt
       privateKey: /etc/istio/ingressgateway-certs/tls.key
-    hosts:
-    - "grafana.example.info"
-    - "servicegraph.example.info"
-    - "tracing.example.info"
-    - "mock.example.info"
-    - "solr.example.info"
+      serverCertificate: /etc/istio/ingressgateway-certs/tls.crt
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: gateway-insecure
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - grafana.example.info
+    - servicegraph.example.info
+    - tracing.example.info
+    port:
+      name: http
+      number: 80
+      protocol: HTTP

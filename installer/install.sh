@@ -20,9 +20,11 @@ function reinstall(){
   kubectl apply --namespace $ns -f $1
 }
 
-reinstall "istio-full.yaml" "istio-system"
-reinstall "samples/networking/soa-gateway.yaml"
-reinstall "samples/networking/virtualservice-destinationrule-grafana.yaml"
-reinstall "samples/networking/virtualservice-destinationrule-servicegraph.yaml"
-reinstall "samples/networking/virtualservice-destinationrule-tracing.yaml"
+# reinstall "istio-full.yaml" "istio-system"
+reinstall "istio-no-crd.yaml" "istio-system"
+# reinstall "samples/networking/soa-gateway.yaml"
+# reinstall "samples/networking/virtualservice-destinationrule-solr.yaml"
+# reinstall "samples/networking/virtualservice-destinationrule-grafana.yaml"
+# reinstall "samples/networking/virtualservice-destinationrule-servicegraph.yaml"
+# reinstall "samples/networking/virtualservice-destinationrule-tracing.yaml"
 # reinstall "samples/networking/virtualservice-destinationrule-pilot.yaml"

@@ -6,11 +6,11 @@ spec:
   hosts:
   - "solr.example.info"
   gateways:
-  - soa-gateway
+  - gateway
   http:
   - route:
     - destination:
-        host: ui-search.od-test.svc.cluster.local
+        host: ui-search-addui.addui.svc.cluster.local
         port:
           number: 8993
 
@@ -20,4 +20,4 @@ kind: DestinationRule
 metadata:
   name: solr
 spec:
-  host: "ui-search.od-test.svc.cluster.local"
+  host: "ui-search-addui.addui.svc.cluster.local"
