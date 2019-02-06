@@ -1,7 +1,6 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  annotations:
   name: gateway
 spec:
   selector:
@@ -11,10 +10,6 @@ spec:
     - grafana.example.info
     - servicegraph.example.info
     - tracing.example.info
-    - mock.example.info
-    - mrm.addui.od.aws.freewheel.tv
-    - rpm.addui.od.aws.freewheel.tv
-    - api.addui.od.aws.freewheel.tv
     port:
       name: https
       number: 443

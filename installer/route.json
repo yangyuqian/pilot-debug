@@ -1,0 +1,220 @@
+[
+    {
+        "name": "https.443.https",
+        "virtualHosts": [
+            {
+                "name": "grafana.example.info:443",
+                "domains": [
+                    "grafana.example.info",
+                    "grafana.example.info:443"
+                ],
+                "routes": [
+                    {
+                        "match": {
+                            "prefix": "/"
+                        },
+                        "route": {
+                            "cluster": "outbound|3000||grafana.istio-system.svc.cluster.local",
+                            "timeout": "0.000s",
+                            "maxGrpcTimeout": "0.000s"
+                        },
+                        "decorator": {
+                            "operation": "grafana.istio-system.svc.cluster.local:3000/*"
+                        },
+                        "perFilterConfig": {
+                            "mixer": {
+                                "forward_attributes": {
+                                    "attributes": {
+                                        "destination.service": {
+                                            "string_value": "grafana.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.host": {
+                                            "string_value": "grafana.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.name": {
+                                            "string_value": "grafana"
+                                        },
+                                        "destination.service.namespace": {
+                                            "string_value": "istio-system"
+                                        },
+                                        "destination.service.uid": {
+                                            "string_value": "istio://istio-system/services/grafana"
+                                        }
+                                    }
+                                },
+                                "mixer_attributes": {
+                                    "attributes": {
+                                        "destination.service": {
+                                            "string_value": "grafana.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.host": {
+                                            "string_value": "grafana.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.name": {
+                                            "string_value": "grafana"
+                                        },
+                                        "destination.service.namespace": {
+                                            "string_value": "istio-system"
+                                        },
+                                        "destination.service.uid": {
+                                            "string_value": "istio://istio-system/services/grafana"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "servicegraph.example.info:443",
+                "domains": [
+                    "servicegraph.example.info",
+                    "servicegraph.example.info:443"
+                ],
+                "routes": [
+                    {
+                        "match": {
+                            "prefix": "/"
+                        },
+                        "route": {
+                            "cluster": "outbound|8088||servicegraph.istio-system.svc.cluster.local",
+                            "timeout": "0.000s",
+                            "maxGrpcTimeout": "0.000s"
+                        },
+                        "decorator": {
+                            "operation": "servicegraph.istio-system.svc.cluster.local:8088/*"
+                        },
+                        "perFilterConfig": {
+                            "mixer": {
+                                "forward_attributes": {
+                                    "attributes": {
+                                        "destination.service": {
+                                            "string_value": "servicegraph.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.host": {
+                                            "string_value": "servicegraph.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.name": {
+                                            "string_value": "servicegraph"
+                                        },
+                                        "destination.service.namespace": {
+                                            "string_value": "istio-system"
+                                        },
+                                        "destination.service.uid": {
+                                            "string_value": "istio://istio-system/services/servicegraph"
+                                        }
+                                    }
+                                },
+                                "mixer_attributes": {
+                                    "attributes": {
+                                        "destination.service": {
+                                            "string_value": "servicegraph.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.host": {
+                                            "string_value": "servicegraph.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.name": {
+                                            "string_value": "servicegraph"
+                                        },
+                                        "destination.service.namespace": {
+                                            "string_value": "istio-system"
+                                        },
+                                        "destination.service.uid": {
+                                            "string_value": "istio://istio-system/services/servicegraph"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "tracing.example.info:443",
+                "domains": [
+                    "tracing.example.info",
+                    "tracing.example.info:443"
+                ],
+                "routes": [
+                    {
+                        "match": {
+                            "prefix": "/"
+                        },
+                        "route": {
+                            "cluster": "outbound|80||tracing.istio-system.svc.cluster.local",
+                            "timeout": "0.000s",
+                            "maxGrpcTimeout": "0.000s"
+                        },
+                        "decorator": {
+                            "operation": "tracing.istio-system.svc.cluster.local:80/*"
+                        },
+                        "perFilterConfig": {
+                            "mixer": {
+                                "forward_attributes": {
+                                    "attributes": {
+                                        "destination.service": {
+                                            "string_value": "tracing.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.host": {
+                                            "string_value": "tracing.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.name": {
+                                            "string_value": "tracing"
+                                        },
+                                        "destination.service.namespace": {
+                                            "string_value": "istio-system"
+                                        },
+                                        "destination.service.uid": {
+                                            "string_value": "istio://istio-system/services/tracing"
+                                        }
+                                    }
+                                },
+                                "mixer_attributes": {
+                                    "attributes": {
+                                        "destination.service": {
+                                            "string_value": "tracing.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.host": {
+                                            "string_value": "tracing.istio-system.svc.cluster.local"
+                                        },
+                                        "destination.service.name": {
+                                            "string_value": "tracing"
+                                        },
+                                        "destination.service.namespace": {
+                                            "string_value": "istio-system"
+                                        },
+                                        "destination.service.uid": {
+                                            "string_value": "istio://istio-system/services/tracing"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        "validateClusters": false
+    },
+    {
+        "virtualHosts": [
+            {
+                "name": "backend",
+                "domains": [
+                    "*"
+                ],
+                "routes": [
+                    {
+                        "match": {
+                            "prefix": "/stats/prometheus"
+                        },
+                        "route": {
+                            "cluster": "prometheus_stats"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+]

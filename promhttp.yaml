@@ -1,0 +1,24 @@
+apiVersion: config.istio.io/v1alpha2
+kind: rule
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"config.istio.io/v1alpha2","kind":"rule","metadata":{"annotations":{},"name":"promhttp","namespace":"istio-system"},"spec":{"actions":[{"handler":"handler.prometheus","instances":["requestcount.metric","requestduration.metric","requestsize.metric","responsesize.metric"]}],"match":"context.protocol == \"http\" || context.protocol == \"grpc\""}}
+  clusterName: ""
+  creationTimestamp: 2018-11-11T13:04:54Z
+  generation: 1
+  name: promhttp
+  namespace: istio-system
+  resourceVersion: "72753088"
+  selfLink: /apis/config.istio.io/v1alpha2/namespaces/istio-system/rules/promhttp
+  uid: 61ac4af9-e5b2-11e8-8fff-0e736d1a7a28
+spec:
+  actions:
+  - handler: handler.prometheus
+    instances:
+    - requestcount.metric
+    - myrequestcount.metric
+    - requestduration.metric
+    - requestsize.metric
+    - responsesize.metric
+  match: context.protocol == "http" || context.protocol == "grpc"

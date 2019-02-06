@@ -1,0 +1,290 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  annotations:
+    sidecar.evangelist.info/authn: ""
+    sidecar.evangelist.info/target: mock1-http1:6000
+    sidecar.istio.io/status: '{"version":"8bb1db42157b2fe2157fc9755f340ba377cfb7bcbd3dd42904d8eb7550010efc","initContainers":["istio-init"],"containers":["istio-proxy","authn"],"volumes":["istio-envoy","fw-gateway-certs","fw-auth-certs","istio-certs"],"imagePullSecrets":null}'
+  creationTimestamp: 2018-11-14T02:10:54Z
+  generateName: mock1-v1-6dddcbd5c8-
+  labels:
+    app: mock1
+    pod-template-hash: "2888768174"
+    version: v1
+  name: mock1-v1-6dddcbd5c8-q89sg
+  namespace: evangelist
+  ownerReferences:
+  - apiVersion: extensions/v1beta1
+    blockOwnerDeletion: true
+    controller: true
+    kind: ReplicaSet
+    name: mock1-v1-6dddcbd5c8
+    uid: 846a98ac-e7b2-11e8-84ba-12086e983298
+  resourceVersion: "74003986"
+  selfLink: /api/v1/namespaces/evangelist/pods/mock1-v1-6dddcbd5c8-q89sg
+  uid: 846e0060-e7b2-11e8-84ba-12086e983298
+spec:
+  containers:
+  - command:
+    - /root/mockserver
+    - --name=mock1
+    - --http1-addr=:6000
+    - --http2-addr=:6001
+    - --latency-milliseconds=5
+    - --error-ratio=-1
+    - --redis-addr=redis:6379
+    - --http1-target=GET|http://mock2-authn.evangelist:17001,POST|http://mock2-authn.evangelist:17001
+    - --http2-target=mock2-http2.evangelist:6001
+    image: boscoellision/mockserver:v3.1
+    imagePullPolicy: IfNotPresent
+    name: server
+    ports:
+    - containerPort: 6000
+      name: http
+      protocol: TCP
+    - containerPort: 6001
+      name: http2
+      protocol: TCP
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: mock1-v1-token-dkrkc
+      readOnly: true
+  - args:
+    - proxy
+    - sidecar
+    - --configPath
+    - /etc/istio/proxy
+    - --binaryPath
+    - /usr/local/bin/envoy
+    - --serviceCluster
+    - mock1
+    - --drainDuration
+    - 45s
+    - --parentShutdownDuration
+    - 1m0s
+    - --discoveryAddress
+    - istio-pilot.istio-system:15007
+    - --discoveryRefreshDelay
+    - 1s
+    - --zipkinAddress
+    - zipkin.istio-system:9411
+    - --connectTimeout
+    - 10s
+    - --proxyAdminPort
+    - "15000"
+    - --controlPlaneAuthPolicy
+    - NONE
+    env:
+    - name: POD_NAME
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: metadata.name
+    - name: POD_NAMESPACE
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: metadata.namespace
+    - name: INSTANCE_IP
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: status.podIP
+    - name: ISTIO_META_POD_NAME
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: metadata.name
+    - name: ISTIO_META_INTERCEPTION_MODE
+      value: REDIRECT
+    - name: ISTIO_METAJSON_ANNOTATIONS
+      value: |
+        {"sidecar.evangelist.info/authn":"","sidecar.evangelist.info/target":"mock1-http1:6000"}
+    - name: ISTIO_META_app
+      value: mock1
+    - name: ISTIO_META_pod-template-hash
+      value: "2888768174"
+    - name: ISTIO_META_version
+      value: v1
+    image: docker.io/istio/proxyv2:1.0.3
+    imagePullPolicy: IfNotPresent
+    name: istio-proxy
+    ports:
+    - containerPort: 15090
+      name: http-envoy-prom
+      protocol: TCP
+    resources:
+      requests:
+        cpu: 10m
+    securityContext:
+      readOnlyRootFilesystem: true
+      runAsUser: 1337
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /etc/istio/proxy
+      name: istio-envoy
+    - mountPath: /etc/certs/
+      name: istio-certs
+      readOnly: true
+  - command:
+    - myauthn
+    - -addr
+    - :17001
+    - -target-addr
+    - mock1-http1:6000
+    - -url-prefix
+    - /
+    env:
+    - name: POD_NAMESPACE
+      valueFrom:
+        fieldRef:
+          apiVersion: v1
+          fieldPath: metadata.namespace
+    image: boscoellision/myauthn:v1.0
+    imagePullPolicy: Always
+    name: authn
+    ports:
+    - containerPort: 17001
+      name: http-17001
+      protocol: TCP
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+  dnsPolicy: ClusterFirst
+  initContainers:
+  - args:
+    - -p
+    - "15001"
+    - -u
+    - "1337"
+    - -m
+    - REDIRECT
+    - -i
+    - '*'
+    - -x
+    - ""
+    - -b
+    - 6000,6001
+    - -d
+    - ""
+    image: docker.io/istio/proxy_init:1.0.3
+    imagePullPolicy: IfNotPresent
+    name: istio-init
+    resources: {}
+    securityContext:
+      capabilities:
+        add:
+        - NET_ADMIN
+      privileged: true
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+  nodeName: ip-10-207-62-206.ec2.internal
+  nodeSelector:
+    soa: "true"
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: mock1-v1
+  serviceAccountName: mock1-v1
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: mock1-v1-token-dkrkc
+    secret:
+      defaultMode: 420
+      secretName: mock1-v1-token-dkrkc
+  - emptyDir:
+      medium: Memory
+    name: istio-envoy
+  - name: fw-gateway-certs
+    secret:
+      defaultMode: 420
+      optional: true
+      secretName: istio.fw-gateway
+  - name: fw-auth-certs
+    secret:
+      defaultMode: 420
+      optional: true
+      secretName: istio.fw-auth
+  - name: istio-certs
+    secret:
+      defaultMode: 420
+      optional: true
+      secretName: istio.mock1-v1
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: 2018-11-14T02:11:08Z
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: 2018-11-14T02:11:14Z
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: 2018-11-14T02:10:54Z
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: docker://151fc762df876875ef7b5d2431d4fb786395899521fed1729f996cf17836f309
+    image: boscoellision/myauthn:v1.0
+    imageID: docker-pullable://boscoellision/myauthn@sha256:49111a9445a62b9b6d405b5159aebd9a97981c3bdbe4c37503bd37fdf024fbee
+    lastState: {}
+    name: authn
+    ready: true
+    restartCount: 0
+    state:
+      running:
+        startedAt: 2018-11-14T02:11:12Z
+  - containerID: docker://6c1f24f1327618300b075aab7ef5052da11aa4cf9fb403034d95e704cc244043
+    image: istio/proxyv2:1.0.3
+    imageID: docker-pullable://istio/proxyv2@sha256:947348e2039b8b0e356e843ae263dc0c3d50abbf6cfe9d676446353f85b9ccb7
+    lastState: {}
+    name: istio-proxy
+    ready: true
+    restartCount: 0
+    state:
+      running:
+        startedAt: 2018-11-14T02:11:11Z
+  - containerID: docker://755de4d8a0954810bbd20a83a00045557bfab426f9eb55738bc31cac28e51f4f
+    image: boscoellision/mockserver:v3.1
+    imageID: docker-pullable://boscoellision/mockserver@sha256:64efc6322413accf88f5d36009447945e2c980dd9e8087cb14e802c50b2c795a
+    lastState: {}
+    name: server
+    ready: true
+    restartCount: 0
+    state:
+      running:
+        startedAt: 2018-11-14T02:11:09Z
+  hostIP: 10.207.62.206
+  initContainerStatuses:
+  - containerID: docker://9e2de67ec024fd4f9228bc939cd5401af4b86600fa777c0b0fbc1bd6c841c841
+    image: istio/proxy_init:1.0.3
+    imageID: docker-pullable://istio/proxy_init@sha256:dca4eb689378dddd93f3eb71717ef3b957b978f418d81ce56046ad59efab3c32
+    lastState: {}
+    name: istio-init
+    ready: true
+    restartCount: 0
+    state:
+      terminated:
+        containerID: docker://9e2de67ec024fd4f9228bc939cd5401af4b86600fa777c0b0fbc1bd6c841c841
+        exitCode: 0
+        finishedAt: 2018-11-14T02:11:07Z
+        reason: Completed
+        startedAt: 2018-11-14T02:11:07Z
+  phase: Running
+  podIP: 100.96.7.100
+  qosClass: Burstable
+  startTime: 2018-11-14T02:10:54Z

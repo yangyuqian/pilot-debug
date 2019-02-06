@@ -1,0 +1,39 @@
+apiVersion: config.istio.io/v1alpha2
+kind: metric
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"config.istio.io/v1alpha2","kind":"metric","metadata":{"annotations":{},"name":"myrequestcount","namespace":"istio-system"},"spec":{"dimensions":{"connection_security_policy":"conditional((context.reporter.kind | \"inbound\") == \"outbound\", \"unknown\", conditional(connection.mtls | false, \"mutual_tls\", \"none\"))","destination_app":"destination.labels[\"app\"] | \"unknown\"","destination_principal":"destination.principal | \"unknown\"","destination_service":"destination.service.host | \"unknown\"","destination_service_name":"destination.service.name | \"unknown\"","destination_service_namespace":"destination.service.namespace | \"unknown\"","destination_version":"destination.labels[\"version\"] | \"unknown\"","destination_workload":"destination.workload.name | \"unknown\"","destination_workload_namespace":"destination.workload.namespace | \"unknown\"","fw_user_login":"request.headers[\"x-freewheel-user-login\"] | \"unknown\"","reporter":"conditional((context.reporter.kind | \"inbound\") == \"outbound\", \"source\", \"destination\")","request_protocol":"api.protocol | context.protocol | \"unknown\"","response_code":"response.code | 200","source_app":"source.labels[\"app\"] | \"unknown\"","source_principal":"source.principal | \"unknown\"","source_version":"source.labels[\"version\"] | \"unknown\"","source_workload":"source.workload.name | \"unknown\"","source_workload_namespace":"source.workload.namespace | \"unknown\""},"monitored_resource_type":"\"UNSPECIFIED\"","value":"1"}}
+  clusterName: ""
+  creationTimestamp: 2018-11-12T01:39:11Z
+  generation: 1
+  name: myrequestcount
+  namespace: istio-system
+  resourceVersion: "73996238"
+  selfLink: /apis/config.istio.io/v1alpha2/namespaces/istio-system/metrics/myrequestcount
+  uid: c1249ccd-e61b-11e8-84ba-12086e983298
+spec:
+  dimensions:
+    connection_security_policy: conditional((context.reporter.kind | "inbound") ==
+      "outbound", "unknown", conditional(connection.mtls | false, "mutual_tls", "none")) # {{{
+    destination_app: destination.labels["app"] | "unknown"
+    destination_principal: destination.principal | "unknown"
+    destination_service: destination.service.host | "unknown"
+    destination_service_name: destination.service.name | "unknown"
+    destination_service_namespace: destination.service.namespace | "unknown"
+    destination_version: destination.labels["version"] | "unknown"
+    destination_workload: destination.workload.name | "unknown"
+    destination_workload_namespace: destination.workload.namespace | "unknown" # }}}
+    evangelist_user: request.headers["x-evangelist-myuser"] | "unknown"
+    evangelist_user_group: request.headers["x-evangelist-mygroup"] | "unknown"
+    reporter: conditional((context.reporter.kind | "inbound") == "outbound", "source",
+      "destination") 
+    request_protocol: api.protocol | context.protocol | "unknown"
+    response_code: response.code | 200
+    source_app: source.labels["app"] | "unknown"
+    source_principal: source.principal | "unknown"
+    source_version: source.labels["version"] | "unknown"
+    source_workload: source.workload.name | "unknown"
+    source_workload_namespace: source.workload.namespace | "unknown"
+  monitored_resource_type: '"UNSPECIFIED"'
+  value: "1"
